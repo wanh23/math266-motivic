@@ -1,0 +1,87 @@
+% Packages
+\usepackage{etoolbox}
+
+\usepackage{enumitem}[cleveref]
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{float}
+\usepackage{microtype}
+
+% For boxes around cheatsheets
+\usepackage{mdframed}
+\mdfdefinestyle{cheatsheet}{%
+    linecolor=black,
+    outerlinewidth=2pt,
+    roundcorner=20pt,
+    innertopmargin=4pt,
+    innerbottommargin=4pt,
+    innerrightmargin=40pt,
+    innerleftmargin=40pt,
+    leftmargin = 100pt,
+    rightmargin = 100pt
+    backgroundcolor=gray!50!white}
+
+% Parindent/parskip
+\setlength{\parindent}{0pt}
+
+% Custom color names
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0,0.30,0}
+\definecolor{darkred}{rgb}{0.75,0,0}
+\definecolor{darkblue}{rgb}{0,0,0.6} 
+
+% Citation colors
+\def\customcitecolor{purple}
+\def\customlinkcolor{darkblue}
+
+% Hyperref settings
+\usepackage[pdfborder=0,colorlinks,citecolor=\customcitecolor,linkcolor=\customlinkcolor,urlcolor=darkblue]{hyperref}
+
+% Removes vertical spacing around aligned environments
+\usepackage{etoolbox}
+\newcommand{\zerodisplayskips}{%
+  \setlength{\abovedisplayskip}{2pt}%
+  \setlength{\belowdisplayskip}{2pt}%
+  \setlength{\abovedisplayshortskip}{0pt}%
+  \setlength{\belowdisplayshortskip}{0pt}}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
+
+% Removes spacing around enumerate/itemize environments
+\usepackage{enumitem}
+\usepackage{setspace}
+\setlist[enumerate,1]{leftmargin=1cm}
+\setlist[enumerate,2]{leftmargin=2cm}
+\setlist[itemize,1]{leftmargin=0.5cm}
+\setlist[itemize,2]{leftmargin=2cm}
+\setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
+
+% Section headings
+\newcommand{\sectionheader}{Lecture~\thesection:~}
+
+% Course info
+\newcommand{\theinstructor}{Thomas Brazelton}
+\newcommand{\thecoursenumber}{MATH266}
+\newcommand{\thecoursetitle}{Unstable motivic homotopy theory}
+\newcommand{\thetitle}{\thecoursenumber:\, \thecoursetitle}
+\newcommand{\theterm}{Fall 2024}
+
+% Title page
+\title{\MakeUppercase{\thetitle} \\ \theterm}
+\author{\theinstructor}
+%\date{\theterm}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape\thecoursenumber}
+\fancyhead[C]{\small\itshape\thecoursetitle}
+\fancyhead[R]{\small\itshape\theterm}
+
+% Last hacky commands
+\newcommand{\todo}{\color{red}\text{todo:}\, \color{black}}
+\let\minus\smallsetminus
+\renewcommand{\labelitemi}{$\triangleright$}
+

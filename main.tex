@@ -1,0 +1,185 @@
+\documentclass[11pt]{amsart}
+
+% Bibliography stuff
+\usepackage[doi=false,isbn=false,url=false,style=alphabetic]{biblatex}
+\bibliography{citations.bib}
+
+\input{aux/commands.tex}
+\input{aux/thms.tex}
+\input{aux/macros.tex}
+
+\begin{document}
+\begin{abstract} Notes from MATH266: Motivic homotopy theory, taught at Harvard in Fall 2024.
+\end{abstract}
+
+\maketitle
+
+\setcounter{tocdepth}{1}
+{\tiny\tableofcontents{}}
+
+% Set parskip after toc
+\setlength{\parskip}{0.2em}
+
+% 0th section is intro
+\setcounter{section}{-1}
+
+\section{Introduction}
+
+\subsection{Overview} What sorts of things about a ring $R$ are still true when we move to the polynomial ring $R[t]$? In other words, what sorts of things about $R$ can't be varied in a 1-parameter family?
+
+Let's give a ton of examples! Don't stress if not all of the words are familiar, we'll break down what's happening here over the course of the semester, this is just motivation.
+
+\begin{example} Let $R$ be a reduced ring. Then the inclusion $R \to R[t]$ induces an isomorphism after taking units\footnote{If $R$ is not reduced, say there is some $r\in R$ so that $r^2 = 0$, then $(1+rt)(1-rt) = 1$, so $1+rt\in R[t]^\times$.}
+\begin{equation}\label{eqn:units-rings}
+\begin{aligned}
+    R^\times \xto{\sim} (R[t])^\times.
+\end{aligned}
+\end{equation}
+Recall that the functor sending a commutative ring to its group of units is corepresented by $\Z[u,u^{-1}]$, so \autoref{eqn:units-rings} is equivalent to saying that the following map is a bijection
+\begin{align*}
+    \Hom_\Ring(\Z[u,u^{-1}],R) \to \Hom_\Ring(\Z[u,u^{-1}],R[t]).
+\end{align*}
+After taking $\Spec$ everywhere, this becomes
+\begin{align*}
+    \Hom_\Sch(\Spec(R),\mathbb{G}_m) \to \Hom_\Sch(\Spec(R[t]),\mathbb{G}_m).
+\end{align*}
+We therefore might rephrase \autoref{eqn:units-rings} as saying that $\Hom_{\Sch}(-,\mathbb{G}_m)$ is \textit{$\A^1$-invariant}, at least when we plug in something reduced.
+\end{example}
+
+\begin{example} Let $k$ be a field. Then the functor $k \to k[t_1, \ldots, t_n]$ induces an extension of scalars map
+\begin{align*}
+    \Mod_k &\to \Mod_{k[t_1, \ldots, t_n]} \\
+    M &\mapsto M \otimes_k k[t_1, \ldots, t_n].
+\end{align*}
+\textbf{Serre's Problem}: Is every finitely generated $k[t_1, \ldots, t_n]$-module free?
+
+Recall finitely generated projective $R$-modules are the same as ``algebraic vector bundles'' over $\Spec(R)$, so we're asking whether every algebraic vector bundle on $\A^n_k$ is trivial.
+
+\textbf{Answer}: Yes (Quillen--Suslin, 1974). Quillen actually proved more-- for $R$ a PID, he proved that the every finitely generated projective $R[t]$-module is extended from an $R$-module.\footnote{%
+Quillen's proof involves leveraging some previous work of Horrocks, flat descent for vector bundles, and a very clever technique he invented called \textit{patching}. Suslin's proof, which appeared in the same year, is almost completely linear algebraic, leveraging the theory of \textit{unimodular rows}.} Lindel proved shortly thereafter that every finitely generated projective $A[t]$-module is extended from an $A$-algebra, where $A$ is a smooth algebra containing a field $k$. We could read this as saying that the stack of algebraic vector bundles is $\A^1$-invariant over the category of smooth affine $k$-schemes.
+\end{example}
+
+\textbf{More general}: (Bass--Quillen conjecture) is it true that for every $R$ regular Noetherian, the map
+\begin{align*}
+    \Mod_R^{\text{f.g., proj}} &\to \Mod_{R[t]}^{\text{f.g., proj}} \\
+    M &\mapsto M \otimes_R R[t]
+\end{align*}
+is essentially surjective? \textit{Still open}.
+
+\textbf{Fundamental Theorem of Algebraic $K$-Theory} (Quillen): For $R$ regular Noetherian, we have that $R \to R[t]$ induces an equivalence\footnote{%
+So Bass--Quillen is really a question about \textit{unstable} modules.}\footnote{%
+The statement for $K_0$ is originally due to Grothendieck \cite[5.6.1.3]{Aravind}. The statement for $K_1$ is due to Bass--Heller--Swan \cite[5.8.2.1]{Aravind}.
+}
+\begin{align*}
+    K(R) \xto{\sim} K(R[t]).
+\end{align*}
+%
+In other $K$-theory is \textit{$\A^1$-invariant} for regular Noetherian rings (regular Noetherian schemes, more generally).
+
+\begin{example} If $X = \Spec(R)$ or more generally $X$ is a scheme, then the map $\pi \colon X \times \A^1 \to X$ induces an isomorphism on Chow groups (see for instance \cite[3.3]{Fulton})
+\begin{align*}
+    \pi^\ast \colon \CH_\ast(X) \xto{\sim} \CH_{\ast+1}(X \times \A^1).
+\end{align*}
+\end{example}
+
+\begin{example} Let $X = \Spec(R)$ where $R$ is normal and Noetherian.\footnote{%
+We can get away with weaker assumptions on this. In Aravind's notes 3.7.1.3 he assumes $R$ is a locally factorial Noetherian normal domain.
+}
+Then every line bundle on $X \times \A^1$ is extended from a line bundle on $X$, in other words $X \times \A^1 \to X$ induces an isomorphism
+\begin{align*}
+    \Pic(X) \xto{\sim} \Pic(X \times\A^1).
+\end{align*}
+\end{example}
+
+\begin{example} We can also show $\A^1$-invariance for the Picard group over a PID. Let $R$ be a PID, then it is a UFD, and we can show that $\Pic(R) = 0$, and therefore $\Pic(R[t_1, \ldots, t_n])=0$.
+\end{example}
+
+
+
+
+\begin{example} \cite[3.7.1.5]{Aravind}
+Check this doesn't hold for all rings, for example $R = k[x,y]/(y^2-x^3)$.
+\end{example}
+
+\begin{definition} An \textit{inner product space} over a ring $R$ is a finitely generated productive $R$-module $M$ and a symmetric bilinear form $\beta \colon M \times M \to R$ for which $m \mapsto \beta(-,m)$ defines an isomorphism $M \cong M^\ast$.
+\end{definition}
+
+
+\begin{theorem} (Harder's Theorem, VII.3.13 in Lam's book on Serre's problem) Let $k$ be a field. Then every inner product space over $k[t]$ is extended from an inner product space over $k$.
+\end{theorem}
+
+\begin{remark} The stable analogue of this has to do with $\A^1$-invariance of Hermitian $K$-theory [reference needed].
+\end{remark}
+
+
+
+Algebraic vector bundles are $\GL_n$-torsors (we will talk about torsors in more detail next week), so the Bass--Quillen conjecture is really asking about $\A^1$-invariance of torsors over affine schemes. We could ask an analogous question about $G$-torsors for any $G$. Here's an example result in this direction that we'll see later in the semester:
+
+\begin{theorem} \cite[1.3]{AHW3} If $k$ is a field, and $G$ is an isotropic reductive group scheme, then $G$-torsors in the Nisnevich site are $\A^1$-invariant over any smooth affine $k$-scheme.
+\end{theorem}
+
+\subsection{$\A^1$-homotopy theory}
+
+Recall from algebraic topology that $X \times [0,1] \to X$ is a weak homotopy equivalence, which implies that any cohomology theory is insensitive to taking a product with an interval, e.g. for $H^\ast(-,\Z)$ integral cohomology we get
+\begin{align*}
+    H^\ast(X,\Z) \xto{\sim} H^\ast(X \times [0,1],\Z).
+\end{align*}
+In fact this type of homotopy invariance is an axiom of generalized Eilenberg--Steenrod cohomology theories.
+
+\begin{example} Let $k \subseteq \C$ be a subfield of the complex numbers. Then there is a \textit{Betti realization} functor
+\begin{align*}
+    \Var_k &\to \Top \\
+    X &\mapsto X(\C)
+\end{align*}
+sending a variety to its underlying analytic space. Note that
+\begin{align*}
+    X \times \A^1_k &\mapsto (X \times \A^1_k)(\C) = X(\C) \times \C.
+\end{align*}
+Therefore any homotopy invariant functor out of spaces provides another example of an $\A^1$-invariant functor out of $k$-varieties, for example
+\begin{align*}
+    X &\mapsto H^\ast(X(\C);\Z) \\
+    X &\mapsto \pi_\ast (X(\C)).
+\end{align*}
+\end{example}
+
+
+\textbf{Q}: Can we build a homotopy theory of algebraic varieties in which the affine line $\A^1$ plays the role that the interval $[0,1]$ plays in classical topology?
+
+\textbf{A}: Yes! This is what's known as \textit{$\A^1$-homotopy theory} or \textit{motivic homotopy theory}. This dates back to Morel and Voevodsky's seminal work in 1999, but many ideas date back to work of Karoubi--Villamayor, Jardine, Weibel in the 1980's, work of Brown, Gersten, Illusie and Joyal in the 1970's, and of Quillen and Grothendieck in the 1960's.
+
+\textbf{Q}: What can we do with motivic homotopy theory?
+
+\textbf{A}: Motivic homotopy theory blends algebraic geometry and topology in a beautiful way, allowing us to do many things. A short list is:
+\begin{itemize}
+    \item we obtain a natural home for these kinds of $\A^1$-invariant cohomology theories of varieties, and can study them in a method analogous to algebraic topology (e.g. we can classify cohomology operations, use fiber sequences to carry out computations, unify various spectral sequences, etc.)
+    \item we have access to obstruction theory for classifying torsors over affine varieties --- recent success in this direction is Asok--Bachmann--Hopkins' resolution of Murthy's conjecture
+    \item we can eliminate differentials in the Adams spectral sequence via looking at their motivic depth (citation needed)
+\end{itemize}
+
+\textbf{Q}: What techniques will we learn in this class?
+
+\textbf{A}: We should be able to do the following things:
+\begin{itemize}
+    \item learn descent and torsors more thoroughly, and unify perspectives on sheaves and stacks using higher categorical language
+    \item work with infinity-categories at a very basic level
+    \item learn how to work with motivic spaces and do computations
+    \item learn motivic obstruction theory and its applications
+\end{itemize}
+
+\subsection{A bit more about these notes}
+
+\begin{remark} \textit{(Transparency about pedagogy)} We're going to place affine representability on the horizon and keep our eyes fixed on it while motivate building the category of motivic spaces. This is of course ahistorical--- although affine representability was one of the key early results explored by Morel, motivic spaces and spectra were developed in order to house theories such as algebraic $K$-theory, Bloch's higher Chow groups, and to grow new theories such as algebraic cobordism. We chose this route for a few reasons:
+\begin{enumerate}
+    \item The Fall 2024 Thursday seminar is on the motivic Steenrod algebra, so we're hoping this class will contrast nicely and provide some foundational background in techniques in motivic obstruction theory.
+    \item In order to tailor the course to a broader audience, we'd like to unify the class around a key question which has general appeal, so we've picked the classification of torsors over affine varieties using motivic methods as such a question. This has certain advantages, for instance we can pause in the sheaf topos and discuss classifying torsors there before building motivic spaces --- this vista is useful to people across many fields.
+
+    \item This forces us to spend a bit longer on descent and torsors, two words which strike fear in the heart of many, and are worth investing some more time in.
+\end{enumerate}
+\end{remark}
+
+\begin{remark} \textit{(On background)} We're assuming a strong handle of algebraic geometry and category theory, and a fair bit of familiarity with commutative algebra and homotopy theory. We'll see very quickly that $\infty$-categories (and/or model categories) are needed in order to develop the setting in which we wish to work. We've elected to take the $\infty$-categorical approach, since it streamlines many of the constructions and key ideas, at the cost of being a high technical investment; for this reason we've done our best to make the $\infty$-categorical machinery easy to black box. The reader should be aware that while the categorical language will be heavy in the first half of these notes, it will quickly fade into the background as we become familiar with the ambient setting we're working in and can set our focus towards computations.
+\end{remark}
+
+
+\printbibliography
+\end{document}
