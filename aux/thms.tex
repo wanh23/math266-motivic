@@ -1,9 +1,7 @@
 \usepackage{cleveref}
 \let\fullref\autoref
 %
-
 \def\makeautorefname#1#2{\expandafter\def\csname#1autorefname\endcsname{#2}}
-
 %  
 \makeautorefname{eqn}{Equation}%
 \makeautorefname{sec}{Section}%
@@ -39,6 +37,7 @@
 \makeautorefname{prop}{proposition}%
 \makeautorefname{ques}{question}%
 \makeautorefname{rmk}{remark}%
+\makeautorefname{set}{setup}%
 \makeautorefname{strat}{strategy}%
 \makeautorefname{term}{terminology}%
 \makeautorefname{thm}{theorem}%
@@ -72,6 +71,7 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{question}[theorem]{Question}
 \newtheorem{remark}[theorem]{Remark}
+\newtheorem{setup}[theorem]{Setup}
 \newtheorem{strategy}[theorem]{Strategy}
 \newtheorem{terminology}[theorem]{Terminology}
 \newtheorem{upshot}[theorem]{Upshot}

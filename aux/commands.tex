@@ -1,11 +1,19 @@
 % Packages
-\usepackage{etoolbox}
-
+\usepackage{amsmath,amssymb,amsthm,amsfonts,thmtools}
 \usepackage{enumitem}[cleveref]
 \usepackage{amsfonts}
 \usepackage[margin=1in]{geometry}
 \usepackage{float}
 \usepackage{microtype}
+\RequirePackage{color}
+\RequirePackage{tikz}
+\RequirePackage{tikz-cd}
+
+% For arrows
+\RequirePackage{mathtools}
+
+% For script letters
+\RequirePackage{mathrsfs}
 
 % For boxes around cheatsheets
 \usepackage{mdframed}
@@ -29,13 +37,20 @@
 \definecolor{darkgreen}{rgb}{0,0.30,0}
 \definecolor{darkred}{rgb}{0.75,0,0}
 \definecolor{darkblue}{rgb}{0,0,0.6} 
+\definecolor{custompurple}{RGB}{62, 34, 127}
+
 
 % Citation colors
-\def\customcitecolor{purple}
-\def\customlinkcolor{darkblue}
+\def\customcitecolor{darkred}
+\def\customlinkcolor{custompurple}
 
 % Hyperref settings
-\usepackage[pdfborder=0,colorlinks,citecolor=\customcitecolor,linkcolor=\customlinkcolor,urlcolor=darkblue]{hyperref}
+\usepackage[%
+    colorlinks,
+    citecolor=\customcitecolor,%
+    linkcolor=\customlinkcolor,%
+    urlcolor=\customlinkcolor%
+]{hyperref}
 
 % Removes vertical spacing around aligned environments
 \usepackage{etoolbox}
@@ -84,4 +99,5 @@
 \newcommand{\todo}{\color{red}\text{todo:}\, \color{black}}
 \let\minus\smallsetminus
 \renewcommand{\labelitemi}{$\triangleright$}
+\let\emptyset\varnothing
 
