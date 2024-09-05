@@ -181,5 +181,347 @@ Therefore any homotopy invariant functor out of spaces provides another example 
 \end{remark}
 
 
+\section{\sectionheader Torsors}
+
+\begin{assumption} For this lecture, every time we say ``cover'' you can assume we are working with Zariski covers, or even open covers of topological spaces, since the intuition will be the same and the results here will be mostly identical. If you know about other topologies, the statements here work for any site. We will go into sheaves and sites more next week, when we will remark that everything here works for other nice sites (\'etale, Nisnevich, flat, etc.).
+\end{assumption}
+
+\begin{definition} Let $G$ be a group. Then a $G$-set $X$ is called a \textit{torsor} if its $G$-action is simple and transitive. Equivalently, the map
+\begin{align*}
+    G \times X &\to X \times X \\
+    (g,x) &\mapsto (x,gx)
+\end{align*}
+is a bijection.
+\end{definition}
+
+Note there are two types of $G$-torsors --- sets of the form $G/e$, and the empty set. Depending on the convention, we might want to exclude the case of the empty set by including $X \ne \emptyset$ in the definition.
+
+\begin{intuition} A $G$-torsor is like a group $G$ which has remembered its multiplication but forgotten its identity. Any choice of basepoint $x\in X$ yields a canonical bijection $G \xto{\sim} X$ by sending $g \mapsto g\cdot x$.
+\end{intuition}
+
+\begin{example} In a locally small category $\mathscr{C}$, given two objects $x,y \in \mathscr{C}$, the set of isomorphisms $\mathrm{Isom}_{\mathscr{C}}(x , y)$ is a left $\Aut_{\mathscr{C}}(x)$-torsor and a right $\Aut_{\mathscr{C}}(y)$-torsor.
+\end{example}
+
+
+Let's try to extend this definition to the setting where $G$ isn't a single group, but a \textit{sheaf of groups} $\mathcal{G}$ on a site. What is the appropriate analogue of a torsor in this setting? By abuse of notation we will also call this a \textit{torsor}.
+
+\begin{definition} \cite[03AH]{Stacks} Let $\mathcal{G}$ be a sheaf of groups on $X$, and let $\Shv_\mathcal{G}(X)$ denote the category of $\mathcal{G}$-sheaves, meaning sheaves of sets equipped with a $\mathcal{G}$-action, and equivariant morphisms between them. We define the category of $\mathcal{G}$\textit{-torsors} $\Tors_\mathcal{G}(X) \subseteq \Shv_\mathcal{G}(X)$ to be the full subcategory on those $\mathcal{F}$ so that
+\begin{enumerate}
+    \item if $\mathcal{F}(U)$ is non-empty then the action
+    \begin{align*}
+        \mathcal{G}(U) \times \mathcal{F}(U) \to \mathcal{F}(U)
+    \end{align*}
+    is simply transitive\footnote{This means that in the category of $\mathcal{G}(U)$-sets, we have that $\mathcal{F}(U) \cong \mathcal{G}(U)$, but $\mathcal{F}(U)$ doesn't have a group structure --- we might imagine that it has forgotten its identity element. Picking a basepoint $e\in \mathcal{F}(U)$ defines a group structure on $\mathcal{F}(U)$.} 
+    
+    \item there exists a covering $\left\{ U_i \to X \right\}$ over which $\mathcal{F}(U_i) \ne \emptyset$.\footnote{In other words, we can find a cover in which to visualize $\mathcal{F}(U_i)$ as a group for each $i$.}
+\end{enumerate}
+\end{definition}
+
+\begin{terminology} The choice of topology comes into play in that second point. If $\mathcal{F} \in \Shv_{\mathcal{G}}(X)$, we say it is $\tau$\textit{-locally trivial} if $\mathcal{G}$ is a $\tau$-sheaf of groups, $\mathcal{F}$ is a $\tau$-sheaf of sets, and point (2) holds for any $\tau$-cover.
+\end{terminology}
+
+
+\begin{example} The sheaf $\mathcal{G}$, acting on itself by scaling, is called the \textit{trivial} $\mathcal{G}$-torsor.
+\end{example}
+
+\begin{example} For any group scheme $G$, we will refer to $G$\textit{-torsors}, mean torsors the representable functor $\Hom(-,G)$.
+\end{example}
+
+\begin{proposition} A $\mathcal{G}$-torsor $\mathcal{F}$ on $X$ is trivial if and only if $\mathcal{F}(X) \ne \emptyset$, i.e. if it admits a global section.
+\end{proposition}
+
+
+
+\begin{theorem} Every morphism in $\Tors_G(X)$ is an isomorphism.
+\end{theorem}
+
+So what are some examples of torsors, and why might we care to classify them?
+
+\begin{example} If $L/k$ is a Galois field extension then $\Spec(L) \to \Spec(k)$ is a $\Gal(L/k)$-torsor in any topology.
+\end{example}
+\begin{itemize}
+\item \textit{the inverse Galois problem}: which groups $G$ occur as Galois groups of number fields? This is asking to scratch the surface of understanding $G$-torsors over $\Spec(\Q)$ for all finite groups $G$.
+\end{itemize}
+
+\begin{example} A $\GL_n$-torsor (say in the Zariski topology) is an algebraic vector bundle.
+\end{example}
+\begin{proof} Since $\GL_n$ is affine, every torsor is representable, hence $\GL_n$-torsors are just principal $\GL_n$-bundles, which are precisely algebraic vector bundles.
+\end{proof}
+\begin{itemize}
+    \item \textit{Bass--Quillen conjecture}: this can be reframed as asking whether each $\GL_n$-torsor over a regular Noetherian ring is trivial
+    \item \textit{Hartshorne's conjecture} concerns $\GL_2$-torsors over $\P^n$ for $n\ge7$
+\end{itemize}
+
+\begin{example} A $\PGL_n$-torsor is a Brauer--Severi variety (or a central simple algebra).
+\end{example}
+\begin{itemize}
+    \item the \textit{period-index conjecture} then concerns the complexity of $\PGL_n$-torsors.
+\end{itemize}
+
+\begin{goal} Develop methods to classify torsors.
+\end{goal}
+
+
+
+
+
+Let's do this, by first considering an alternative perspective on what a torsor is. We learned this from Alex Youcis' excellent note on torsors \cite{Youcis}.
+
+\subsection{Sheaves and stacks}
+
+Recall if $\mathscr{F}$ is a sheaf of sets, this means for every cover $\left\{ U_i \to U \right\}$, we have that the diagram is an equalizer
+\begin{align*}
+    \mathcal{F}(U) \to \prod \mathcal{F}(U_i) \rightrightarrows \prod_{i,j} \mathcal{F}(U_i \times_U U_j).
+\end{align*}
+This first map is a monomorphism (injection) because it is an equalizer. This means that if $x,y \in \mathcal{F}(U)$ are equal in $\mathcal{F}(U_i)$ for each $i$, then they are equal in $\mathcal{F}(U)$. In other words, the map ``reflects equality'' --- this is literally just what it means for something to be an injection.
+
+Let's suppose now that $\mathcal{F}(U)$ is a \textit{category} for every $U$. We'll define this concretely soon once we have more machinery, but for now let's just pretend that we know what this means --- it means we can glue objects and morphisms along covers. Consider the analogous restriction functor:
+\begin{align*}
+    \mathcal{F}(U) &\to \prod \mathcal{F}(U_i) \\
+    x &\mapsto \left( x|_{U_i} \right)_i.
+\end{align*}
+%
+\textbf{Q}: Does this map need to reflect isomorphisms?\footnote{A functor which reflects isomorphisms is called \textit{conservative}.}
+
+\begin{example} Let $\mathcal{F}$ be the functor sending $U$ to the category of line bundles over $U$. If the cover is picked appropriately small, then all line bundles are isomorphic to the trivial line bundle over $U_i$, but they need not be isomorphic globally as line bundles over $U$.
+\end{example}
+
+\textbf{A}: No, by the example above. This means that we can have $x,y \in \mathcal{F}(U)$ so that $x|_{U_i} \cong y|_{U_i}$ for each $i$, but we \textit{do not have} that $x$ and $y$ are isomorphic in the category $\mathcal{F}(U)$. In other words, the two notions are \textit{different}:
+\begin{itemize}
+    \item $x$ and $y$ agree \textit{globally}, meaning $x$ and $y$ are isomorphic in $\mathscr{F}(U)$
+    \item  $x$ and $y$ agree \textit{locally}, meaning there exists an open cover $\left\{ U_i \to U \right\}$ for which we have isomorphisms $\left. x \right|_{ U_i } \xto{\sim} \left. y \right|_{ U_i }$ in $\mathcal{F}(U_i)$.\footnote{%
+    The notation $x|_{U_i}$ is shorthand for the image of $x$ under the restriction functor $\mathcal{F}(U) \to \mathcal{F}(U_i)$
+    }
+\end{itemize}
+
+
+\begin{remark} This is a big difference between sheaves of sets (or 1-categories in general) and sheaves of categories (also called \textit{stacks}). Equality is reflected along a cover for sheaves of sets, but isomorphism is not necessarily reflected along a cover.
+\end{remark}
+
+\begin{question} How many isomorphism classes of objects $y\in \mathcal{F}(U)$ are \textit{locally isomorphic} to $x$ along a cover, but not globally isomorphic?
+\end{question}
+
+We're going to build a sheaf that measures this! We'll call this sheaf $\Aut_{\mathcal{F}}(x)$, and it is defined by
+\begin{equation}\label{eqn:autx-torsor}
+\begin{aligned}
+    U_i &\mapsto \Aut_{\mathscr{F}(U_i)}(x)
+\end{aligned}
+\end{equation}
+\begin{exercise} This is a priori just a presheaf of groups. Check it is actually a sheaf of groups.
+\end{exercise}
+
+\textbf{Recall}: If $\mathcal{G}$ is a sheaf of groups over $U$, and $\mathcal{U} = \left\{ U_i \to U \right\}$ is a cover.
+\begin{enumerate}
+    \item We define a \textit{\v{C}ech 1-cocycle} to be a collection of elements $g_{ij} \in \mathcal{G}(U_i \times_U U_j)$ for each $i,j$ so that
+\begin{align*}
+    g_{jk}g_{ij} = g_{ik}
+\end{align*}
+on triple overlaps.
+    \item We say two 1-cocycles $(g_{ij})$ and $(\gamma_{ij})$ are cohomologous if there are $\alpha_i \in \mathcal{G}(U_i)$ for each $i$ so that
+    \begin{align*}
+        \alpha_j g_{ij} = \gamma_{ij} \alpha_i.
+    \end{align*}
+    \item We define the \textit{Cech cohomology} $\v{H}^1(U,\mathcal{G})$ to be the colimit of the \v{C}ech cohomology over covers, filtered with respect to refinement.
+\end{enumerate}
+
+
+\begin{theorem} There is a bijection between $H^1(U,\Aut_{\mathcal{F}}(x))$ and isomorphism classes of objects $y\in \mathscr{F}(U)$ which are locally isomorphic to $x$.
+\end{theorem}
+\begin{proof} Let's first define a map. If $y$ is locally isomorphic to $x$, then there is a cover $\left\{ U_i \right\}$ of $U$ and isomorphisms $\phi_i \colon \left. x \right|_{ U_i } \xto{\sim} \left. y \right|_{ U_i }$ for each $i$. If the $\phi_i$'s agreed on overlaps then they would glue to a global isomorphism $\phi \colon x \xto{\sim} y$ because $\Aut(x)$ is a sheaf of groups, so it makes sense to look on overlaps to see what happens. Note that $\left. \phi_i \right|_{ U_{ij} }$ and $\left. \phi_j \right|_{ U_{ij} }$ will differ by an automorphism of $\left. x \right|_{ U_{ij} }$, call this $g_{ij}$:
+\begin{align*}
+    g_{ij} := \left( \left. \phi_j \right|_{ U_{ij} } \right)^{-1} \left( \left. \phi_i \right|_{ U_{ij} } \right) \colon \left. x \right|_{ U_{ij}  }\xto{\sim} \left. x \right|_{ U_{ij} }.
+\end{align*}
+On triple overlaps, these satisfy the relations (check)
+\begin{align*}
+    g_{jk}g_{ij} = g_{ik}.
+\end{align*}
+In other words we get a 1-cocycle! There was ambiguity here, since we \textit{picked} isomorphisms $x|_{U_i} \xto{\sim} y|_{U_i}$ as our starting data. The remaining thing to prove is that any other choice of local isomorphisms gives rise to a cohomologous 1-cocycle.
+
+Suppose we instead picked some $\psi_i \colon x|_{U_i} \xto{\sim} y|_{U_i}$ for each $i$, yielding $\gamma_{ij} = \psi_j^{-1}\psi_i $. Then $\psi_i$ and $\phi_i$ differ by an automorphism of $y$ which we call $\alpha_i$:
+\[ \begin{tikzcd}
+    x|_{U_i}\ar[rr,"\phi_i"]\ar[dr,"\alpha_i" below left] &  & y|_{U_i}\\
+     & x|_{U_i}\ar[ur,"\psi_i" below right] & 
+\end{tikzcd} \]
+Then on $U_{ij}$ we have
+\begin{align*}
+    g_{ij} &= \phi_j^{-1}\phi_i = (\psi_j \alpha_j)^{-1} \psi_i \alpha_i = \alpha_j^{-1} \gamma_{ij} \alpha_i.
+\end{align*}
+Rescaling on the left by $\alpha_j$ we get
+\begin{align*}
+    \alpha_j g_{ij} = \gamma_{ij}\alpha_i,
+\end{align*}
+so $\left( g_{ij} \right)$ and $\left( \gamma_{ij} \right)$ give cohomologous 1-cocycles.
+\end{proof}
+
+
+
+\begin{theorem} There is a bijection between isomorphism classes of $\mathcal{G}$-torsors and $\v{H}^1(U,\mathcal{G})$.
+\end{theorem}
+\begin{proof}[Sketch] Let $\mathcal{F}$ be a $\mathcal{G}$-torsor, and pick $s_i \in \mathcal{F}(U_i)$ for each $i$. Then on the overlap $U_i \times_U U_j$, we have that $s_i$ and $s_j$ differ by a unique element $g_{ij}\in \mathcal{G}(U_i \times_U U_j)$. We run basically an identical argument.
+\end{proof}
+
+So if $\mathcal{G} = \Aut_{\mathcal{F}}(x)$ then we have a bijection
+\begin{align*}
+    \left\{ \substack{\text{iso classes of }y\in \mathcal{F}(U) \\ \text{locally isomorphic to }x} \right\} \leftrightarrow \v{H}^1(U,\Aut_{\mathcal{F}}(x)) \leftrightarrow \left\{ \Aut_\mathcal{F}(x)\text{-torsors} \right\}.
+\end{align*}
+
+These sorts of arguments are compatible with refinement of the cover, and since \v{C}ech and sheaf cohomology agree we see that $G$-torsors are in bijection with the first sheaf cohomology $H^1(U,G)$.
+
+
+%
+\begin{exercise}\label{exer:every-sheaf-of-groups-is-aut} 
+(Fun/hard) Show that every sheaf of groups $\mathcal{G}$ is of the form $\Aut_\mathcal{F}(x)$ for some sheaf of categories $\mathcal{F}$.
+\end{exercise}
+
+\begin{intuition} A $\mathcal{G}$-torsor is an object whose automorphisms locally look like $\mathcal{G}(U_i)$.
+\end{intuition}
+
+\subsection{Interlude: representable $G$-torsors}
+
+When both the presheaf $\mathcal{G}$ and the sheaf of sets $\mathcal{F}$ are representable, we get a slightly different characterization.
+
+\begin{proposition} Let $X$ be a scheme, let $Y$ be a group scheme, and let
+\begin{align*}
+    f \colon Y \to X
+\end{align*}
+be a $G$-equivariant map. Suppose there exists a cover $\left\{ U_i \to X \right\}$ for which
+\begin{align*}
+    U_i \times_X Y \to Y
+\end{align*}
+is isomorphic to the trivial cover $G \times_X U_i \to U_i$. Then $Y \to X$ is a representable $G$-torsor, sometimes called a \textit{principal $G$-bundle}.
+\end{proposition}
+
+Often it's just enough to assume the sheaf of groups is representable to get all torsors are representable.
+
+\begin{proposition}\label{prop:affine-gp-torsors-representable} 
+Let $G$ be an affine group scheme over $X$, and let $\tau\le \fppf$. Then every $G$-torsor is representable. (see \cite[0497]{Stacks}, \cite[3.25]{Youcis})
+\end{proposition}
+\begin{proof}[Sketch] Every $G$-torsor is an algebraic space, and algebraic spaces which are locally affine are schemes. Since a $G$-torsor is locally isomorphic to $G$, which was assumed to be affine, then we conclude every torsor is actually a scheme.
+\end{proof}
+
+
+\begin{terminology} A representable fpqc-torsor for $G$ is called a \textit{principal homogeneous space}.
+\end{terminology}
+
+
+\begin{remark} If $t \le \tau$, then every $t$-cover is a $\tau$-cover, hence if we can find a $t$-cover trivializing a $G$-torsor, then it also trivializes it in the $\tau$-topology. hence
+\begin{align*}
+    t\le \tau \Rightarrow \left\{ t\text{-torsors} \right\} \subseteq \left\{ \tau \text{-torsors} \right\}.
+\end{align*}
+\end{remark}
+So a very natural question is \textit{how do we tell when a $\tau$-torsor is also a $t$-torsor?} We'll discuss this next week.
+
+
+\subsection{Interlude: representability of torsors in topology}
+
+So it's a very reasonable goal to ask for any tools that could help us try to classify torsors. A natural idea, by analogy, is to look to homotopy theory, where we have a suite of tools for studying torsors.
+
+\begin{definition} Let $X$ be a compact Hausdorff topological space and $G$ a group. Then a \textit{principal $G$-bundle} (or we might just say a $G$-torsor) is a fiber bundle $\pi \colon Y \to X$ so that $G$ acts freely and transitively on the fibers.
+\end{definition}
+
+In topology there is a \textit{universal $G$-torsor}, which is denoted $EG \to BG$. This is universal in the sense that, given any map $f \colon X \to BG$, we can consider the fiber product
+\[ \begin{tikzcd}
+    f^\ast EG\rar\dar\pb & EG\dar\\
+    X\rar["f" below] & BG.
+\end{tikzcd} \]
+Then $f^\ast EG \to X$ is a principal $G$-bundle, and all principal $G$-bundles are obtained in this way. Not only that, but isomorphic principal $G$-bundles are given by homotopic classifying maps. In other words we have a bijection
+\begin{align*}
+    \Prin_G(X) \leftrightarrow \left[ X,BG \right].
+\end{align*}
+%
+So the data of a principal $G$-bundle is the data of a map $X \to BG$, and an isomorphism of principal $G$-bundles is equivalent to a homotopy between two maps $f,g \colon X \to BG$.
+
+\begin{example} We have that $B(\Z/2) =\RP^\infty$ and $E\Z/2 = S^\infty$, so that $\Z/2$-torsors are real line bundles. Similarly $B\C^\times = \CP^\infty$.
+\end{example}
+
+A big example comes from quotienting out by a compact subgroup:
+
+\begin{theorem} (Samelson, 1941) If $H \le G$ is a compact subgroup of a Lie group, then $G \to G/H$ is a Serre fibration and principal $H$-bundle.
+\end{theorem}
+
+\begin{corollary} We have fiber sequences
+\begin{align*}
+    H \to G \to G/H \\
+    G/H \to BH \to BG.
+\end{align*}
+\end{corollary}
+
+\begin{example} For the inclusions $O(n) \subseteq O(n+1)$ and $U(n) \subseteq U(n+1)$ we get fiber sequences
+\begin{align*}
+    S^{2n+1} \to \BU(n) \to \BU(n+1) \\
+    S^n \to \BO(n) \to \BO(n+1).
+\end{align*}
+\end{example}
+This is how Bott periodicity is proved.
+
+
+
+\subsection{Why we like representability of torsors}
+
+
+
+
+
+This has a number of huge applications:
+\begin{itemize}
+    \item Given any cohomology theory $E^\ast$ and any class $c\in E^\ast(BG)$, if $f^\ast(c) \ne g^\ast(c)$ in $E^\ast(X)$, this means that $f$ and $g$ correspond to non-isomorphic torsors. This the basic idea of characteristic classes.
+\end{itemize}
+
+\begin{example} If $G = \GL_n(\C)$, then $\BGL_n(\C) = \BU(n) = \Gr_\C(n,\infty)$ is a Grassmannian of $n$-planes in $\C^\infty$. A map $f \colon X \to \Gr_\C(n,\infty)$ gives a complex $n$-dimensional vector space by pullback.
+\end{example}
+
+\begin{theorem} (Pontryagin--Steenrod) There is a bijection
+\begin{align*}
+    \Vect_\C^n(X) \cong \left[ X, \BU(n) \right].
+\end{align*}
+Since $H^\ast(\BU(n);\Z) = \Z[c_1, \ldots, c_n]$, if $E \to X$ is any rank $n$ vector bundle classified by a map $f \colon X \to \BU(n)$, then its Chern classes are by definition $c_i(E) = f^\ast c_i$.
+\end{theorem}
+
+\begin{itemize}
+    \item We have access to \textit{obstruction theory} -- this lets us break down lifting problems into smaller manageable stages.
+\end{itemize}
+
+\begin{example} If $X$ is a complex $n$-dimensional manifold, and $E \to X$ is a rank $n$ complex vector bundle, then it splits off a free summand if and only if $c_n(E) = 0$.
+\end{example}
+
+\begin{example} If we fix $c_1, \ldots, c_n \in H^{\ast}(X;\Z)$, we can ask how many isomorphism classes of complex rank $n$ vector bundles on $X$ have these given Chern classes. Since $c_i \in H^{2i}(X;\Z) = \left[ X, K(\Z,2i) \right]$ this is equivalent to asking how many lifts there are for
+\[ \begin{tikzcd}
+     & \BU(n)\dar\\
+    X\ar[ur,dashed]\rar["{c_1, \ldots, c_n}" below] & {\prod_i K(\Z,2i)}.
+\end{tikzcd} \]
+If $X$ is a finite CW complex, there are only finitely many such lifts by basic obstruction theory.
+\end{example}
+
+
+
+\begin{itemize}
+    \item Suppose we have two groups $G$ and $K$, and we want to study natural ways to create $K$-torsors out of $G$-torsors over any space. Then representability, combined with the Yoneda lemma, allows us to completely classify all the ways to do this. 
+\end{itemize}
+
+\begin{example} There is one and only one natural non-trivial function
+\begin{align*}
+    \left\{ \GL_n(\R)\text{-torsors} \right\} \to \left\{ (\Z/2)\text{-torsors} \right\},
+\end{align*}
+given by the nonzero class in $\left[ \BGL_n(\R), B\Z/2 \right] = \Z/2$. This is called the \textit{determinant bundle} or the \textit{first Stiefel--Whitney class}.
+\end{example}
+
+
+
+\subsection{Motivation of what's to come}
+
+
+\begin{question} By analogy to homotopy theory, we might ask, for a group scheme $G$, the following questions:
+\begin{enumerate}
+    \item Is there an analogous universal space $BG$ in algebraic geometry which classifies $G$-torsors?
+    \item If so, can we classify $G$-torsors over $X$ via some ``homotopy classes'' of maps from $X$ to $BG$?
+\end{enumerate}
+\end{question}
+
+
+
+
+
+The answer to both will be yes, but \textit{not in the category of varieties}. We need more machinery than is available to us there.
+
 \printbibliography
 \end{document}
