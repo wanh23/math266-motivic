@@ -186,7 +186,7 @@ Therefore any homotopy invariant functor out of spaces provides another example 
 \begin{remark} \textit{(On background)} We're assuming a strong handle of algebraic geometry and category theory, and a fair bit of familiarity with commutative algebra and homotopy theory. We'll see very quickly that $\infty$-categories (and/or model categories) are needed in order to develop the setting in which we wish to work. We've elected to take the $\infty$-categorical approach, since it streamlines many of the constructions and key ideas, at the cost of being a high technical investment; for this reason we've done our best to make the $\infty$-categorical machinery easy to black box. The reader should be aware that while the categorical language will be heavy in the first half of these notes, it will quickly fade into the background as we become familiar with the ambient setting we're working in and can set our focus towards computations.
 \end{remark}
 
-
+\newpage
 \section{\sectionheader Torsors}
 
 \begin{assumption} For this lecture, every time we say ``cover'' you can assume we are working with Zariski covers, or even open covers of topological spaces, since the intuition will be the same and the results here will be mostly identical. If you know about other topologies, the statements here work for any site. We will go into sheaves and sites more next week, when we will remark that everything here works for other nice sites (\'etale, Nisnevich, flat, etc.).
@@ -322,30 +322,33 @@ We're going to build a sheaf that measures this! We'll call this sheaf $\Aut_{\m
 \begin{exercise} This is a priori just a presheaf of groups. Check it is actually a sheaf of groups.
 \end{exercise}
 
-\textbf{Recall}: If $\mathcal{G}$ is a sheaf of groups over $U$, and $\mathcal{U} = \left\{ U_i \to U \right\}$ is a cover.
+Recall the following definition.
+
+\begin{definition}\label{def:cech-cover-cohomology} 
+If $\mathcal{G}$ is a sheaf of groups over $U$, and $\mathcal{U} = \left\{ U_i \to U \right\}$ is a cover.
 \begin{enumerate}
     \item We define a \textit{\v{C}ech 1-cocycle} to be a collection of elements $g_{ij} \in \mathcal{G}(U_i \times_U U_j)$ for each $i,j$ so that
 \begin{align*}
-    g_{jk}g_{ij} = g_{ik}
+    g_{ij}g_{jk} = g_{ik}
 \end{align*}
-on triple overlaps.
+on triple overlaps.\footnote{See e.g. \cite[\S11]{MilneLEC}.}
     \item We say two 1-cocycles $(g_{ij})$ and $(\gamma_{ij})$ are cohomologous if there are $\alpha_i \in \mathcal{G}(U_i)$ for each $i$ so that
     \begin{align*}
-        \alpha_j g_{ij} = \gamma_{ij} \alpha_i.
+        \alpha_i g_{ij} = \gamma_{ij} \alpha_j.
     \end{align*}
     \item We define the \textit{Cech cohomology} $\check{H}^1(U,\mathcal{G})$ to be the colimit of the \v{C}ech cohomology over covers, filtered with respect to refinement.
 \end{enumerate}
-
+\end{definition}
 
 \begin{theorem} There is a bijection between $H^1(U,\Aut_{\mathcal{F}}(x))$ and isomorphism classes of objects $y\in \mathscr{F}(U)$ which are locally isomorphic to $x$.
 \end{theorem}
 \begin{proof} Let's first define a map. If $y$ is locally isomorphic to $x$, then there is a cover $\left\{ U_i \right\}$ of $U$ and isomorphisms $\phi_i \colon \left. x \right|_{ U_i } \xto{\sim} \left. y \right|_{ U_i }$ for each $i$. If the $\phi_i$'s agreed on overlaps then they would glue to a global isomorphism $\phi \colon x \xto{\sim} y$ because $\Aut(x)$ is a sheaf of groups, so it makes sense to look on overlaps to see what happens. Note that $\left. \phi_i \right|_{ U_{ij} }$ and $\left. \phi_j \right|_{ U_{ij} }$ will differ by an automorphism of $\left. x \right|_{ U_{ij} }$, call this $g_{ij}$:
 \begin{align*}
-    g_{ij} := \left( \left. \phi_j \right|_{ U_{ij} } \right)^{-1} \left( \left. \phi_i \right|_{ U_{ij} } \right) \colon \left. x \right|_{ U_{ij}  }\xto{\sim} \left. x \right|_{ U_{ij} }.
+    g_{ij} := \left( \left. \phi_i \right|_{ U_{ij} } \right)^{-1} \left( \left. \phi_j \right|_{ U_{ij} } \right) \colon \left. x \right|_{ U_{ij}  }\xto{\sim} \left. x \right|_{ U_{ij} }.
 \end{align*}
-On triple overlaps, these satisfy the relations (check)
+On triple overlaps, it is straightforward to verify that
 \begin{align*}
-    g_{jk}g_{ij} = g_{ik}.
+    g_{ij}g_{jk} = g_{ik}.
 \end{align*}
 In other words we get a 1-cocycle! There was ambiguity here, since we \textit{picked} isomorphisms $x|_{U_i} \xto{\sim} y|_{U_i}$ as our starting data. The remaining thing to prove is that any other choice of local isomorphisms gives rise to a cohomologous 1-cocycle.
 
@@ -354,15 +357,16 @@ Suppose we instead picked some $\psi_i \colon x|_{U_i} \xto{\sim} y|_{U_i}$ for 
     x|_{U_i}\ar[rr,"\phi_i"]\ar[dr,"\alpha_i" below left] &  & y|_{U_i}\\
      & x|_{U_i}\ar[ur,"\psi_i" below right] & 
 \end{tikzcd} \]
+%
 Then on $U_{ij}$ we have
 \begin{align*}
-    g_{ij} &= \phi_j^{-1}\phi_i = (\psi_j \alpha_j)^{-1} \psi_i \alpha_i = \alpha_j^{-1} \gamma_{ij} \alpha_i.
+    g_{ij} &= \phi_i^{-1} \phi_j = \left( \psi_i \alpha_i \right)^{-1} \left( \psi_j \alpha_j \right) = \alpha_i^{-1} \psi_i^{-1}\psi_j \alpha_j.
 \end{align*}
-Rescaling on the left by $\alpha_j$ we get
+Hence
 \begin{align*}
-    \alpha_j g_{ij} = \gamma_{ij}\alpha_i,
+    \alpha_i g_{ij} = \gamma_{ij}\alpha_j
 \end{align*}
-so $\left( g_{ij} \right)$ and $\left( \gamma_{ij} \right)$ give cohomologous 1-cocycles.
+And we get cohomologous 1-cocycles.
 \end{proof}
 
 
@@ -882,7 +886,7 @@ which tells us that $g_{ii} = \id$. That's about all we can learn from degenerac
     U_{jk}\dar["g_{jk}" left] & U_{ijk}\lar["d_0" above]\dar\\
     G & G \times G\lar["d_0 = \text{proj}_2" below]
 \end{tikzcd} \quad\quad \quad\quad  \begin{tikzcd}
-    U_{ij}\dar["g_{ij}"] & U_{ijk}\lar["d_2" above]\dar\\
+    U_{ij}\dar["g_{ij}" left] & U_{ijk}\lar["d_2" above]\dar\\
     G & G \times G\lar["d_2 = \text{proj}_1" below]
 \end{tikzcd} \]
 We've decorated the face maps on the bar construction to recall whether they are projection or multiplication. By universal property of the product, $U_{ijk}\to G \times G$ is determined by its post-composition with the projections, hence it makes sense to call it $(g_{ij}, g_{jk})$. The $d_1$ relation gives us
@@ -894,14 +898,14 @@ This implies that
 \begin{align*}
     g_{ik} = g_{ij}g_{jk}.
 \end{align*}
-This is \textit{exactly the 1-cocycle condition}.
+This is \textit{exactly the 1-cocycle condition} from \autoref{def:cech-cover-cohomology}.
 
 We claim that the remaining data of the map $N(\mathcal{U})_\bullet \to B_\bullet G$ is completely determined by this relation.\footnote{%
 This can very likely be made precise by the idea that $B_\bullet G $ is 1-truncated, I'd like to find a reference that makes this precise so it's clear how the rest of the argument goes. See maybe \cite[I.7.8]{GoerssJardine}%
 }
 \end{proof}
 
-\begin{theorem} Two 1-cocycles for the cover $\mathcal{U}$ are cohomologous if and only if they are simplicially homotopic!
+\begin{theorem} Two 1-cocycles for the cover $\mathcal{U}$ are cohomologous if and only if they are simplicially homotopic.
 \end{theorem}
 \begin{proof}[Proof sketch] Let $f,g \colon N(\mathcal{U})_\bullet \to B_\bullet G$ be two maps corresponding to 1-cocycles $(f_{ij})$ and $(g_{ij})$, respectively. Recall simplicial homotopy requires us to define maps $H^n_i \colon N(\mathcal{U})_n \to B_{n+1}G$ for $0\le i\le n$ so that $d_0 H_0 = f_n$, $d_{n+1} H_n = g_n$, and various other relations hold. For us, let's see what $H_0$ looks like:
 \def\theshiftamount{1}
@@ -915,21 +919,22 @@ At level zero, the map $H^0_0$ specifies an element $\alpha_i \in G(U_i)$. Let's
     {\coprod_i U_i}\ar[dr,"H^0_0" below left] & {\coprod_{i,j}U_{ij}} \lar[shift left=\theshiftamount,"d^1" description]\lar[shift right=\theshiftamount,"d^0" description]\dar\ar[dr,"{H^1_0,H^1_1}" above right] &  \\
      & G & G \times G \lar["d_1" description] \lar[shift left=\theshiftamount,"d_2" below]\lar[shift right=\theshiftamount,"d_0" above] & \cdots 
 \end{tikzcd} \]
-Since $H_i^1$ is mapping into a product, it is determined by its projections, which are post-composing with $d_0$ and $d_2$. From the relations and the simplicial homotopy condition, we get
+Since $H_i^1$ is mapping into a product, it is determined by its projections, which are post-composing with $d_2$ and $d_0$, respectively. From the relations and the simplicial homotopy condition, we get
 \begin{align*}
     d_0 H_0^1 &= f_{ij} \\
-    d_2 H_0^1 &= H_0^0 d_1 = \alpha_j,
+    d_2 H_0^1 &= H_0^0 d_1 = \alpha_i,
 \end{align*}
-so $H_0^1$ is the tuple $(f_{ij},\alpha_j) \colon U_{ij} \to G \times G$.\footnote{There's abuse of notation here with $\alpha_j$.} Similarly we compute
+so $H_0^1$ is the tuple $(\alpha_i,f_{ij}) \colon U_{ij} \to G \times G$.\footnote{There's abuse of notation here with $\alpha_i$.} Similarly we compute
 \begin{align*}
-    d_0 H_1^1 &= H_0^0 d_0 = \alpha_i \\
+    d_0 H_1^1 &= H_0^0 d_0 = \alpha_j \\
     d_2 H_1^1 &= g_{ij},
 \end{align*}
-so $H^1_1 = (\alpha_i,g_{ij}) \colon U_{ij} \to G \times G$. The remaining relation states that
+ 
+so $H^1_1 = (g_{ij},\alpha_j) \colon U_{ij} \to G \times G$. The remaining relation states that
 \begin{align*}
     d_1 H_1^1 &= d_1 H_0^1,
 \end{align*}
-and since $d_1$ is the multiplication $G \times G \to G$, this tells us that $f_{ij}\alpha_j = \alpha_i g_{ij}$. This is the coboundary condition!
+and since $d_1$ is the multiplication $G \times G \to G$, this tells us that $\alpha_i f_{ij} = g_{ij}\gamma_j$, which is thee coboundary condition.
 
 Again we claim that the higher data is determined by what is happening in lower degrees (need to make this formal).
 \end{proof}
