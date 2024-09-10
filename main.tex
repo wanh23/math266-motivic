@@ -680,7 +680,7 @@ There are a priori a lot of order-preserving functions $[n] \to [m]$, so we'd li
 Any time we define a simplicial object via this compressed data, we should check that the simplicial identities hold, although we'll mostly omit these arguments here.}
 \end{exercise}
 
-\begin{definition} If $\mathscr{C}$ is a locally category with all finite products (binary products and a terminal object) then a \textit{group object} in $\mathscr{C}$ is the data of an object $G\in \mathscr{C}$ together with morphisms
+\begin{definition} If $\mathscr{C}$ is a locally small category with all finite products (binary products and a terminal object) then a \textit{group object} in $\mathscr{C}$ is the data of an object $G\in \mathscr{C}$ together with morphisms
 \begin{align*}
     m \colon G \times G &\to G \\
     e \colon 1 \to G \\
@@ -723,6 +723,7 @@ and degeneracies $s_i \colon G^{\times n} \to G^{\times(n+1)}$ given by
     (g_1, \ldots, g_i,e,g_{i+1}, \ldots, g_n) & 1\le i\le n.
     \end{cases}
 \end{align*}
+Note that $d_1 \colon G^{\times 2} \to G$ is precisely the group multiplication, while $s_0 \colon \ast \to G$ is the identity on the group.
 \end{example}
 
 \begin{exercise}\label{exer:simplicial-bar-construction-gp-object} 
@@ -749,7 +750,7 @@ The associated chain complex is called the \textit{Moore complex} of the simplic
 \begin{enumerate}
     \item This works if we replace $\Ab$ by any abelian category.
     \item This process is invertible --- this implies that simplicial objects and connective chain complexes in any abelian category are equivalent.\footnote{%
-    There's a small lie here, the actual functor exhibiting the equivalence is not the Moore complex but the \textit{normalized chains complex}, although the normalized chain complex maps to the Moore complex in a natural way, and this is a chain homotopy equivalence \cite[III.2.4]{GoerssJardine}, so they are essentially the same. For more detail see \cite[\S III.2]{GoerssJardine}.}
+    There's a small lie here, the actual functor exhibiting the equivalence is not the Moore complex but the \textit{normalized chains complex}, although the normalized chain complex maps to the Moore complex in a natural way, and this is a chain homotopy equivalence \cite[III.2.4]{GoerssJardine}, so they are essentially the same. This equivalence is the \textit{Dold--Kan theorem}. For more detail see \cite[\S III.2]{GoerssJardine}.}
     We will use this later, as we will want to construct certain simplicial objects in sheaves of abelian groups, and it will be more direct to construct them first as chain complexes, then pass through this equivalence.
 \end{enumerate}
 \end{example}
@@ -832,9 +833,21 @@ Unpacking this data, we can verify it is the same as asking for maps for every $
 \begin{align*}
     H_i^n \colon X_n &\to Y_{n+1} \quad\quad 0\le i\le n,
 \end{align*}
-so that $d_0 H_0^n = f_n$, and $d_{n+1}H_n^n = g_n$, and so that they commute with face and degeneracy maps appropriately.\footnote{%
+so that $d_0 H_0^n = f_n$, and $d_{n+1}H_n^n = g_n$, and so that they satisfy the following relations with face and degeneracy maps:\footnote{%
 This is in \cite[8.3.11]{Weibel}.
 }
+\begin{align*}
+    d_i H_j^n &= \begin{cases}
+    H_{j-1}^{n-1}d_i & i<j \\
+    d_i H_{j-1}^n & i=j\ne 0 \\
+    d_{j+1} H_{j+1} &= i = j+1,\ j\ne n \\
+    H_{j}^{n-1} d_{i-1} & i > j+1.
+    \end{cases} \\
+    s_i H_j^N &= \begin{cases}
+    H_{j+1}^{n+1} s_i & i\le j \\
+    H_{j}^{n+1} s_{i-1} & i>j.
+    \end{cases}
+\end{align*}
 This notion makes sense for maps between simplicial objects in any category, and it is called a \textit{simplicial homotopy}.
 \begin{enumerate}
     \item A priori we should be careful calling it a homotopy, since it doesn't require us to have any notion of a model structure or higher-categorical structure in order to state, however we will see this won't be a problem.
@@ -871,7 +884,9 @@ The big takeaway of this entire section is the following:
 \end{align*}
 and this assignment is surjective.
 \end{theorem}
-\begin{proof} To specify a map, we need to know what happens on each level, so let's consider the diagram:
+\begin{proof} We'll figure out some what's happening in lower degrees first and use this to see how to define maps in general.
+
+\textbf{Low-degree intuition}: To specify a map, we need to know what happens on each level, so let's consider the diagram:
 \[ \begin{tikzcd}
 N(\mathcal{U})= & \coprod_i U_i\dar\rar & \coprod_{i,j} U_{ij}\lar[shift left]\lar[shift right]\dar & \cdots \\
     BG= & \ast\rar & G \lar[shift left]\lar[shift right] & \cdots 
@@ -898,19 +913,24 @@ This implies that
 \begin{align*}
     g_{ik} = g_{ij}g_{jk}.
 \end{align*}
-This is \textit{exactly the 1-cocycle condition} from \autoref{def:cech-cover-cohomology}.
+This is \textit{exactly the 1-cocycle condition} from \autoref{def:cech-cover-cohomology}. We claim that the remaining data of the map $N(\mathcal{U})_\bullet \to B_\bullet G$ is completely determined by this relation. 
 
-We claim that the remaining data of the map $N(\mathcal{U})_\bullet \to B_\bullet G$ is completely determined by this relation.\footnote{%
-This can very likely be made precise by the idea that $B_\bullet G $ is 1-truncated, I'd like to find a reference that makes this precise so it's clear how the rest of the argument goes. See maybe \cite[I.7.8]{GoerssJardine}%
-}
+\textbf{In general}: It is now clear how to define the map $N_n \mathcal{U} \to B_n G$ --- its component on $U_{i_0 \cdots i_{n}}$ is given by the tuples of maps
+\begin{align*}
+    \prod_{j=0}^{n-1} g_{i_j i_{j+1} \colon }U_{i_0 \cdots i_{n}} &\to G^{\times n}.
+\end{align*}
+This clearly commutes with degeneracies, and commutes with face maps by universal property of the product and by the 1-cocycle relation. We see in fact that this map is well-defined if and only if the 1-cocycle condition holds.
 \end{proof}
+
 
 \begin{theorem} Two 1-cocycles for the cover $\mathcal{U}$ are cohomologous if and only if they are simplicially homotopic.
 \end{theorem}
-\begin{proof}[Proof sketch] Let $f,g \colon N(\mathcal{U})_\bullet \to B_\bullet G$ be two maps corresponding to 1-cocycles $(f_{ij})$ and $(g_{ij})$, respectively. Recall simplicial homotopy requires us to define maps $H^n_i \colon N(\mathcal{U})_n \to B_{n+1}G$ for $0\le i\le n$ so that $d_0 H_0 = f_n$, $d_{n+1} H_n = g_n$, and various other relations hold. For us, let's see what $H_0$ looks like:
+\begin{proof}[Proof sketch] Let $f,g \colon N(\mathcal{U})_\bullet \to B_\bullet G$ be two maps corresponding to 1-cocycles $(f_{ij})$ and $(g_{ij})$, respectively. Recall simplicial homotopy requires us to define maps $H^n_i \colon N(\mathcal{U})_n \to B_{n+1}G$ for $0\le i\le n$ so that $d_0 H_0 = f_n$, $d_{n+1} H_n = g_n$, and various other relations hold. Again let's start in low degrees to gain some intuition and then prove the theorem directly.
+
+\textbf{Low-degree intuition}: Let's see what $H_0^0$ looks like:
 \def\theshiftamount{1}
 \[ \begin{tikzcd}
-    {\coprod_i U_i}\rar\dar\ar[dr,"H^0_0" above right] & {\coprod_{i,j}U_{ij}} \lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount]\dar\ar[dr,"{H^1_0,H^1_1}" above right] & \coprod_{i,j,k} U_{ijk} \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount]\dar\ar[dr,"{H_0,H_1,H_2}" above right] & \cdots \\
+    {\coprod_i U_i}\rar\dar\ar[dr,"H^0_0" above right] & {\coprod_{i,j}U_{ij}} \lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount]\dar\ar[dr,"{H^1_0,H^1_1}" above right] & \coprod_{i,j,k} U_{ijk} \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount]\dar\ar[dr,"{H_0^2,H_1^2,H_2^2}" above right] & \cdots \\
     \ast\rar & G \lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount] & G \times G \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount] & \cdots 
 \end{tikzcd} \]
 \def\theshiftamount{2}
@@ -934,9 +954,25 @@ so $H^1_1 = (g_{ij},\alpha_j) \colon U_{ij} \to G \times G$. The remaining relat
 \begin{align*}
     d_1 H_1^1 &= d_1 H_0^1,
 \end{align*}
-and since $d_1$ is the multiplication $G \times G \to G$, this tells us that $\alpha_i f_{ij} = g_{ij}\gamma_j$, which is thee coboundary condition.
+and since $d_1$ is the multiplication $G \times G \to G$, this tells us that $\alpha_i f_{ij} = g_{ij}\gamma_j$, which is the coboundary condition.
 
-Again we claim that the higher data is determined by what is happening in lower degrees (need to make this formal).
+\textbf{Exercise}: Show that, as maps $U_{i_0 i_1 i_2} \to G \times G \times G$, we have
+\begin{align*}
+    H_0^2 &= \left( \alpha_{i_0}, f_{i_0 i_1}, f_{i_1 i_2} \right) \\
+    H_1^2 &= \left( g_{i_0 i_1}, \alpha_{i_1}, f_{i_1 i_2} \right) \\
+    H_2^2 &= \left( g_{i_0 i_1}, g_{i_1 i_2}, \alpha_{i_2} \right).
+\end{align*}
+%
+\textbf{In general}: We define
+\begin{align*}
+    H^n_j \colon U_{i_0 i_1 \cdots i_n} \to G^{\times (n+1)}
+\end{align*}
+by
+\begin{align*}
+    \left(g_{i_0 i_1}, \ldots, g_{i_{j-1} i_j},\alpha_{i_j}, f_{i_j i_{j+1}}, \ldots, f_{i_{n-1} i_n} \right).
+\end{align*}
+We verify that the relevant relations hold if and only if the coboundary condition $\alpha_i f_{ij} = g_{ij} \alpha_j$ holds for every $i,j$.
+%
 \end{proof}
 
 \begin{motivation} 
