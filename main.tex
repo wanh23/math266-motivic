@@ -11,6 +11,8 @@
 \input{aux/thms.tex}
 
 
+\def\theshiftamount{2}
+\let\del\partial
 
 \begin{document}
 \begin{abstract} Notes from MATH266: Motivic homotopy theory, taught at Harvard in Fall 2024.
@@ -595,6 +597,374 @@ given by the nonzero class in $\left[ \BGL_n(\R), B\Z/2 \right] = \Z/2$. This is
 
 
 The answer to both will be yes, but \textit{not in the category of varieties}. We need more machinery than is available to us there.
+
+\section{\sectionheader Torsors II: Simplicial methods}
+
+
+\begin{definition} We denote by $\DDelta$ the category whose objects are finite ordered sets of the form $[n] = \left\{ 0<1< \cdots<n \right\}$, and whose morphisms $[n] \to [m]$ are order-preserving maps.
+\end{definition}
+
+\begin{notation} Let $\mathscr{C}$ be a category. Then we refer to a functor $\DDelta \to \mathscr{C}$ as a \textit{cosimplicial object} of $\mathscr{C}$, and a functor $\DDelta^\op \to \mathscr{C}$ as a \textit{simplicial object} of $\mathscr{C}$.
+\end{notation}
+
+\begin{intuition} We should think about a (co)simplicial object as a \textit{data type} ---  it is a combinatorial gadget that is surprisingly convenient for bookkeeping and appears frequently in nature. We'll see quite a few examples, but let's first see how to compress this data.
+\end{intuition}
+
+There are a priori a lot of order-preserving functions $[n] \to [m]$, so we'd like a nice class of easy-to-manage morphisms in $\DDelta$ so that any morphism factors into nice morphisms. These fall in two classes:
+
+\begin{terminology} $\ $
+\begin{enumerate}
+    \item We have \textit{coface} maps $d^i \colon [n] \to [n+1]$ for $0\le i\le n+1$ which are defined by the property that they miss the element $i\in [n+1]$.
+
+    \item We have \textit{codegeneracy} maps $s^j \colon [n] \to [n-1]$ for $0\le j\le n-1$ defined by the property that they are surjective and that $s^j(j) = s_j(j+1)$.
+\end{enumerate}
+\end{terminology}
+
+\begin{example} The coface maps $d^i \colon [2] \to [3]$ look like
+\[ \begin{tikzcd}[row sep=small]
+    0\bullet\ar[dr,"d^0" above right] & \bullet 0\\
+    1\bullet\ar[dr] & \bullet1\\
+    2\bullet\ar[dr] & \bullet2\\
+    & \bullet3\\
+\end{tikzcd} \qquad \begin{tikzcd}[row sep=small]
+    0\bullet\rar["d^1" above] & \bullet 0\\
+    1\bullet\ar[dr] & \bullet1\\
+    2\bullet\ar[dr] & \bullet2\\
+    & \bullet3\\
+\end{tikzcd} \qquad \begin{tikzcd}[row sep=small]
+    0\bullet\rar["d^2" above] & \bullet 0\\
+    1\bullet\rar & \bullet1\\
+    2\bullet\ar[dr] & \bullet2\\
+    & \bullet3\\
+\end{tikzcd} \qquad \begin{tikzcd}[row sep=small]
+    0\bullet\rar["d^3" above] & \bullet 0\\
+    1\bullet\rar & \bullet1\\
+    2\bullet\rar & \bullet2\\
+    & \bullet3\\
+\end{tikzcd} \]
+\end{example}
+\begin{example} The codegeneracy maps $[3] \to [2]$ look like
+\[ \begin{tikzcd}[row sep=small]
+    0\bullet\rar["s^0" above] & \bullet 0\\
+    1\bullet\ar[ur] & \bullet1\\
+    2\bullet\ar[ur] & \bullet2\\
+    3\bullet\ar[ur]& \\
+\end{tikzcd} \qquad
+\begin{tikzcd}[row sep=small]
+    0\bullet\rar["s^1" above] & \bullet 0\\
+    1\bullet\rar & \bullet1\\
+    2\bullet\ar[ur] & \bullet2\\
+    3\bullet\ar[ur]& \\
+\end{tikzcd} \qquad 
+\begin{tikzcd}[row sep=small]
+    0\bullet\rar["s^2" above] & \bullet 0\\
+    1\bullet\rar & \bullet1\\
+    2\bullet\rar & \bullet2\\
+    3\bullet\ar[ur]& \\
+\end{tikzcd} \]
+\end{example}
+
+\begin{terminology} Let $X_\bullet \colon \DDelta^\op \to \mathscr{C}$ denote a simplicial object
+\begin{enumerate}
+    \item We use the notation $X_n$ to denote the object $X_\bullet([n])$ in $\mathscr{C}$.
+    \item We denote by $d_i \colon X_n \to X_{n-1}$ for $0\le i\le n$ the image of the coface map $d^i$. We call $d_i$ a \textit{face map}
+    \item Similarly we denote by $s_i \colon X_n \to X_{n+1}$ for $0\le i\le n$ the image of the codegeneracy map $s^i$, and call $s_i$ a \textit{degeneracy map}.
+\end{enumerate}
+\end{terminology}
+
+\begin{exercise} Convince yourself that every map in $\DDelta$ factors into face and degeneracy maps, and therefore any simplicial object $X_\bullet$ in $\mathscr{C}$ can be described by the data of $X_n$ for each $n$, and its face and degeneracy maps.\footnote{%
+Any time we define a simplicial object via this compressed data, we should check that the simplicial identities hold, although we'll mostly omit these arguments here.}
+\end{exercise}
+
+\begin{definition} If $\mathscr{C}$ is a locally category with all finite products (binary products and a terminal object) then a \textit{group object} in $\mathscr{C}$ is the data of an object $G\in \mathscr{C}$ together with morphisms
+\begin{align*}
+    m \colon G \times G &\to G \\
+    e \colon 1 \to G \\
+    i \colon G \to G
+\end{align*}
+called multiplication, identity, and inverse, so that the diagrams commute
+\[ \begin{tikzcd}
+    G \times G \times G\rar["\id \times m"]\dar["m \times \id" left] & G \times G\dar["m" right]\\
+    G \times G\rar["m" below] & G
+\end{tikzcd} \quad\quad  \begin{tikzcd}
+    G\rar["e \times \id" above]\dar["\id \times e" left]\ar[dr,"\id" above right] & G \times G\dar["m" right]\\
+    G \times G\rar["m" below] & G
+\end{tikzcd} \quad\quad  \begin{tikzcd}
+    G\rar["i \times \id"]\dar["\id \times i" left]\ar[dr,"e" above right] & G \times G\dar["m" right]\\
+    G\times G\rar["m" below] & G.
+\end{tikzcd} \]
+\end{definition}
+
+
+\begin{example} Let $G$ be a group object in a category $\mathscr{C}$ as above. Then we can define a simplicial object
+\begin{align*}
+    B_\bullet G \colon \DDelta^\op &\to \mathscr{C} \\
+    [n] &\mapsto G^{\times n},
+\end{align*}
+as:
+\[ \begin{tikzcd}[column sep=small]
+    \ast\rar & G\lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount] & G \times G \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount]
+\end{tikzcd} \]
+Explicitly, $B_n G = G^{\times n}$, with face maps $d_i \colon G^{\times n} \to G^{\times(n-1)}$ given by
+\begin{align*}
+    d_i (g_1, \ldots, g_n) &=  \begin{cases}
+    (g_2, \ldots, g_n) & i=0 \\
+    (g_1, \ldots, g_i g_{i+1},g_{i+2}, \ldots, g_{n}) &  1\le i\le n-1 \\
+    (g_1, \ldots, g_{n-1}) & i=n,\end{cases}
+\end{align*}
+and degeneracies $s_i \colon G^{\times n} \to G^{\times(n+1)}$ given by
+\begin{align*}
+    s_i(g_1, \ldots, g_n) &= \begin{cases}
+    (e,g_1, \ldots, g_n) & i=0 \\
+    (g_1, \ldots, g_i,e,g_{i+1}, \ldots, g_n) & 1\le i\le n.
+    \end{cases}
+\end{align*}
+\end{example}
+
+\begin{exercise}\label{exer:simplicial-bar-construction-gp-object} 
+Check the simplicial identities hold \textit{precisely} because of the group axioms. In particular, observe that we didn't use anything special about spaces --- if $G$ is a group object in any category $\mathscr{C}$ we obtain an associated bar construction which is a simplicial object in $\mathscr{C}$ that we call $B_{\bullet}G$.
+\end{exercise}
+
+\begin{example} (Important) For the formal categorical reason in \autoref{exer:simplicial-bar-construction-gp-object}, any group scheme $G$ gives rise to a simplicial scheme $B_\bullet G \in \Fun \left( \DDelta^\op, \Sch \right)$. This dates back at least to work of Friedlander \cite[Example~1.2]{Friedlander}. We'll use this object frequently.
+\end{example}
+
+\begin{example} Simplicial objects appeared crucially in Deligne's work on resolution of singularities and mixed Hodge structures.
+Let $X$ be a complete\footnote{$X$ is \textit{complete} if it is proper over the base \cite[p.~105]{Hartshorne}. This is a slightly more general notion than projective.} singular variety. Then we can ``replace'' $X$ with a simplicial variety
+\[ \begin{tikzcd}[column sep=small]
+    \cdots & X_2\rar\rar[shift right=2*\theshiftamount]\rar[shift left=2*\theshiftamount] & X_1\lar[shift right=\theshiftamount]\lar[shift left=\theshiftamount]\rar[shift right=\theshiftamount]\rar[shift left=\theshiftamount] & X_0,\lar
+\end{tikzcd} \]
+where each $X_i$ is smooth and projective. There is a cohomological descent spectral sequence computing the cohomology of $X$ in terms of the cohomology of the $X_n$'s. This dates back to SGA 4. Additionally, this replacement is the core idea of \textit{resolution of singularities}. Deligne uses these simplicial methods to endow singular varieties with Hodge structures, so-called \textit{mixed Hodge structures} \cite{Hodge3}.
+\end{example}
+
+\begin{example} Let $A_\bullet \colon \DDelta^\op \to \Ab$ be a simplicial abelian group. Then by taking the alternating sum of the face maps, we obtain a chain complex, purely by the simplicial identities. This assignment is functorial:
+\begin{align*}
+    \sAb &\to \Ch_{\ge 0}(\Ab) \\
+    A_\bullet &\mapsto \left( A_n, \del = \sum_{i=0}^n (-1)^i d_i \right).
+\end{align*}
+The associated chain complex is called the \textit{Moore complex} of the simplicial abelian group. Two quick remarks about this:
+\begin{enumerate}
+    \item This works if we replace $\Ab$ by any abelian category.
+    \item This process is invertible --- this implies that simplicial objects and connective chain complexes in any abelian category are equivalent.\footnote{%
+    There's a small lie here, the actual functor exhibiting the equivalence is not the Moore complex but the \textit{normalized chains complex}, although the normalized chain complex maps to the Moore complex in a natural way, and this is a chain homotopy equivalence \cite[III.2.4]{GoerssJardine}, so they are essentially the same. For more detail see \cite[\S III.2]{GoerssJardine}.}
+    We will use this later, as we will want to construct certain simplicial objects in sheaves of abelian groups, and it will be more direct to construct them first as chain complexes, then pass through this equivalence.
+\end{enumerate}
+\end{example}
+
+
+Covers, their overlaps, triple overlaps, etc. are also conveniently encoded in the data of a simplicial object.\footnote{%
+Technically it should be an \textit{augmented simplicial object} since we'd also like to remember the data of the maps $U_i \to X$.}
+
+\begin{notation} If $\left\{ U_i \to X \right\}_{i\in I}$ is a cover, we'll denote by $U_{ij}:= U_i \times_X U_j$, and similarly $U_{ijk}:= U_i \times_X U_j \times_X U_k$.
+\end{notation}
+
+
+\begin{example} Let $\mathcal{U} = \left\{ U_i \to X \right\}$ be an open cover of a variety. We define a simplicial object
+\[ \begin{tikzcd}[column sep=small]
+    {\coprod_i U_i}\rar & {\coprod_{i,j}U_{ij}} \lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount] & \coprod_{i,j,k} U_{ijk} \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount] & \cdots 
+\end{tikzcd} \]
+which we call the \textit{\v{C}ech nerve} associated to the cover, and we denote by $N(\mathcal{U})$. By universal property of the pullback, we obtain three projection maps, which become our face maps $d_i \colon N(\mathcal{U})_2 \to N(\mathcal{U})_1$:
+\begin{align*}
+    d_0 \colon U_{ijk} &\to U_{ij} \\
+    d_1 \colon U_{ijk} &\to U_{ik} \\
+    d_2 \colon U_{ijk} &\to U_{jk}.
+\end{align*}
+Higher face maps are defined analogously. For degeneracy maps, remark that there is a natural diagonal map $U_i\to U_{ii}$, inducing the degeneracies $N(\mathcal{U})_0 \to N(\mathcal{U})_1$. The degeneracies at the next level are
+\begin{align*}
+    s_0 \colon U_{ij} &\to U_{iij} \\
+    s_1 \colon U_{ij} &\to U_{ijj},
+\end{align*}
+and so on for higher degeneracies.
+\end{example}
+
+
+
+\subsection{More on simplicial sets} We denote by
+\begin{align*}
+    \sSet := \Fun(\DDelta^\op,\Set)
+\end{align*}
+the category of \textit{simplicial sets}. Given a simplicial set
+\begin{align*}
+    X_\bullet \colon \DDelta^\op &\to \Set \\
+    [n] &\mapsto X_n,
+\end{align*}
+we call $X_n$ the set of \textit{$n$-simplices}.
+
+\begin{example} Any set $Y$ gives rise to a constant simplicial set $\underline{Y}$, given by sending $[n] \mapsto Y$, and every morphism in $\DDelta$ to the identity on $Y$.
+\end{example}
+
+\begin{example} We denote by $\Delta^n$ the simplicial set
+\begin{align*}
+    \Delta^n := \Hom_{\DDelta}(-,[n]) \colon \DDelta^\op \to \Set.
+\end{align*}
+By the Yoneda lemma, we have a natural bijection
+\begin{align*}
+    \Hom_{\sSet}(\Delta^n, X_\bullet) \cong X_n
+\end{align*}
+for any $X_\bullet \in \sSet$.
+\end{example}
+
+There is a functor called \textit{geometric realization}, which ``assembles'' a simplicial set into a topological space: Let $\Delta^n_\text{top}$ denote the \textit{topological} $n$-simplex\footnote{This is the locus $\Delta^n_\mathrm{top}:=\left\{ (x_0, \ldots, x_{n+1}\in \R^{n+1} \colon \sum x_i = 1,\ x_i\ge0 \right\}$.}
+\begin{align*}
+    |-| \colon \sSet &\to \Top \\
+    X_\bullet &\mapsto \amalg_{n\ge0} X_n \times \Delta^n_\mathrm{top}/\sim,
+\end{align*}
+where $\sim$ is
+\begin{align*}
+    (x,d_i u) \sim (d_i x,u) \quad\quad & x\in X_n,\, u\in \Delta_\mathrm{top}^{n-1} \\
+    (y,s_i v)\sim (s_iy,v) \quad\quad  &y\in X_{n-1},\ v\in \Delta^n_\mathrm{top}.
+\end{align*}
+%
+\begin{remark} We discussed this universal space $BG$ classifying principal $G$-bundles last week. We can define this as $BG := |B_\bullet G|$, i.e. it is the geometric realization of the bar construction for the group.\footnote{If $G$ is a discrete group this is literally correct. If $G$ is a topological group we have to modify the domain of geometric realization to be $|-| \colon \Fun(\DDelta^\op,\Top) \to \Top$ in order to get the correct definition.}
+\end{remark}
+
+\begin{definition}\label{def:simplicial-homotopy-sset} 
+We say two maps $f,g \colon X_\bullet \to Y_\bullet$ are \textit{simplicially homotopic} if there is a map
+\begin{align*}
+    H \colon \Delta^1 \times X_\bullet \to Y_\bullet
+\end{align*}
+so that $H|_{\{0\} \times X_\bullet} = f$ and  $H|_{\{1\} \times X_\bullet} = g$.
+\end{definition}
+
+\begin{remark}
+Unpacking this data, we can verify it is the same as asking for maps for every $n$:
+\begin{align*}
+    H_i^n \colon X_n &\to Y_{n+1} \quad\quad 0\le i\le n,
+\end{align*}
+so that $d_0 H_0^n = f_n$, and $d_{n+1}H_n^n = g_n$, and so that they commute with face and degeneracy maps appropriately.\footnote{%
+This is in \cite[8.3.11]{Weibel}.
+}
+This notion makes sense for maps between simplicial objects in any category, and it is called a \textit{simplicial homotopy}.
+\begin{enumerate}
+    \item A priori we should be careful calling it a homotopy, since it doesn't require us to have any notion of a model structure or higher-categorical structure in order to state, however we will see this won't be a problem.
+    \item In the context of simplicial sets, this coincides with \autoref{def:simplicial-homotopy-sset}, as we can check (see e.g. \cite[8.3.12]{Weibel}).
+    \item It is not true (even in simplicial sets) that this is an equivalence relation, and indeed it isn't. Nevertheless it generates one, so when we say ``up to simplicial homotopy'' we often mean with respect to the transitive closure of this relation.
+\end{enumerate}
+\end{remark}
+
+
+\begin{theorem} Geometric realization preserves products.
+\end{theorem}
+
+\begin{corollary} Simplicial homotopies become honest homotopies of spaces after geometric realization.
+\end{corollary}
+
+
+\begin{remark} We can study simplicial sets up to homotopy or spaces up to homotopy, and in a sense that can be made precise, these are essentially the same theory.
+\end{remark}
+
+\begin{remark} Historically this connection between simplicial sets and spaces was part of a research program which used to be called ``combinatorial homotopy theory,'' led by Kan in the 1950's. % Goerss--Jardine p2
+\end{remark}
+
+
+
+
+
+\subsection{Torsors via simplicial maps}
+
+The big takeaway of this entire section is the following:
+
+\begin{theorem} Let $\mathcal{U} = \left\{ U_i \to X \right\}$ be a cover, and let $G$ be a group scheme over $X$. To any map from the \v{C}ech nerve to the bar construction, we can assign a \v{C}ech 1-cocycle
+\begin{align*}
+    \Hom_{\Fun(\DDelta^\op,\Var_k)}(N(\mathcal{U}), B_\bullet G) \to H^1(X,G),
+\end{align*}
+and this assignment is surjective.
+\end{theorem}
+\begin{proof} To specify a map, we need to know what happens on each level, so let's consider the diagram:
+\[ \begin{tikzcd}
+    BG= & \ast\rar & G \lar[shift left]\lar[shift right] & \cdots \\
+    N(\mathcal{U})= & \coprod_i U_i\uar\rar & \coprod_{i,j} U_{ij}\lar[shift left]\lar[shift right]\uar & \cdots \\
+\end{tikzcd} \]
+On 0-simplices, there is no data, and on 1-simplices, we are obtaining an element we'll call $g_{ij} \in G(U_i \times_X U_j)$. What happens on 2-simplices? The degeneracy maps requires the two diagrams to commute:
+\[ \begin{tikzcd}
+    G\rar["s_0" above] & G \times G\\
+    U_{ij}\uar["g_{ij}" left]\rar["s_0" below] & U_{iij}\uar
+\end{tikzcd} \quad\quad 
+\begin{tikzcd}
+    G\rar["s_1" above] & G \times G\\
+    U_{ij}\uar["g_{ij}" left]\rar["s_1" below] & U_{iij}\uar
+\end{tikzcd}
+\]
+We've now incorporated all we can learn from degeneracies. But what is the map $U_{ijk}\to G \times G$ when $i,j,k$ are all distinct? To answer that we consider the degeneracies:
+\[ \begin{tikzcd}
+    G & G \times G\lar["d_0" above]\\
+    U_{ij}\uar["g_{ij}" left] & U_{ijk}\uar\lar["d_0" below]
+\end{tikzcd} \quad\quad \begin{tikzcd}
+    G & G \times G\lar["d_1" above]\\
+    U_{ik}\uar["g_{ik}" left] & U_{ijk}\uar\lar["d_1" below]
+\end{tikzcd} \quad\quad \begin{tikzcd}
+    G & G \times G\lar["d_2" above]\\
+    U_{jk}\uar["g_{jk}" left] & U_{ijk}\uar\lar["d_2" below]
+\end{tikzcd} \]
+Since the inner and outermost degeneracies $d_0$ and $d_2$ are the projection maps $G \times G \to G$, these relations describe the map $U_{ijk} \to G \times G$. So the mathematical content comes from the inner $d_1$ relation, which implies that $g_{ik}$ must be the \textit{product} of $g_{ij}$ and $g_{ik}$. This is \textit{exactly the 1-cocycle condition}.
+
+We claim that the remaining data of the map $N(\mathcal{U})_\bullet \to B_\bullet G$ is completely determined by this relation.\footnote{%
+This can very likely be made precise by the idea that $B_\bullet G $ is 1-truncated, I'd like to find a reference that makes this precise so it's clear how the rest of the argument goes. See maybe \cite[I.7.8]{GoerssJardine}%
+}
+\end{proof}
+
+\begin{theorem} Two 1-cocycles for the cover $\mathcal{U}$ are cohomologous if and only if they are simplicially homotopic!
+\end{theorem}
+\begin{proof}[Proof sketch] Let $f,g \colon N(\mathcal{U})_\bullet \to B_\bullet G$ be two maps corresponding to 1-cocycles $(f_{ij})$ and $(g_{ij})$, respectively. Recall simplicial homotopy requires us to define maps $H^n_i \colon N(\mathcal{U})_n \to B_{n+1}G$ for $0\le i\le n$ so that $d_0 H_0 = f_n$, $d_{n+1} H_n = g_n$, and various other relations hold. For us, let's see what $H_0$ looks like:
+\def\theshiftamount{1}
+\[ \begin{tikzcd}
+    {\coprod_i U_i}\rar\dar\ar[dr,"H^0_0" above right] & {\coprod_{i,j}U_{ij}} \lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount]\dar\ar[dr,"{H^1_0,H^1_1}" above right] & \coprod_{i,j,k} U_{ijk} \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount]\dar\ar[dr,"{H_0,H_1,H_2}" above right] & \cdots \\
+    \ast\rar & G \lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount] & G \times G \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount] & \cdots 
+\end{tikzcd} \]
+\def\theshiftamount{2}
+At level zero, the map $H^0_0$ specifies an element $\alpha_i \in G(U_i)$. Let's see what the degeneracy relations tell us at level one:
+\[ \begin{tikzcd}
+    {\coprod_i U_i}\ar[dr,"H^0_0" below left] & {\coprod_{i,j}U_{ij}} \lar[shift left=\theshiftamount,"d^1" description]\lar[shift right=\theshiftamount,"d^0" description]\dar\ar[dr,"{H^1_0,H^1_1}" above right] &  \\
+     & G & G \times G \lar["d_1" description] \lar[shift left=\theshiftamount,"d_2" below]\lar[shift right=\theshiftamount,"d_0" above] & \cdots 
+\end{tikzcd} \]
+Since $H_i^1$ is mapping into a product, it is determined by its projections, which are post-composing with $d_0$ and $d_2$. From the relations and the simplicial homotopy condition, we get
+\begin{align*}
+    d_0 H_0^1 &= f_{ij} \\
+    d_2 H_0^1 &= H_0^0 d_1 = \alpha_j,
+\end{align*}
+so $H_0^1$ is the tuple $(f_{ij},\alpha_j) \colon U_{ij} \to G \times G$.\footnote{There's abuse of notation here with $\alpha_j$.} Similarly we compute
+\begin{align*}
+    d_0 H_1^1 &= H_0^0 d_0 = \alpha_i \\
+    d_2 H_1^1 &= g_{ij},
+\end{align*}
+so $H^1_1 = (\alpha_i,g_{ij}) \colon U_{ij} \to G \times G$. The remaining relation states that
+\begin{align*}
+    d_1 H_1^1 &= d_1 H_0^1,
+\end{align*}
+and since $d_1$ is the multiplication $G \times G \to G$, this tells us that $f_{ij}\alpha_j = \alpha_i g_{ij}$. This is the coboundary condition!
+
+Again we claim that the higher data is determined by what is happening in lower degrees (need to make this formal).
+\end{proof}
+
+\begin{motivation} 
+Last week we asked for a universal space $BG$ so that homotopy classes of maps $X \to BG$ classifies $G$-torsors, and we're getting close! We now have a fantastic candidate for $BG$, namely the bar construction $B_\bullet G$ above. However we (1) didn't have a notion of homotopy of maps to witness two torsors being equivalent, and (2) we were mapping from $N(\mathcal{U})$, \textit{not} from $X$. To that end, let's write down what we're looking for.
+\end{motivation}
+
+\textbf{Wishlist}: We want some nice category $\mathscr{C}$ where both $X$ and $B_\bullet G$ live (so our category should contain simplicial varieties), and we want our category to have a notion of \textit{equivalence} with the following properties:
+\begin{enumerate}
+    \item Two maps $N(\mathcal{U}) \to B_\bullet G$ are homotopic in $\mathscr{C}$ if and only if they classify cohomologous $G$-torsors. We want to make this notion of homotopy precise.
+    \item In $\mathscr{C}$, we have that $X \simeq N(\mathcal{U})$, i.e. a variety is equivalent to the \v{C}ech nerve of any cover over it, so that up to homotopy, we can classify torsors via maps $X \to B_\bullet G$.
+\end{enumerate}
+
+Let's preview how this is going to go --- the category $\Var_k$ of $k$-varieties doesn't support a nice homotopy theory, nor does simplicial varieties $\Fun(\DDelta^\op, \Var_k)$. So what we could do instead is replace each variety by its representable presheaf (functor of points, for the algebraic geometers). The Yoneda embedding $\Var_k \to \Fun(\Var_k^\op,\Set)$ then induces a functor
+\begin{align*}
+    \Fun(\DDelta^\op, \Var_k) \to \Fun(\DDelta^\op, \Fun(\Var_k^\op,\Set).
+\end{align*}
+Doing some adjoint business, we get that this latter category is equivalent to
+\begin{align*}
+    \Fun(\Var_k^\op, \Fun(\DDelta^\op, \Set)) = \Fun(\Var_k^\op, \sSet).
+\end{align*}
+So altogether we get a Yoneda embedding
+\begin{align*}
+    \Var_k \hookto \Fun(\Var_k^\op, \sSet).
+\end{align*}
+This latter category is called the category of \textit{simplicial presheaves}, or in higher category language it is just denoted $\Pre(\Var_k)$, and called the $\infty$-category of ($\infty$-)presheaves. It comes with a notion of homotopy coming from simplicial homotopy theory. We'll see that this was not only a nice well-behaved way to access homotopy theory starting from $\Var_k$, it was actually the \textit{universal} way to do this (see e.g. \cite{Dugger-univ}).
+
+This category $\Pre(\Var_k)$ will take care of item (1) on our checklist! After we define what homotopy means there, homotopic maps in this category will give isomorphic torsors.
+
+This doesn't take care of point (2), and we shouldn't really expect it to. The equivalence between a variety and the \v{C}ech nerve of the cover should depend on \textit{what covers are permissible}. In other words, it should bake in the Grothendieck topology somehow. We'll see that we can get point (2) (while retaining a notion of homotopy compatible with that of presheaves) by passing to the category of \textit{sheaves} in our site. We'll make all this precise soon.
+
+
+
 
 \printbibliography
 \end{document}
