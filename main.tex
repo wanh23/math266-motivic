@@ -221,7 +221,7 @@ Let's try to extend this definition to the setting where $G$ isn't a single grou
     \begin{align*}
         \mathcal{G}(U) \times \mathcal{F}(U) \to \mathcal{F}(U)
     \end{align*}
-    is simply transitive\footnote{This means that in the category of $\mathcal{G}(U)$-sets, we have that $\mathcal{F}(U) \cong \mathcal{G}(U)$, but $\mathcal{F}(U)$ doesn't have a group structure --- we might imagine that it has forgotten its identity element. Picking a basepoint $e\in \mathcal{F}(U)$ defines a group structure on $\mathcal{F}(U)$.} 
+    is simply transitive.\footnote{This means that in the category of $\mathcal{G}(U)$-sets, we have that $\mathcal{F}(U) \cong \mathcal{G}(U)$, but $\mathcal{F}(U)$ doesn't have a group structure --- we might imagine that it has forgotten its identity element. Picking a basepoint $e\in \mathcal{F}(U)$ defines a group structure on $\mathcal{F}(U)$.} 
     
     \item there exists a covering $\left\{ U_i \to X \right\}$ over which $\mathcal{F}(U_i) \ne \emptyset$.\footnote{In other words, we can find a cover in which to visualize $\mathcal{F}(U_i)$ as a group for each $i$.}
 \end{enumerate}
@@ -255,7 +255,7 @@ If $L/k$ is a Galois field extension then $\Spec(L) \to \Spec(k)$ is a $\Gal(L/k
 \item \textit{the inverse Galois problem}: which groups $G$ occur as Galois groups of number fields? This is asking to scratch the surface of understanding $G$-torsors over $\Spec(\Q)$ for all finite groups $G$.
 \end{itemize}
 
-\begin{example} A $\GL_n$-torsor (say in the Zariski topology) is an algebraic vector bundle.
+\begin{example} A $\GL_n$-torsor (say, in the Zariski topology) is an algebraic vector bundle.
 \end{example}
 \begin{proof} Since $\GL_n$ is affine, every torsor is representable, hence $\GL_n$-torsors are just principal $\GL_n$-bundles, which are precisely algebraic vector bundles.
 \end{proof}
@@ -298,9 +298,9 @@ Let's suppose now that $\mathcal{F}(U)$ is a \textit{category} for every $U$. We
 \begin{example} Let $\mathcal{F}$ be the functor sending $U$ to the category of line bundles over $U$. If the cover is picked appropriately small, then all line bundles are isomorphic to the trivial line bundle over $U_i$, but they need not be isomorphic globally as line bundles over $U$.
 \end{example}
 
-\textbf{A}: No, by the example above. This means that we can have $x,y \in \mathcal{F}(U)$ so that $x|_{U_i} \cong y|_{U_i}$ for each $i$, but we \textit{do not have} that $x$ and $y$ are isomorphic in the category $\mathcal{F}(U)$. In other words, the two notions are \textit{different}:
+\textbf{A}: No, by the example above. This means that we can have $x,y \in \mathcal{F}(U)$ so that $x|_{U_i} \cong y|_{U_i}$ for each $i$, but we \textit{do not have} that $x$ and $y$ are isomorphic in the category $\mathcal{F}(U)$. In other words, the following two notions are \textit{different}.
 \begin{itemize}
-    \item $x$ and $y$ agree \textit{globally}, meaning $x$ and $y$ are isomorphic in $\mathscr{F}(U)$
+    \item $x$ and $y$ agree \textit{globally}, meaning $x$ and $y$ are isomorphic in $\mathscr{F}(U)$.
     \item  $x$ and $y$ agree \textit{locally}, meaning there exists an open cover $\left\{ U_i \to U \right\}$ for which we have isomorphisms $\left. x \right|_{ U_i } \xto{\sim} \left. y \right|_{ U_i }$ in $\mathcal{F}(U_i)$.\footnote{%
     The notation $x|_{U_i}$ is shorthand for the image of $x$ under the restriction functor $\mathcal{F}(U) \to \mathcal{F}(U_i)$
     }
@@ -316,7 +316,7 @@ Let's suppose now that $\mathcal{F}(U)$ is a \textit{category} for every $U$. We
 We're going to build a sheaf that measures this! We'll call this sheaf $\Aut_{\mathcal{F}}(x)$, and it is defined by
 \begin{equation}\label{eqn:autx-torsor}
 \begin{aligned}
-    U_i &\mapsto \Aut_{\mathscr{F}(U_i)}(x)
+    U_i &\mapsto \Aut_{\mathscr{F}(U_i)}(x).
 \end{aligned}
 \end{equation}
 \begin{exercise} This is a priori just a presheaf of groups. Check it is actually a sheaf of groups.
@@ -325,7 +325,7 @@ We're going to build a sheaf that measures this! We'll call this sheaf $\Aut_{\m
 Recall the following definition.
 
 \begin{definition}\label{def:cech-cover-cohomology} 
-If $\mathcal{G}$ is a sheaf of groups over $U$, and $\mathcal{U} = \left\{ U_i \to U \right\}$ is a cover.
+Let $\mathcal{G}$ denote a sheaf of groups over $U$ and $\mathcal{U} = \left\{ U_i \to U \right\}$ a cover.
 \begin{enumerate}
     \item We define a \textit{\v{C}ech 1-cocycle} to be a collection of elements $g_{ij} \in \mathcal{G}(U_i \times_U U_j)$ for each $i,j$ so that
 \begin{align*}
@@ -668,7 +668,7 @@ There are a priori a lot of order-preserving functions $[n] \to [m]$, so we'd li
 \end{tikzcd} \]
 \end{example}
 
-\begin{terminology} Let $X_\bullet \colon \DDelta^\op \to \mathscr{C}$ denote a simplicial object
+\begin{terminology} Let $X_\bullet \colon \DDelta^\op \to \mathscr{C}$ denote a simplicial object.
 \begin{enumerate}
     \item We use the notation $X_n$ to denote the object $X_\bullet([n])$ in $\mathscr{C}$.
     \item We denote by $d_i \colon X_n \to X_{n-1}$ for $0\le i\le n$ the image of the coface map $d^i$. We call $d_i$ a \textit{face map}
@@ -680,13 +680,13 @@ There are a priori a lot of order-preserving functions $[n] \to [m]$, so we'd li
 Any time we define a simplicial object via this compressed data, we should check that the simplicial identities hold, although we'll mostly omit these arguments here.}
 \end{exercise}
 
-\begin{definition} If $\mathscr{C}$ is a locally small category with all finite products (binary products and a terminal object) then a \textit{group object} in $\mathscr{C}$ is the data of an object $G\in \mathscr{C}$ together with morphisms
+\begin{definition} If $\mathscr{C}$ is a locally small category with all finite products (binary products and a terminal object), then a \textit{group object} in $\mathscr{C}$ is the data of an object $G\in \mathscr{C}$ together with morphisms
 \begin{align*}
     m \colon G \times G &\to G \\
     e \colon 1 \to G \\
     i \colon G \to G
 \end{align*}
-called multiplication, identity, and inverse, so that the diagrams commute
+called multiplication, identity, and inverse, such that the following diagrams commute.
 \[ \begin{tikzcd}
     G \times G \times G\rar["\id \times m"]\dar["m \times \id" left] & G \times G\dar["m" right]\\
     G \times G\rar["m" below] & G
@@ -695,7 +695,7 @@ called multiplication, identity, and inverse, so that the diagrams commute
     G \times G\rar["m" below] & G
 \end{tikzcd} \quad\quad  \begin{tikzcd}
     G\rar["i \times \id"]\dar["\id \times i" left]\ar[dr,"e" above right] & G \times G\dar["m" right]\\
-    G\times G\rar["m" below] & G.
+    G\times G\rar["m" below] & G
 \end{tikzcd} \]
 \end{definition}
 
@@ -755,19 +755,12 @@ The associated chain complex is called the \textit{Moore complex} of the simplic
 \end{enumerate}
 \end{example}
 
-
-Covers, their overlaps, triple overlaps, etc. are also conveniently encoded in the data of a simplicial object.\footnote{%
-Technically it should be an \textit{augmented simplicial object} since we'd also like to remember the data of the maps $U_i \to X$.}
-
-\begin{notation} If $\left\{ U_i \to X \right\}_{i\in I}$ is a cover, we'll denote by $U_{ij}:= U_i \times_X U_j$, and similarly $U_{ijk}:= U_i \times_X U_j \times_X U_k$.
-\end{notation}
-
-
-\begin{example} Let $\mathcal{U} = \left\{ U_i \to X \right\}$ be an open cover of a variety. We define a simplicial object
+\begin{example}[\v{C}ech nerve $N_\bullet(U)$] A simplicial object can conveniently encode the data of an open cover, its intersections, triple intersections, etc.\footnote{%
+    Technically it should be an \textit{augmented simplicial object} since we'd also like to remember the data of the maps $U_i \to X$.} For this, given an open cover $\{U_i \to X\}$ of a variety $X$, denote by $U_{ij} := U_i \times_{X} U_j$ the double overlaps, by $U_{ijk} := U_i \times_X U_j \times_X U_k$ the triple overlaps, and so on. We define a simplicial object
 \[ \begin{tikzcd}[column sep=small]
     {\coprod_i U_i}\rar & {\coprod_{i,j}U_{ij}} \lar[shift left=\theshiftamount]\lar[shift right=\theshiftamount]\rar[shift left=\theshiftamount]\rar[shift right=\theshiftamount] & \coprod_{i,j,k} U_{ijk} \lar \lar[shift left=2*\theshiftamount]\lar[shift right=2*\theshiftamount] & \cdots 
 \end{tikzcd} \]
-The face maps are omitted by omitting the $j$th index:
+The face maps are defined by omitting the $j$th index
 \begin{align*}
     d_j \colon U_{i_1 \cdots i_n} \to U_{i_1 \cdots \widehat{i_j} \cdots i_n},
 \end{align*}
@@ -775,7 +768,7 @@ and the degeneracy maps repeat the $j$th index
 \begin{align*}
     s_j \colon U_{i_1 \cdots i_n} \to U_{i_1 \cdots i_{j-1} i_j i_j i_{j+1} \cdots i_n}.
 \end{align*}
-We call this the \textit{\v{C}ech nerve} associated to the cover, and we denote by $N(\mathcal{U})$.
+We call this the \textit{\v{C}ech nerve} associated to the cover, and we denote it by $N(\mathcal{U})$.
 \end{example}
 
 
@@ -891,12 +884,12 @@ and this assignment is surjective.
 N(\mathcal{U})= & \coprod_i U_i\dar\rar & \coprod_{i,j} U_{ij}\lar[shift left]\lar[shift right]\dar & \cdots \\
     BG= & \ast\rar & G \lar[shift left]\lar[shift right] & \cdots 
 \end{tikzcd} \]
-On 0-simplices, there is no data, and on 1-simplices, we are obtaining an element we'll call $g_{ij} \in G(U_{ij})$. What happens on 2-simplices? The degeneracy maps requires the two diagrams to commute:
+On 0-simplices, there is no data, and on 1-simplices, we are obtaining elements we will call $(g_{ij} \in \Hom(U_{ij},G))$. For each $i$, the degeneracy maps require the following diagram to commute.
 \[ \begin{tikzcd}
     U_{i}\rar["s_0"]\dar & U_{ii}\dar["g_{ii}" right] & \\
     \ast\rar["e" below] & G,
 \end{tikzcd} \]
-which tells us that $g_{ii} = \id$. That's about all we can learn from degeneracies. Let's consider the inner and outermost face maps $[2] \to [1]$:
+which tells us that $g_{ii} = e$. That's about all we can learn from degeneracies. What happens on 2-cells? Let's consider the inner and outermost face maps $N_2(U) \to N_1(U)$:
 \[ \begin{tikzcd}
     U_{jk}\dar["g_{jk}" left] & U_{ijk}\lar["d_0" above]\dar\\
     G & G \times G\lar["d_0 = \text{proj}_2" below]
@@ -904,7 +897,7 @@ which tells us that $g_{ii} = \id$. That's about all we can learn from degenerac
     U_{ij}\dar["g_{ij}" left] & U_{ijk}\lar["d_2" above]\dar\\
     G & G \times G\lar["d_2 = \text{proj}_1" below]
 \end{tikzcd} \]
-We've decorated the face maps on the bar construction to recall whether they are projection or multiplication. By universal property of the product, $U_{ijk}\to G \times G$ is determined by its post-composition with the projections, hence it makes sense to call it $(g_{ij}, g_{jk})$. The $d_1$ relation gives us
+We've decorated the face maps on the bar construction to recall whether they are projection or multiplication. By the universal property of the product, $U_{ijk}\to G \times G$ is determined by its post-composition with the projections, hence it makes sense to call this map $(g_{ij}, g_{jk})$. The $d_1$ relation gives us
 \[ \begin{tikzcd}
     U_{ik}\dar["g_{ik}"] & U_{ijk}\lar["d_1" above]\dar["{(g_{ij},g_{jk})}" right]\\
     G & G \times G\lar["d_1 = \text{mult}" below]
@@ -913,7 +906,7 @@ This implies that
 \begin{align*}
     g_{ik} = g_{ij}g_{jk}.
 \end{align*}
-This is \textit{exactly the 1-cocycle condition} from \autoref{def:cech-cover-cohomology}. We claim that the remaining data of the map $N(\mathcal{U})_\bullet \to B_\bullet G$ is completely determined by this relation. 
+This is \textit{exactly the 1-cocycle condition} from \autoref{def:cech-cover-cohomology}. We claim that the remaining data of the map $N(\mathcal{U})_\bullet \to B_\bullet G$ is completely determined by this relation. In particular, every \v{C}ech 1-cocycle can be extracted from a map $N_\bullet(U) \to B_\bullet G$ by the above process.   
 
 \textbf{In general}: It is now clear how to define the map $N_n \mathcal{U} \to B_n G$ --- its component on $U_{i_0 \cdots i_{n}}$ is given by the tuples of maps
 \begin{align*}
