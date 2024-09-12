@@ -450,7 +450,7 @@ be an $X$-scheme equipped with a $G$-action. Then $Y$ is a $G$-torsor if and onl
 In this setting, we call $Y \to X$ a \textit{principal $G$-bundle}.
 \end{proposition}
 
-\begin{example} Let's double back to \autoref{exa:galois-field-extn-torsor} and actually prove that $\Spec L \to \Spec k$ is a principal $\Gal(L/k)$-bundle when $L/k$ is a Galois field extension.
+\begin{example} Let's double back to \autoref{exa:galois-field-extn-torsor} and actually prove that $\Spec L \to \Spec k$ is a principal $\Gal(L/k)$-bundle in the \'etale site when $L/k$ is a Galois field extension.
 \end{example}
 \begin{proof} We check the conditions from \autoref{prop:principal-G-bundle}. The first condition asks that
 \begin{align*}
@@ -996,6 +996,125 @@ This category $\Pre(\Var_k)$ will take care of item (1) on our checklist! After 
 
 This doesn't take care of point (2), and we shouldn't really expect it to. The equivalence between a variety and the \v{C}ech nerve of the cover should depend on \textit{what covers are permissible}. In other words, it should bake in the Grothendieck topology somehow. We'll see that we can get point (2) (while retaining a notion of homotopy compatible with that of presheaves) by passing to the category of \textit{sheaves} in our site. We'll make all this precise soon.
 
+
+\section{\sectionheader Torsors III: Sites, sheaves, and Hilbert 90}
+
+We have seen that $H^1(X,G)$ classifies $G$-torsors for $X$, but we've been a little vague about Grothendieck topologies (i.e. what kinds of covers are we considering for our varieties). Today we'll make things more precise.
+
+
+\begin{definition} Let $\mathscr{C}$ be a category with pullbacks. Then a \textit{Grothendieck topology} $\tau$ consists of collections of morphisms $\left\{ U_i \to X \right\}_{i\in I}$ in $\mathscr{C}$ called \textit{covers} or \textit{coverings}, satisfying the following properties:
+\begin{enumerate}
+    \item \textit{Closure under pullbacks}: If $\left\{ U_i \to X \right\}_{i\in I}$ is a covering and $f \colon Y \to X$ is any morphism, then the collection of base change morphisms $\left\{ U_i \times_X Y \to Y \right\}_{i\in I}$ is a covering.
+    \item \textit{Closure under refinement}: If $\left\{ U_i \in X \right\}$ is a covering and $\left\{ V_{ij} \to U_i \right\}_j$ is a covering for each $i$, then the composite $\left\{ V_{ij} \to U_i \to X \right\}_{i,j}$ is a covering
+    \item \textit{Isomorphisms}: Any isomorphism $f\colon Y \xto{\sim} X$ gives a one-element cover $\left\{ Y \to X \right\}$.
+\end{enumerate}
+A pair of a category and a topology $(\mathscr{C},\tau)$ is called a \textit{site}.
+\end{definition}
+
+\begin{example} A \textit{Zariski cover} is a collection of open immersions $\left\{ U_i \to U \right\}$ which are jointly surjective. This generates the \textit{Zariski site} on $\Sch_S$.
+\end{example}
+
+\begin{example} An \textit{\'etale cover} is a collection of \'etale morphisms, jointly surjective.
+\end{example}
+
+\begin{example} A \textit{Nisnevich cover} is a collection of \'etale morphisms $\left\{ U_i \to U \right\}$ so that for each $x\in X$ there exists an $i$ and a $y\in U_i$ so that $y\mapsto x$ induces an isomorphism on residue fields.
+\end{example}
+
+\begin{note} If $R\to S$ is an \'etale ring extension, then $\Spec(S) \to \Spec(R)$ is an \'etale cover but not necessarily a Nisnevich cover. For example $\Spec(L) \to \Spec(k)$ is \'etale if $L/k$ is a finite separable extension, but not Nisnevich unless $k=L$.
+\end{note}
+
+\begin{example} \cite[021M]{Stacks} An \textit{fppf cover} is a jointly surjective collection of morphisms $\left\{ U_i \xto{f_i} U \right\}$ so that each $f_i$ is flat and locally of finite presentation.
+\end{example}
+
+\begin{example} \cite[03NW]{Stacks} An \textit{fpqc cover} is a jointly surjective collection of morphisms $\left\{ U_i \xto{f_i} U \right\}$ so that $\amalg_i U_i \to X$ is faithfully flat and quasi-compact.
+\end{example}
+
+\begin{example} A map $\Spec(S) \to \Spec(R)$ is an fpqc cover if and only if the ring map $R\to S$ is faithfully flat.
+\end{example}
+
+
+
+\begin{terminology} If $t$ and $\tau$ are two Grothendieck topologies, we write $t\le \tau$ if every $t$-cover is a $\tau$-cover. We say $t$ is \textit{coarser} than $\tau$ or that $\tau$ \textit{refines} $t$ in this case.
+\end{terminology}
+
+\begin{proposition} We have that
+\begin{align*}
+    \Zar \le \Nis \le \et \le \fppf \le \fpqc.
+\end{align*}
+For more topologies see \href{https://pbelmans.ncag.info/topologies-comparison/}{Belmans: topologies comparison}.
+\end{proposition}
+
+\begin{question} If $t \le \tau$ then what is the difference between $t$-torsors and $\tau$-torsors?
+\end{question}
+
+Let's break this into two parts
+
+\subsection{Torsors in finer topologies}
+
+\begin{proposition}\label{prop:torsor-in-finer-topology-if-sheaf} 
+Let $\mathscr{C}$ be some fixed category of schemes, with topologies $t$ and $\tau$. Let $\mathcal{G}$ be a sheaf of groups in the $\tau$-topology. Let $\mathcal{F}$ be a $\mathcal{G}$-torsor in the $t$-topology. Then $\mathcal{F}$ is also a $\tau$-torsor if $\mathcal{F}$ is a $\tau$-sheaf.
+\end{proposition}
+\begin{proof} The only thing that could fail is the sheaf condition in the definition. If $\mathcal{F}$ is a $t$-torsor, then there exists a $t$-cover $\left\{ U_i \to U \right\}$ trivializing $\mathcal{F}$, and this is also a $\tau$-cover since $\tau$ refines $t$. 
+\end{proof}
+
+We want to make some guarantee that $\mathcal{G}$ will still be a sheaf in a finer topology. In our cases, we care about the case where $\mathcal{G}$ is representable, and a classical result guarantees this for us.
+
+\begin{theorem}\label{thm:fpqc-subcanonical} 
+(Grothendieck, \cite[023Q]{Stacks}) Every representable presheaf is a sheaf in the fpqc topology (and hence in any coarser topology, e.g. Zariski, Nisnevich, \'etale, syntomic, fppf).
+\end{theorem}
+
+\begin{corollary} Let $G$ be an affine group scheme, and let $t \le \tau \le \fppf$. Then every $t$-torsor is a $\tau$-torsor.
+\end{corollary}
+\begin{proof} Let $\mathcal{F}$ be a $G$-torsor. By \autoref{prop:affine-gp-torsors-representable} it is representable, hence it is a sheaf in the $\tau$ topology as well by \autoref{thm:fpqc-subcanonical}. Therefore by \autoref{prop:torsor-in-finer-topology-if-sheaf} it is also a $\tau$-torsor.
+\end{proof}
+
+\subsection{Torsors in coarser topologies}
+
+Now we're interested in the reverse question --- when $t\le \tau$, when is a $\tau$-torsor a $t$-torsor? The only thing that could fail is condition (2) of \autoref{def:torsor}, so we get the following answer/definition.
+
+
+\begin{definition} Let $t\le \tau$ be topologies on a fixed category of schemes $\mathscr{C}$, let $\mathcal{G}$ be a $\tau$-sheaf of groups and let $\mathcal{F}$ be a $\mathcal{G}$-torsor. Then $\mathcal{F}$ is a $t$-sheaf if and only if there exists a $t$-cover over which $\mathcal{F}$ is trivialized. We say $\mathcal{F}$ is \textit{locally trivial in the} $t$\textit{-topology}.
+\end{definition}
+
+We can now leverage some tools from algebraic geometry to prove this.
+
+\begin{proposition} Every smooth morphism of schemes admits a section \'etale-locally.
+\end{proposition}
+
+\begin{corollary} If $G$ is a smooth affine group scheme, then there is an equivalence of categories between \'etale $G$-torsors and fppf-torsors.
+\end{corollary}
+\begin{proof} See \cite[Proposition~4]{chd} for a proof.
+\end{proof}
+
+
+\subsection{Special algebraic groups}
+
+
+\begin{definition} We say an algebraic group (a group object in varieties) over a field $k$ is \textit{linear} if it admits a faithful finite-dimensional representation (c.f. \cite[p.~72]{MilneAG}).
+\end{definition}
+
+\begin{note} If an algebraic group is linear, it is automatically affine (\cite[1.29]{MilneAG}) and finite type.
+\end{note}
+
+
+\begin{proposition} Every affine group scheme of finite type over a field $k$ is linear (\cite[4.8]{MilneAG}).
+\end{proposition}
+
+
+
+\begin{definition} \cite[p.~5-11]{Grothendieck-torsion} A group scheme is called \textit{special} if it is a linear algebraic group $G$ with the property that every $G$-torsor\footnote{Since $G$ is affine, every $G$-torsor in $\tau\le \fppf$ is automatically a principal $G$-bundle.} is locally trivial in the Zariski topology.
+\end{definition}
+
+\begin{theorem} \cite[Th\'eor\`eme~3]{Grothendieck-torsion} The group $\GL_n$ is special.
+\end{theorem}
+
+\begin{corollary} \cite[11.4]{MilneLEC} There is a natural bijection
+\begin{align*}
+    H^1_\Zar(X,\GL_n) \leftrightarrow H^1_\Nis(X,\GL_n) \leftrightarrow H^1_\et(X,\GL_n) \leftrightarrow H^1_{\fpqc}(X,\GL_n).
+\end{align*}
+\end{corollary}
+
+Hence any of the groups above can be thought of as parametrizing isomorphism classes of \textit{algebraic vector bundles} on $X$.
 
 
 
