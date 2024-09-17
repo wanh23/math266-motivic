@@ -1131,5 +1131,309 @@ Hence any of the groups above can be thought of as parametrizing isomorphism cla
 
 
 
+
+
+\section{\sectionheader Infinity categories}
+
+\begin{example} If $\mathscr{C}$ is a small 1-category, it gives rise to a simplicial set $N_\bullet \mathscr{C}$, called the \textit{nerve} of $\mathscr{C}$, with the following data:
+\begin{itemize}
+    \item 0-simplices = objects of $\mathscr{C}$
+    \item 1-simplices = morphisms in $\mathscr{C}$
+    \item 2-simplices = pairs of composable morphisms $x \xto{f} y \xto{g} z$ in $\mathscr{C}$
+    \item[$\vdots$]
+    \item $n$-simplices = strings of $n$-composable morphisms
+\end{itemize}
+Here the degeneracy maps $(N\mathscr{C})_n \to (N\mathscr{C})_{n+1}$ insert an identity, while the face maps $(N\mathscr{C})_n \to (N\mathscr{C})_{n-1}$ compose maps. Observe that in $\mathscr{C}$, composition happens \textit{strictly}, by which we mean there is no notion of homotopy between maps --- if $x \xto{f} y \xto{g} z$ is a composite of maps, and $h \colon x \to z$, then either $h = g\circ f$, or it is not equal, and this is encoded by the data of a \textit{unique} 2-cell:
+\[ \begin{tikzcd}
+     & y\ar[dr,"g" above right]\\
+    x\ar[ur,"f" above left]\ar[rr,"h" below] &  & z.
+\end{tikzcd} \]
+We think about this 2-cell as a \textit{witness} for the composition. Note that if no 2-cell exists filling the diagram above, this means that $h$ is not equal to $g\circ f$. It is just some other map from $x$ to $z$.
+\end{example}
+
+\begin{example} If $\mathscr{C}$ is a one-object groupoid (e.g. a group $G$), then $N_\bullet \mathscr{C}$ is the bar construction of $G$, and its realization $B \mathscr{C} := |N_\bullet \mathscr{C}|$ is called the \textit{classifying space} of the category. Some examples:
+\begin{enumerate}
+    \item $BC_2 = \RP^\infty$
+    \item $B \mathbb{N} = S^1$
+    \item $B\Z = S^1$
+    \item $B (\bullet \to \bullet) = \Delta^1_\text{top}$
+    \item $B (\bullet \xto{\sim} \bullet) = S^\infty$
+    \item $B\text{PBr}_n = \text{Conf}_n(\R^2)$
+\end{enumerate}
+\end{example}
+
+
+
+\textbf{Q}: Given a simplicial set, when can you tell whether it arose as the nerve of a 1-category?
+
+\textbf{A}: Given any diagram of the form $\bullet \to \bullet \to \bullet$, it has to fill in uniquely to a 2-cell. But we also need to fill in composites of three morphisms uniquely (to get a tetrahedron), and composites of four morphisms, and so on. To that end, let $\Lambda^k_n$ be the simplicial set obtained from $\Delta^n$ by deleting the $k$th face. This is called a \textit{horn}.
+
+This isn't a definition of a horn --- we might instead characterize the horns by their representable functors, i.e. $\Hom_{\sSet}(\Lambda_2^1,-)$ represents the set of ``composable'' edges $x \xto{f} y \xto{g} z$ in any simplicial set.
+
+\begin{proposition} A simplicial set $X_\bullet$ is the nerve of a 1-category if and only if it admits \textit{unique inner horn filling}, meaning for every $n$ and every $0 < k < n$, given any map $\Lambda^k_n \to X_\bullet$ it admits a unique lift:
+\[ \begin{tikzcd}
+    \Lambda^k_n\rar\dar & X_\bullet\\
+    \Delta^n\ar[ur,dashed] & 
+\end{tikzcd} \]
+\end{proposition}
+
+
+
+\begin{example} Let $X$ be a topological space. Then it gives rise to a simplicial set called its \textit{fundamental $\infty$-groupoid} $\Pi_{\infty} X$, with the data
+\begin{itemize}
+    \item 0-simplices = points $x \in X$
+    \item 1-simplices = paths $x$ to $y$ in $X$
+    \item 2-simplices = homotopies between paths
+    \item 3-simplices = homotopies between homotopies between paths
+    \item[$\vdots$]
+\end{itemize}
+Note that a 2-cell is no longer unique! There can be many homotopies between paths. In particular composition of paths isn't well-defined, in the sense that many paths can function naturally as a composite. We might define $g\circ f$ to be any path together with a 2-cell making the diagram commute:
+\[ \begin{tikzcd}
+     & y\ar[dr,"g" above right]\\
+    x\ar[ur,"f" above left]\ar[rr,dashed] &  & z.
+\end{tikzcd} \]
+In order to specify a composite now, we need to give the data not only of the 1-cell but also of the 2-cell! This is the vibe of higher-categorical composition. Note that horns don't fill uniquely here.
+\end{example}
+
+\begin{exercise} If you're familiar with the singular chains construction
+\begin{align*}
+    |-| \colon \sSet \leftrightarrows \Top \noloc \Sing(-),
+\end{align*}
+convince yourself that $\Sing(-)$ is the same as $\Pi_\infty(-)$.
+\end{exercise}
+
+
+\begin{definition} A \textit{quasicategory} is any simplicial set with (not necessarily unique) inner horn filling. We denote by $\qCat \subseteq \sSet$ the full subcategory on the quasi-categories.
+\end{definition}
+
+A natural question to ask is to what extent there is ambiguity in composition -- how many choices do we have for horn filling? Do different choices \textit{mean} different things? The following proposition answers this to some extent.
+
+\begin{proposition} (Joyal) If $\mathscr{C}$ is a quasi-category, then the map of simplicial sets
+\begin{align*}
+    \Fun(\Delta^2,\mathscr{C})\to \Fun(\Lambda_2^n,\mathscr{C})
+\end{align*}
+has contractible fibers.\footnote{In fact $\mathscr{C}$ is a quasi-category if and only if this holds.}
+
+% todo add reference -- this is 3.4 and 3.5 in https://arxiv.org/pdf/1303.4669
+\end{proposition}
+
+
+
+
+
+\begin{definition} A \textit{Kan complex} is a quasi-category which also has \textit{outer horn filling}, meaning we have a lift
+\[ \begin{tikzcd}
+    \Lambda^k_n\rar\dar & X_\bullet\\
+    \Delta^n\ar[ur,dashed] & 
+\end{tikzcd} \]
+not only for $0<k<n$, but also for $k=0,n$. For $n=2$, this means we are also allowed to fill the horns:
+\[ \begin{tikzcd}
+     & \bullet\\
+    \bullet\ar[ur]\ar[rr] & & \bullet
+\end{tikzcd} \quad\quad \quad\quad  \begin{tikzcd}
+    & \bullet\ar[dr] & \\
+    \bullet\ar[rr] & & \bullet
+\end{tikzcd} \]
+\end{definition}
+
+
+
+\begin{exercise} Show a Kan complex is the nerve of a 1-groupoid if and only if its horn filling is unique.
+\end{exercise}
+
+\textbf{The homotopy hypothesis}: The functor
+\begin{align*}
+    (\Top,\text{weak equiv}) &\to (\Kan, \text{weak equiv}) \\
+    X &\mapsto \Pi_\infty(X)
+\end{align*}
+yields an equivalence of $\infty$-categories.\footnote{%
+We haven't defined what we mean by $\Top$ or $\Kan$ as an $\infty$-category, and it's a bit subtle. We want to incorporate the weak equivalences, so really we should take the hammock localization of $\Kan$ at the simplicial weak equivalences, then take its homotopy coherent nerve, but fibrantly replace $L^W\Kan$ first before taking $N_\Delta$ so that the resulting simplicial set is an honest quasi-category. An analogous procedure should be carried out with topological spaces, assuming we work with all spaces and not just CW complexes.
+}
+Hence we can think about spaces as Kan complexes without much loss of generality. We use $\mathcal{S}$ to denote the $\infty$-category of spaces.
+
+\begin{remark} (On other models of $\infty$-categories) There are a ton of different models of $\infty$-categories, we stick with quasi-categories since they have become the standard to some extent. The main advantage is that functors are much easier to describe -- they are just maps of the underlying simplicial sets. Functor $\infty$-categories $\Fun(\mathscr{C},\mathscr{D})$ between two quasi-categories are simply given by the internal hom in simplicial sets.
+\end{remark}
+
+\begin{proposition} If $\mathscr{C}$ is a quasi-category and $S$ is any simplicial set, then the internal hom $\Fun(S,\mathscr{C})$ is also a quasi-category. We think about this as ``$S$-shaped diagrams in $\mathscr{C}$.''
+\end{proposition}
+
+
+
+\subsection{Homotopy in an $\infty$-category}
+
+
+
+\begin{definition}\label{def:homotopy-category-of-quasicategory} 
+Let $\mathscr{C}$ be a quasi-category. We define its \textit{homotopy category}, denoted $h\mathscr{C}$ to be the category freely generated by the 1-truncation $\tau_{\le 1} \mathscr{C}$, modulo the relations coming from 2-simplices.
+\end{definition}
+
+\begin{definition} We say that a morphism $f \colon x \to y$ in a quasi-category $\mathscr{C}$ is an \textit{isomorphism/equivalence} if there exists some $g \colon y \to x$ so that $[gf]=\id_x$ and $[fg]=\id_y$ in $h\mathscr{C}$. Note that $g$ is \textit{not uniquely defined}, unlike in ordinary 1-category theory.
+\end{definition}
+
+\begin{remark} We should think about this less like isomorphisms in 1-categories, and more like homotopy equivalences in topology.
+\end{remark}
+
+\begin{example} A morphism $f\colon X\to Y$ between CW complexes is a (weak) homotopy equivalence if and only if $[f]$ is an isomorphism in $h\Top$. Hence the ``isomorphisms'' in the $\infty$-category of spaces are not homeomorphisms but rather homotopy equivalences.
+\end{example}
+
+
+\begin{proposition} There is an adjunction\footnote{%
+If we consider the codomain of the nerve construction to be all simplicial sets, it still admits a left adjoint called the homotopy category, however it is not given by the formula in \autoref{def:homotopy-category-of-quasicategory}. Technically there is a more general construction $h \colon \sSet\to \Cat$, which is left adjoint to $N$, and which agrees with \autoref{def:homotopy-category-of-quasicategory}, which we should call $\tau_{\le 1}$, when the simplicial set is a quasi-category. We'll only apply the homotopy category construction to quasi-categories here so this distinction won't matter.
+}
+
+
+\begin{align*}
+    h\colon \qCat \leftrightarrows \Cat \noloc N.
+\end{align*}
+\end{proposition}
+
+\begin{remark} We recall that the nerve is fully faithful. This is equivalent to the counit of the adjunction being a natural isomorphism:
+\begin{align*}
+    hN\mathscr{C} \xto{\sim} \mathscr{C},
+\end{align*}
+in other words any 1-category can be recovered as the homotopy category of its nerve.
+\end{remark}
+
+\begin{example} Let $R$ be any ring. Then its category of chain complexes $\Ch(R)$ is naturally an $\infty$-category, and the notion of homotopy recovers the idea of chain homotopy equivalence. We have to be careful constructing this explicitly, refer to \S13 of DAG for more info.
+\end{example}
+
+
+\subsection{Mapping spaces}
+
+
+We want to make precise the model of quasi-categories as $(\infty,1)$-categories. The vibe of higher categories is that homs in 1-categories are 0-categories (sets). Homs in 2-categories are 1-categories, homs in 3-categories are 2-categories, etc. Hence homs in $(\infty,1)$-categories should be $(\infty,0)$-categories. From the models we're working in:
+
+\begin{center} 
+\begin{tabular}{l  l  l}
+$(\infty,1)$-categories & = & quasi-categories \\
+$(\infty,0)$-categories & = & Kan complexes,
+\end{tabular}
+\end{center}
+hence we want to argue that, for any quasicategory $\mathscr{C}$, and any pair of objects (0-simplices) $x,y\in \mathscr{C}$, there is a mapping space $\Map_\mathscr{C}(x,y)$ which is a Kan complex.
+
+
+
+\begin{definition} For $x,y\in \mathscr{C}$, where $\mathscr{C}$ is a quasicategory, we denote by $\Map_{\mathscr{C}}(x,y)$ the pullback in simplicial sets:
+\[ \begin{tikzcd}
+    {\Map_{\mathscr{C}}(x,y)}\rar\dar\pb & {\Fun(\Delta^1,\mathscr{C})}\dar["{(\ev_0,\ev_1)}" right]\\
+    {\{x,y\}}\rar & \mathscr{C} \times \mathscr{C}.
+\end{tikzcd} \]
+Here $\Fun(\Delta^1,\mathscr{C})$ denotes an internal hom from the interval $\Delta^1$ to $\mathscr{C}$. The rightmost vertical map is what's called a \textit{bifibration} (the proof that this map is a bifibration is \cite[2.4.7.11]{HTT}), which in particular means that $\Map_{\mathscr{C}}(x,y)$ is a Kan complex.
+\end{definition}
+
+\begin{intuition} The mapping space is intended to generalize the idea of the homotopy category, in the sense that
+\begin{align*}
+    \pi_0 \Map_\mathscr{C}(x,y) = \Hom_{h\mathscr{C}}(x,y).
+\end{align*}
+In particular its connected components correspond to homotopy classes of maps between $x$ and $y$, but it remembers more information about \textit{how} the homotopies were witnessed, encoded in the higher homotopy type of $\Map_\mathscr{C}(x,y)$.
+\end{intuition}
+
+
+
+
+\begin{remark} 
+Alternatively we may define $\Map_\mathscr{C}(x,y)$ as the simplicial set whose $n$-simplices are given by the set of all
+\begin{align*}
+    z \colon \Delta^{n+1} \to \mathscr{C},
+\end{align*}
+with the $\{n+1\}$-vertex mapping to $y$, and the vertices $\left\{ 0, \ldots, n \right\}$ mapping to $x$. 
+Technically speaking this is the space of \textit{right morphisms} but when $\mathscr{C}$ is an $\infty$-category this models the mapping space (it is canonically isomorphic in the homotopy category). As an exercise, verify that $\Map_{\mathscr{C}}(x,y)$ is indeed a Kan complex from the definition.
+\end{remark}
+
+What is $\Map_\mathscr{C}(x,y)$ intended to capture? Its 0-simplices are maps from $x$ to $y$ \textit{in the homotopy category} $h\mathscr{C}$. In other words, they are equivalence classes of zig-zags of morphisms in $\mathscr{C}$ from $x$ to $y$, where maps going the wrong way are all invertible.
+
+\begin{notation} If $\mathscr{C}$ is an $\infty$-category and $x,y\in\mathscr{C}$, we denote by
+\begin{align*}
+    \left[ x,y \right] := \pi_0 \Map_{\mathscr{C}}(x,y).
+\end{align*}
+We call this \textit{homotopy classes of maps} from $x$ to $y$.
+\end{notation}
+
+\begin{warning} It is not true that $\left[ x,y \right]_\mathscr{C}$ is simply the edges from $x$ to $y$ in the quasi-category $\mathscr{C}$ modulo an equivalence relation, it is more subtle. In the presence of a model structure, we can replace $x$ and $y$ by equivalent objects $Qx$ and $Ry$ respectively, so that $\left[ x,y \right] \cong \left[ Qx,Ry \right]$, and this latter set can be literally identified with the 1-cells $Qx \to Ry$ in $\mathscr{C}$ modulo an explicit equivalence relation. We'll come back to this when we talk about sheaves.
+\end{warning}
+
+
+\subsection{Presentable $\infty$-categories}
+
+Modulo some set-theoretic technicalities, we can now be content with the existence of a model for infinity-categories. All notions of functors, colimits, adjunctions, etc. should now be understood in the higher categorical sense, i.e. up to higher coherence.
+
+\begin{definition} \cite[5.4.2.1]{HTT} An $\infty$-category is \textit{accessible} if it is generated under $\kappa$-filtered colimits by a small category.
+\end{definition}
+
+\begin{example}\label{ex:spaces-presentable}  The category $\mathcal{S}$ of spaces is presentable, since it admits all colimits and every space is built out of finite CW complexes.
+\end{example}
+
+\begin{remark} By \cite[5.4.3.6]{HTT}, a small $\infty$-cat is accessible if and only if it is idempotent complete.\footnote{Idempotent complete has a number of definitions, in particular it implies that idempotent endomorphisms $f \colon X \to X$ (i.e. $f\circ f = f$) correspond bijectively to retracts of $X$, i.e. composites $Y \hookto X \to Y$. If $\mathscr{C}$ is idempotent complete then it is closed under retracts.} Observe that the category of finitely generated free $R$-modules fail to contain retracts (projectives) so they're not idempotent complete and hence not accessible.
+\end{remark}
+
+
+\begin{definition}\label{def:presheaves}  Given any $\infty$-category $\mathscr{C}$, we denote by $\Pre(\mathscr{C}) := \Fun(\mathscr{C}^\op, \mathcal{S})$ the category of ($\infty$-)\textit{presheaves}.
+\end{definition}
+
+
+\begin{example}\label{ex:presheaves-presentable} By the previous two examples, $\Pre(\mathscr{C})$ is presentable for any $\mathscr{C}$. This is the coYoneda lemma --- that any presheaf is a colimit of representable ones.
+\end{example}
+
+\begin{example} We can think about presheaves of simplicial sets $\Fun(\Sch_S^\op, \sSet)$ as the presheaf category $\Pre(\Sch_S)$. Note what lives in here:
+\begin{enumerate}
+    \item Schemes all live in here via the Yoneda embedding $\Sch_S \hookto \Fun(\Sch_S^\op, \Set) \subseteq \Fun(\Sch_S^\op, \sSet)$, by viewing $\Set \subseteq \sSet$ as discrete simplicial sets (no non-degenerate $n$-simplices for $n\ge 1$).
+    \item \textit{Simplicial schemes} also live in here, by moving some adjoint stuff around:
+    \begin{align*}
+        \Fun(\DDelta^\op, \Sch_S) \xhookto{y} \Fun(\DDelta^\op, \Fun(\Sch_S^\op, \Set)) \cong \Fun(\Sch_S^\op, \Fun(\DDelta^\op, \Set)) = \Pre(\Sch_S).
+    \end{align*}
+    %
+    \item Spaces (viewed as simplicial sets by $\Pi_\infty$) live in here as constant presheaves $\sSet \hookto \Fun(\Sch_S^\op, \sSet)$.
+\end{enumerate}
+Thus we have a natural home for schemes and spaces, as well as these simplicial scheme data types we've been looking at.
+\end{example}
+
+
+\begin{definition}\label{def:presentable} We say an $\infty$-category $\mathscr{C}$ is \textit{presentable} if it is accessible and admits all colimits (cocomplete).
+\end{definition}
+
+\begin{theorem}\label{thm:aft} \textit{(Adjoint functor theorem)} Let $F \colon \mathscr{C} \to \mathscr{D}$ be a functor between presentable categories. Then
+\begin{itemize}
+    \item $F$ admits a right adjoint if and only if $F$ preserves all colimits
+    \item $F$ admits a left adjoint if and only if it preserves all limits and $\kappa$-filtered colimits
+\end{itemize}
+\end{theorem}
+
+Really hard to write down functors explicitly in quasi-categories, since we are writing down a map of simplicial sets, which is a lot of data. AFT is nice because it lets us get functors without writing them explicitly, but they are still characterized by being adjoints.
+
+\begin{notation}\label{nota:PrL}  We denote by $\Pr^L$ the category of presentable $\infty$-categories and colimit-preserving functors between them. Note every functor in $\Pr^L$ is a left adjoint.
+\end{notation}
+
+
+\subsection{Localization}
+
+\begin{definition} \cite[5.2.7.2]{HTT} A functor $f \colon \mathscr{C}\to \mathscr{D}$ is a \textit{localization} if it admits a fully faithful right adjoint.
+\end{definition}
+
+In many cases a localization is given by inverting a class of morphisms in $\mathscr{C}$. In particular let $S \subseteq \mor \mathscr{C}$ be a class of morphisms in $\mathscr{C}$, then we can try to \textit{invert} $S$ by cooking up a new category $\mathscr{C}[S^{-1}]$.
+
+
+\begin{definition} \cite[5.5.4.1]{HTT} Let $S \subseteq \mor \mathscr{C}$. We say $z\in \mathscr{C}$ is $S$\textit{-local} if for every $s \colon x \to y$ in $S$, the induced map
+\begin{align*}
+    \Map_{\mathscr{C}}(y,z) \to \Map_{\mathscr{C}}(x,z)
+\end{align*}
+is an equivalence.
+\end{definition}
+
+\begin{remark} Let $\mathscr{C}_0 \subseteq \mathscr{C}$ be the full subcategory of $S$-local objects. If this admits a left adjoint, it makes sense to call that adjoint $L_S$, that is, $S$-localization, since it inverts every morphism in $S$. \textit{This is where presentable categories give us an advantage}. In general arguing for the existence of a left adjoint isn't easy, however if $\mathscr{C}$ is presentable, then the adjoint functor theorem tells us that we just have to check the inclusion $\mathscr{C}_0 \subseteq \mathscr{C}$ preserves limits and filtered colimits.
+\end{remark}
+Let $\mathscr{C}_0 \subseteq \mathscr{C}$ be the full subcategory of $S$-local objects. If this admits a left adjoint, it makes sense to call that adjoint $L_S$, that is, $S$-localization, since it inverts every morphism in $S$.
+
+\begin{proposition} \cite[5.5.4.15]{HTT} If $\mathscr{C}$ is presentable and $S \subseteq \mor \mathscr{C}$ is small, then the inclusion of the full subcategory of $S$-local objects admits a left adjoint.\footnote{The terminology for this is that $\mathscr{C}_0 \subseteq \mathscr{C}$ is a \textit{reflective subcategory}.}
+\end{proposition}
+
+\begin{example} In the next talk, our primary application of this machinery will be looking at the presheaf category $\Pre(\mathscr{C})$, which is presentable by \autoref{ex:presheaves-presentable}. We can look at full subcategories of presheaves which satisfy a certain sheaf condition and argue this is a reflective subcategory hence we will have an adjoint we call \textit{sheafification}.
+\end{example}
+
+\begin{remark} Given a class of arrows $S \subseteq \mor \mathscr{C}$, we can always form $\mathscr{C}[S^{-1}]$ by adjoining formal inverses to $S$ and considering all composites of morphisms in $\mathscr{C}$ and formal inverses (zig-zags). This is called \textit{Dwyer--Kan localization} or \textit{hammock localization}. This satisfies the correct universal property of localization, but we might encounter size issues. Bousfield localization is a particular example of Dwyer--Kan localization, but where we are able to guarantee that we don't encounter any size issues since the localization is a subcategory of the original category.
+\end{remark}
+
+
+
+
 \printbibliography
 \end{document}
