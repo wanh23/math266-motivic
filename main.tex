@@ -1360,7 +1360,7 @@ Modulo some set-theoretic technicalities, we can now be content with the existen
 \begin{definition} \cite[5.4.2.1]{HTT} An $\infty$-category is \textit{accessible} if it is generated under $\kappa$-filtered colimits by a small category.
 \end{definition}
 
-\begin{example}\label{ex:spaces-presentable}  The category $\mathcal{S}$ of spaces is presentable, since it admits all colimits and every space is built out of finite CW complexes.
+\begin{example}\label{ex:spaces-presentable}  The category $\mathcal{S}$ of spaces is accessible, since it admits all colimits and every space is built out of finite CW complexes.
 \end{example}
 
 \begin{remark} By \cite[5.4.3.6]{HTT}, a small $\infty$-cat is accessible if and only if it is idempotent complete.\footnote{Idempotent complete has a number of definitions, in particular it implies that idempotent endomorphisms $f \colon X \to X$ (i.e. $f\circ f = f$) correspond bijectively to retracts of $X$, i.e. composites $Y \hookto X \to Y$. If $\mathscr{C}$ is idempotent complete then it is closed under retracts.} Observe that the category of finitely generated free $R$-modules fail to contain retracts (projectives) so they're not idempotent complete and hence not accessible.
@@ -1371,8 +1371,6 @@ Modulo some set-theoretic technicalities, we can now be content with the existen
 \end{definition}
 
 
-\begin{example}\label{ex:presheaves-presentable} By the previous two examples, $\Pre(\mathscr{C})$ is presentable for any $\mathscr{C}$. This is the coYoneda lemma --- that any presheaf is a colimit of representable ones.
-\end{example}
 
 \begin{example} We can think about presheaves of simplicial sets $\Fun(\Sch_S^\op, \sSet)$ as the presheaf category $\Pre(\Sch_S)$. Note what lives in here:
 \begin{enumerate}
@@ -1390,6 +1388,9 @@ Thus we have a natural home for schemes and spaces, as well as these simplicial 
 
 \begin{definition}\label{def:presentable} We say an $\infty$-category $\mathscr{C}$ is \textit{presentable} if it is accessible and admits all colimits (cocomplete).
 \end{definition}
+
+\begin{example}\label{ex:presheaves-presentable} By the previous two examples, $\Pre(\mathscr{C})$ is presentable for any $\mathscr{C}$. This is the coYoneda lemma --- that any presheaf is a colimit of representable ones.
+\end{example}
 
 \begin{theorem}\label{thm:aft} \textit{(Adjoint functor theorem)} Let $F \colon \mathscr{C} \to \mathscr{D}$ be a functor between presentable categories. Then
 \begin{itemize}
