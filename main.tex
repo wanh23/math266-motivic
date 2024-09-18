@@ -13,6 +13,7 @@
 
 \def\theshiftamount{2}
 \let\del\partial
+\renewcommand{\Pre}{\mathrm{PSh}}
 
 \begin{document}
 \begin{abstract} Notes from MATH266: Motivic homotopy theory, taught at Harvard in Fall 2024. Last compiled: \today
@@ -35,7 +36,7 @@ These are notes for a topics class taught at Harvard in Fall 2024. Notes are bei
 \begin{center}
     \href{https://github.com/tbrazel/math266-motivic}{https://github.com/tbrazel/math266-motivic}
 \end{center}
-Thank you to Merrick Cai and Matthew Niemiro for valuable changes and suggestions!
+Thank you to Merrick Cai and Matthew Niemiro for valuable changes and suggestions! Thank you to Liam Keenan for letting me bother them about technical things.
 
 \section{Introduction}
 
@@ -1352,6 +1353,9 @@ We call this \textit{homotopy classes of maps} from $x$ to $y$.
 \begin{warning} It is not true that $\left[ x,y \right]_\mathscr{C}$ is simply the edges from $x$ to $y$ in the quasi-category $\mathscr{C}$ modulo an equivalence relation, it is more subtle. In the presence of a model structure, we can replace $x$ and $y$ by equivalent objects $Qx$ and $Ry$ respectively, so that $\left[ x,y \right] \cong \left[ Qx,Ry \right]$, and this latter set can be literally identified with the 1-cells $Qx \to Ry$ in $\mathscr{C}$ modulo an explicit equivalence relation. We'll come back to this when we talk about sheaves.
 \end{warning}
 
+\begin{example} If $\mathscr{C}$ is a 1-category, we can view it trivially as an $\infty$-category via the nerve construction. In this case $\Map_\mathscr{C}(x,y) = \Hom_\mathscr{C}(x,y)$ is just a set (a discrete simplicial set). The homotopy category of $\mathscr{C}$ is just $\mathscr{C}$, because there are no equivalences which aren't isomorphisms.
+\end{example}
+
 
 \subsection{Presentable $\infty$-categories}
 
@@ -1404,6 +1408,9 @@ Really hard to write down functors explicitly in quasi-categories, since we are 
 \begin{notation}\label{nota:PrL}  We denote by $\Pr^L$ the category of presentable $\infty$-categories and colimit-preserving functors between them. Note every functor in $\Pr^L$ is a left adjoint.
 \end{notation}
 
+\begin{theorem} Every presentable category is complete (admits all limits).
+\end{theorem}
+
 
 \subsection{Localization}
 
@@ -1434,6 +1441,15 @@ Let $\mathscr{C}_0 \subseteq \mathscr{C}$ be the full subcategory of $S$-local o
 \end{remark}
 
 
+\begin{example} We define $\mathcal{S}$ to be the Dwyer--Kan localization of the category $\Top$ of compactly generated weakly Hausdorff spaces at the weak homotopy equivalences. This has the property that $h \mathcal{S} = \Ho(\Top)$. See \cite[\S1.2.16]{HTT} for more information. As a model category we are invited to think about $\mathcal{S}$ as
+\begin{enumerate}
+    \item simplicial sets with the classical model structure
+    \item Kan complexes with the classical model structure
+    \item topological spaces with the classical model structure
+\end{enumerate}
+\end{enumerate}
+Hence we think about $\Pre(\mathscr{C}) = \Fun(\mathscr{C}^\op, \mathcal{S})$ as simplicial presheaves, equipped with a \textit{levelwise} notion of weak equivalence, coming from weak homotopy equivalence of simplicial sets.
+\end{example}
 
 
 \printbibliography
