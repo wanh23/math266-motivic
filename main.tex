@@ -14,6 +14,7 @@
 \def\theshiftamount{2}
 \let\del\partial
 \renewcommand{\Pre}{\mathrm{PSh}}
+\providecommand{\Hen}{\mathrm{Hen}}
 
 \begin{document}
 \begin{abstract} Notes from MATH266: Motivic homotopy theory, taught at Harvard in Fall 2024. Last compiled: \today
@@ -1419,6 +1420,15 @@ Really hard to write down functors explicitly in quasi-categories, since we are 
 
 In many cases a localization is given by inverting a class of morphisms in $\mathscr{C}$. In particular let $S \subseteq \mor \mathscr{C}$ be a class of morphisms in $\mathscr{C}$, then we can try to \textit{invert} $S$ by cooking up a new category $\mathscr{C}[S^{-1}]$.
 
+\begin{example} $\ $
+\begin{enumerate}
+    \item The \textit{homotopy category} of spaces is obtained from the category of compactly generated weakly Hausdorff spaces by inverting all homotopy equivalences.
+    \item The \textit{derived category} of a ring is obtained from the category of chain complexes by inverting the chain homotopy equivalences.
+    \item A group (as a one-object groupoid) is obtained from a monoid by freely inverting each morphism.
+\end{enumerate}
+\end{example}
+
+
 
 \begin{definition} \cite[5.5.4.1]{HTT} Let $S \subseteq \mor \mathscr{C}$. We say $z\in \mathscr{C}$ is $S$\textit{-local} if for every $s \colon x \to y$ in $S$, the induced map
 \begin{align*}
@@ -1447,10 +1457,328 @@ Let $\mathscr{C}_0 \subseteq \mathscr{C}$ be the full subcategory of $S$-local o
     \item Kan complexes with the classical model structure
     \item topological spaces with the classical model structure
 \end{enumerate}
-\end{enumerate}
 Hence we think about $\Pre(\mathscr{C}) = \Fun(\mathscr{C}^\op, \mathcal{S})$ as simplicial presheaves, equipped with a \textit{levelwise} notion of weak equivalence, coming from weak homotopy equivalence of simplicial sets.
 \end{example}
 
+
+
+\section{\sectionheader Descent}
+
+\begin{goal} Define the $\infty$-topos of Nisnevich sheaves $\Sh_\Nis(\Sm_k)$.
+\end{goal}
+
+\begin{assumption} We will work over a base scheme $S$ which is qcqs and Noetherian.
+\end{assumption}
+
+
+\subsection{Descent, higher categorically}
+
+Very roughly speaking, a \textit{sheaf} is a presheaf that glues along covers. We're going to give a general definition, then show how it recovers what we know and remember.
+
+\begin{notation} Suppose $\mathcal{U} = \left\{ U_i \to X \right\}_i$ is a cover in $\Sch_S$, giving rise to a \v{C}ech nerve $\DDelta^\op \to \Sch_S$. Then if $\mathscr{C}$ is any $\infty$-category and $F \colon \Sch_S^\op \to \mathscr{C}$ a presheaf, then we denote by $F(\mathcal{U}) \in \Fun(\DDelta,\mathscr{C})$ the cosimplicial object given by applying $F$ everywhere in the \v{C}ech nerve.\footnote{If $F$ is product-preserving this is immediate, if not we have to apply $F$ at each level and then take products.}
+\end{notation}
+
+\begin{definition} Let $\mathscr{C}$ be an $\infty$-category with all limits, let $(\Sch_S,\tau)$ be a site, and let $F \colon \Sch_S^\op \to \mathscr{C}$ be a presheaf valued in $\mathscr{C}$. Then we say $F$ is a $\tau$\textit{-sheaf} if for every $\tau$-cover $\mathcal{U} = \left\{ U_i \to X \right\}$, we have that the induced map
+\begin{align*}
+    F(X) \to \lim_{\DDelta} F(\mathcal{U})
+\end{align*}
+is an equivalence.
+\end{definition}
+
+
+\begin{example} If $\mathscr{C}$ is a 1-category, e.g. sets, then a higher categorical limit just recovers the notion of an ordinary limit, since there is no higher structure. In particular, the limit reduces to seeing that the pair of parallel morphisms $[0] \rightrightarrows[1]$, viewed as a subcategory of $\DDelta$, is \textit{final}. In this case the sheaf condition reduces to asking whether the map
+\begin{align*}
+    F(X) \to \lim \left( \prod_i F(U_i) \rightrightarrows \prod_{i,j} F(U_{ij}) \right)
+\end{align*}
+is an equivalence, i.e. a 1-categorical limit (equalizer).
+\end{example}
+
+\begin{example} If $\mathscr{C}$ is an abelian category, then the equalizer of two maps is just the kernel of their difference, so we get the familiar sheaf condition that
+\begin{align*}
+    0 \to F(X) \to \prod F(U_i) \to \prod_{i,j}F(U_{ij})
+\end{align*}
+is left exact.
+\end{example}
+
+\begin{example} If $\mathscr{C}$ is a 2-category, then $\DDelta_{\le 2}^\inj \subseteq \DDelta$ is final (reference needed), so we get that the sheaf condition becomes
+\begin{align*}
+    F(X) \to \lim \left( \prod_i F(U_i) \rightrightarrows \prod_{i,j} F(U_{ij}) \rightrightarrows \prod_{i,j,k} F(U_{ijk}) \right)
+\end{align*}
+If $\mathscr{C} =\Grpd$ is the category of groupoids, viewed as an $\infty$-subcategory of $\qCat$ via the nerve construction, then this is precisely the stack condition! So this is what we meant when we said ``sheaf of categories'' earlier.
+\end{example}
+
+\begin{remark} These limits are not 1-categorical limits, they are taking place in a higher categorical sense. The following example is worth thinking about as it makes this more concrete.
+\end{remark}
+
+\begin{example} Let $R$ be a ring, and $\left\langle f,g \right\rangle = R$ two objects generating the unit ideal, giving rise to a two-object cover $\left\{ \Spec(R_f) \to \Spec(R),\ \Spec(R_g) \to \Spec(R) \right\}$.
+\begin{enumerate}
+    \item Argue that the stack condition for this particular cover truncates at the double overlaps, since there are no interesting triple overlaps.
+    \item See that $\mathcal{F} \colon \Sch^\op \to \Grpd$ satisfies descent for this cover if and only if
+\[ \begin{tikzcd}
+    \mathcal{F}(\Spec(R))\rar\dar\pb & \mathcal{F}(\Spec(R_f))\dar\\
+    \mathcal{F}(\Spec(R_g))\rar & \mathcal{F}(\Spec(R_{fg}))
+\end{tikzcd} \]
+is a \textit{pullback of groupoids}.
+
+    \item As a particular example, show that $\Mod(-)$ satisfies descent for two-object Zariski covers. That is, $\Mod(R)$ is equivalent to the 2-categorical pullback, often called the \textit{category of descent data} attached to the cover.
+\end{enumerate}
+\end{example}
+
+\subsection{cd-structures} We saw in the previous example how a sheaf condition can simplify on covers with fewer objects. A natural question to ask would be whether descent along a small collection of covers implies descent along all covers. A formalism that often lets us deal with this is the idea of a \textit{cd-structure}. We're also going to zoom in on presheaves of spaces.
+
+\begin{definition} A \textit{cd-structure} is a collection of commutative squares in $\mathscr{C}$ closed under isomorphism:
+\[ \begin{tikzcd}
+    A\rar\dar & B\dar\\
+    C\rar & D.
+\end{tikzcd} \]
+\end{definition}
+
+\begin{terminology} Given a cd-structure on $\Sch_S$, we define its associated topology $\tau$ to be the coarsest topology for which $\left\{ B\to D,\ C\to D \right\}$ is a $\tau$-cover for every distinguished square.
+\end{terminology}
+
+
+
+\begin{example} The \textit{Zariski cd-structure} is defined by commutative squares of the form
+\[\begin{tikzcd}
+    U\cap V\rar\dar & U\dar\\
+    V\rar & U\cup V.
+\end{tikzcd} \]
+We will call these squares \textit{distinguished Zariski squares}.
+\end{example}
+
+
+\begin{theorem} Let $\mathcal{F} \in \Pre(\Sch_S^\op)$ be a presheaf. Then $\mathcal{F}$ is a Zariski sheaf if and only if $\mathcal{F}(\emptyset) = \ast$ and $\mathcal{F}$ sends every distinguished Zariski square to a (homotopy) pullback square.
+\end{theorem}
+
+
+
+
+
+
+\begin{example} The Nisnevich topology is generated by a cd-structure given by \textit{distinguished Nisnevich squares}, of the form
+\[ \begin{tikzcd}
+    U \times_X V\rar\dar & V\dar["p" right]\\
+    U\rar["i" below] & X,
+\end{tikzcd} \]
+where $i$ is an open immersion, $p$ is \'etale, and $p$ restricts to an isomorphism $p^{-1}(X-U)\to X-U$.
+\end{example}
+
+\begin{example}\label{ex:affine-distinguished-nisnevich-square} \textit{(Affine distinguished Nisnevich square)}. Suppose $f: R \to S$ is a finite \'etale ring homomorphism, and $h\in R$ is some element for which $R/x \cong S/f(x)$ is a ring isomorphism. Then we have a distinguished Nisnevich square:
+\[ \begin{tikzcd}
+    \Spec(S_{f(x)})\rar\dar\pb & \Spec(S)\dar\\
+    \Spec(R_f)\rar & \Spec(R).
+\end{tikzcd} \]
+\end{example}
+\begin{proof} The right map is \'etale, the bottom is an open immersion, and the restriction of $\Spec(S) \to \Spec(R)$ to the complement of the open distinguished affine $D(f) \subseteq \Spec(R)$ is the hypyothesis that $R/x \cong S/f(x)$.
+\end{proof}
+
+\begin{definition} We say $\mathcal{F} \in \Pre(\Sm_S)$ is a \textit{Nisnevich sheaf} if $\mathcal{F}(\emptyset)= \ast$ and $\mathcal{F}$ sends every Nisnevich sheaf to a pullback square.
+\end{definition}
+
+\begin{exercise} Show that $\Mod(-)$ is a Nisnevich sheaf on the site of affine schemes.
+\end{exercise}
+
+
+
+\subsection{Sheafification and accessible localizations}
+
+\begin{definition} If $\mathscr{C} \subseteq \mathscr{D}$, then we say a localization $L \colon \mathscr{D} \to \mathscr{C}$ is \textit{accessible} if and only if the composite $\mathscr{D} \xto{L} \mathscr{C} \hookto \mathscr{D}$ is accessible. If $\mathscr{D}$ is an accessible category, this is equivalent to the statement that $\mathscr{C} \subseteq \mathscr{D}$ is an accessible subcategory \cite[5.5.4.2]{HTT}.
+\end{definition}
+
+
+
+\begin{definition} \cite[6.1.0.4]{HTT} If $\mathscr{X}$ is an $\infty$-category, we say it is an $\infty$\textit{-topos} if there exists a small category $\mathscr{C}$ and an accessible left exact localization functor $\Pre(\mathscr{C}) \to \mathscr{X}$.
+\end{definition}
+
+This is some higher categorical analogue of the fact from topos theory that every topos is the category of sheaves of sets on a site.
+
+
+\begin{proposition} \cite[6.2.2.7]{HTT} If $\mathscr{C}$ is a (small) $\infty$-category with a Grothendieck topology,  then $\Shv_\tau(\mathscr{C})$ is an accessible left exact localization of $P(\mathscr{C})$, in particular it is an $\infty$-topos.
+\end{proposition}
+\begin{proof} The precise statement of \cite[6.2.2.7]{HTT} is that $\Shv_\tau(\mathscr{C}) \subseteq \Pre(\mathscr{C})$ is a so-called \textit{topological} localization (defined in \cite[6.2.1.4]{HTT}). In \cite[6.2.1.6]{HTT} it is proved that every topological localization of a presentable $\infty$-category is accessible and left exact.
+\end{proof}
+
+
+Actually more is true:
+
+\begin{proposition} \cite[6.2.2.17]{HTT} If $\mathscr{C}$ is a small $\infty$-category there is a bijection between Grothendieck topologies on $\mathscr{C}$ and (equivalence classes of) topological localizations of $\Pre(\mathscr{C})$.
+\end{proposition}
+
+\begin{corollary}\label{cor:properties-sheafification} 
+Some consequences:
+\begin{enumerate}
+    \item The \textit{sheafification} functor $L_\tau \colon \Pre(\mathscr{C}) \to \Shv_\tau(\mathscr{C})$ preserves all colimits (being a left adjoint) and all small limits (being left exact).
+
+    \item The inclusion functor $i \colon \Shv_\tau(\mathscr{C}) \hookto \Pre(\mathscr{C})$ preserves all limits and all filtered colimits, by the adjoint functor theorem.
+\end{enumerate}
+\end{corollary}
+
+Explicitly, by this second point, we have that \textit{limits and filtered colimits of sheaves can be computed in the presheaf category}. This is a crucial fact.
+
+We can ask what we're localizing at here, and it's essentially the covering sieves attached to the cover --- \S6.2.2 of \cite{HTT} works through this in detail. It's a technical result, but we record one corollary.
+
+\begin{corollary} Let $S$ be qcqs and Noetherian, and let $\tau$ be a topology on $\Sch_S$. Then given any $\tau$-cover $\mathcal{U}:=\left\{ U_i \to X \right\}$, we can look at the induced map from the \v{C}ech nerve (viewed as a simplicial object of representable presheaves) to $X$ viewed as a constant simplicial presheaf. This map
+\begin{align*}
+    N(\mathcal{U}) \to X
+\end{align*}
+is an equivalence in the sheaf topos $\Shv_\tau(\Sch_S)$.
+\end{corollary}
+\begin{proof} The proof follows from identifying the sheaf topos, as a simplicial model category, with the Bousfield localization of the category of simplicial presheaves, endowed with the projective model structure, at the class of hypercovers in the topology. We insist on $S$ being qcqs and Noetherian so we don't have to stress about the difference between covers and hypercovers here, although there is a more general statement over any base. This follows a body of work by Jardine, Bousfield and Kan, Dugger, Hollander and Isaksen.
+\end{proof}
+
+
+Another technical thing we might need is the following:
+
+\begin{proposition} \cite[6.4.4.6]{HTT} Colimits in any $\infty$-topos (in particular in $\Shv_\tau(\mathscr{C})$ are \textit{universal}, meaning they commute with pullbacks.
+\end{proposition}
+
+
+\subsection{Slice categories}
+
+Recall if $\mathscr{C}$ is any ($\infty$-)category and $x\in \mathscr{C}$, we have the under and over categories $\mathscr{C}_{x/}$ and $\mathscr{C}_{/x}$, respectively. If $\ast\in \mathscr{C}$ is a terminal object, then it becomes both initial and terminal in $\mathscr{C}_{\ast/}$, that is, it is a zero object. We call a category with a zero object \textit{pointed}.
+
+\begin{proposition} We have that $\Delta^0$, viewed as a constant sheaf, is terminal in $\Shv_\Nis(\Sm_S)$.
+\end{proposition}
+\begin{proof} A terminal object is a limit over an empty diagram, and we can compute limits of sheaves in the category of presheaves by \autoref{cor:properties-sheafification}. Since limits and colimits of presheaves are computed pointwise, it is clear that $\Delta^0$ is terminal.
+\end{proof}
+
+\begin{notation} We denote by $\Shv_\Nis(\Sm_S)_\ast := \Shv_\Nis(\Sm_S)_{\Delta^0/}$ the pointed slice category. An object here is a map of sheaves $\Delta^0 \to F$, which we observe is equivalent to picking a basepoint in $F(U)$ for every $U \in \Sm_S$. Hence we can think of these as sheaves of \textit{pointed} spaces.
+\end{notation}
+
+\subsection{Connectivity}
+
+
+
+\begin{definition} Let $(X,x)\in\Shv_\Nis(\Sm_S)_\ast$ and $n\ge0$. Then we denote by $\pi_n(X,x)$ the $n$th \textit{homotopy sheaf}, defined to be the sheafification of the presheaf
+\begin{align*}
+    \Sch_S^\op &\to \Set \\
+    U &\mapsto \pi_n(X(U),x).
+\end{align*}
+\end{definition}
+
+\begin{remark} There is a more intrinsic definition of $\pi_n$, leveraging that an $\infty$-topos is cotensored over spaces,\footnote{%
+This means that for any $F \in \Shv_\tau(\Sch_S)$ and any $X \in \sSet$, we have a natural object $F^X\in \Shv_\tau(\Sch_S)$ with natural equivalences of mapping spaces
+\begin{align*}
+    \Map_\Shv(G,F^X) \cong \Map_\sSet(X,\Map_\Shv(G,F).
+\end{align*}
+}
+and considering the map $X^{S^n} \to X$ in the slice topos $\Shv_{/X}$, and defining $\pi_n$ to be its 0-truncation.
+\end{remark}
+
+
+\begin{proposition} We have that
+\begin{enumerate}
+    \item $\pi_0$ is a sheaf of sets
+    \item $\pi_1$ is a sheaf of groups
+    \item $\pi_n$ is a sheaf of abelian groups for $n\ge 2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{example} Let $\mathcal{F} \colon \Sm_S^\op \to \Set$ be any sheaf of sets, groups, abelian groups, etc. Then $\pi_n \mathcal{F} = 0$ for $n>0$.
+\end{example}
+\begin{proof} The presheaf $\pi_n \mathcal{F}$ is identically zero in sections, and hence so is its sheafification.
+\end{proof}
+
+\begin{example} If $\mathcal{G}$ is a sheaf of discrete groups, we have that
+\begin{align*}
+    \pi_n B_\bullet \mathcal{G} = \begin{cases} \mathcal{G} & i=1 \\ 0 & \text{otherwise}
+    \end{cases}
+\end{align*}
+\end{example}
+\begin{proof} We see that $(B_\bullet \mathcal{G}) (U)$ is exactly the simplicial bar construction for the group $\mathcal{G}(U)$. It is a $K(\pi,1)$ so it only has homotopy groups concentrated in each degree.
+\end{proof}
+
+
+
+\begin{definition} \cite[6.5.1.10]{HTT} We say $X\in \Shv_\Nis(\Sch_S)$ is $n$\textit{-connective} if $\pi_k(X) = \ast$ for every $k<n$. Say that $X$ is \textit{connected} if it is 1-connective, meaning $\tau_{\le 0}X = \ast$.
+\end{definition}
+
+\begin{proposition} \cite[5.5.6.18]{HTT}
+If $\mathscr{C}$ is a presentable category, and $\tau_{\le k} \mathscr{C} \subseteq \mathscr{C}$ the full subcategory spanned by the $k$-truncated objects, then the inclusion admits an accessible left adjoint, in other words there is a truncation functor $\tau_{\le k}$ which is a localization.
+\end{proposition}
+
+
+
+\begin{definition} The category $\tau_{\le 0}\Shv_\Nis(\Sch_S) =: \Shv_\Nis(\Sch_S)_{\le 0}$ is the category of Nisnevich sheaves of sets.
+\end{definition}
+
+\begin{notation} We write $\Ab(\Shv_\Nis(\Sch_S)_{\le 0})$ for the Nisnevich sheaves of abelian groups.
+\end{notation}
+
+
+
+
+\subsection{Whitehead's theorem}
+
+\begin{theorem} (Whitehead's theorem) Let $f \colon X \to Y$ be a map of CW complexes. Then $f$ is a homotopy equivalence if and only if $f \colon \pi_i(X) \to \pi_i(Y)$ is an isomorphism for each $i\ge0$.
+\end{theorem}
+
+A way to say this is that $\infty$-connective morphisms are homotopy equivalences. The $\infty$-categorical analogue of this is the notion of \textit{hypercompleteness}.
+
+\begin{definition} An $\infty$-topos is \textit{hypercomplete} if and only if every object is $\infty$-connective.
+\end{definition}
+
+\begin{upshot} In a hypercomplete topos, equivalences can be checked on homotopy sheaves.
+\end{upshot}
+
+\begin{definition} \cite[7.2.11]{HTT} An $\infty$-topos has \textit{homotopy dimension} $\le n$ if every $(n-1)$-connected object $X$ receives a map from the terminal object $\ast \to X$.
+\end{definition}
+
+\begin{theorem} If an $\infty$-topos has finite homotopy dimension then it is hypercomplete.
+\end{theorem}
+
+\begin{theorem} (Voevodsky) If $S$ is qcqs and Noetherian, then the homotopy dimension of $\Shv_\Nis(\Sm_S)$ is bounded above by $\dim(S)$. In particular this implies it is hypercomplete.
+\end{theorem}
+
+Truncation and connectivity fit into fiber sequences
+\begin{align*}
+    \tau_{>n} \to \id \to \tau_{\le n},
+\end{align*}
+which allow us to form Postnikov towers out of objects of $\infty$-topoi:
+\[ \begin{tikzcd}
+    & \tau_{\le n X}\dar \\
+    & \vdots\dar\\
+    X\rar\ar[uur,dashed] & \tau_{\le 0} X
+\end{tikzcd} \]
+Hypercompleteness implies \textit{Postnikov completeness} (reference needed) meaning that the induced map
+\begin{align*}
+    X \to \lim_n \tau_{\le n} X
+\end{align*}
+is an equivalence. That is, the Postnikov towers converge and we can make sense of obstruction theory.
+
+We'll see soon that this is a valuable perspective, e.g. for classifying torsors via homotopy theory. However the obstruction theory won't be very useful in the sheaf topos setting. This is one of the advantages we gain by passing to motivic spaces.
+
+\begin{corollary} Let $F \to G$ be a map in the sheaf topos $\Shv_\Nis(\Sm_S)$ where $S$ is qcqs and Noetherian. Then the following are equivalent:
+\begin{enumerate}
+    \item The map $F \to G$ is an equivalence in $\Shv_\Nis(\Sm_S)$
+    \item The induced maps $\pi_n(F) \to \pi_n(G)$ are equivalences for every $n\ge 0$.
+\end{enumerate}
+\end{corollary}
+
+So this gives us a way to check equivalence on homotopy groups!
+
+\subsection{Another way to check equivalence} We have seen that we can check equivalence of sheaves on homotopy sheaves, which gives us a topological way to check equivalence. Here we provide a more algebraic method.
+
+\begin{notation} Let $X$ be a scheme and $x\in X$. We denote by $\Hen_{X,x}$ the category of maps $f \colon (Y,y) \to (X,x)$ where $f \colon Y \to X$ is \'etale, $f(y) = x$, and $f$ induces an isomorphism $k(x) \xto{\sim} k(y)$.
+\end{notation}
+
+
+\begin{definition} Let $X$ be a scheme and $x\in X$. We denote by 
+\begin{align*}
+    X_x^h := \lim_{\Hen_{X,x}} Y = \lim_{\Hen_{X,x}} Y_y
+\end{align*}
+See \cite[04GV]{Stacks}, or \cite[2.22]{Bachmann-K}.
+\end{definition}
+
+
+\begin{theorem} Let $S$ be qcqs and Noetherian, and let $f \colon F \to G$ be a map of presheaves. Then $L_\Nis f$ is an equivalence if and only if for every smooth $X$ and $x\in X$, the induced map
+\begin{align*}
+    \colim_{\Hen_{X,x}} F(Y) \to \colim_{\Hen_{X,x}} G(Y)
+\end{align*}
+is an equivalence of spaces. (c.f. \cite[2.23]{Bachmann-K})
+\end{theorem}
+
+This follows from a more general idea that isomorphism can be checked on stalks \cite[1.15]{Nisnevich}. Nisnevich refers the reader to SGA4 VIII.3.5b for the analogous result in the \'etale topology and indicates that a nearly identical proof works for the Nisnevich topology.
 
 \printbibliography
 \end{document}
