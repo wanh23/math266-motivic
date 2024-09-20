@@ -37,7 +37,7 @@ These are notes for a topics class taught at Harvard in Fall 2024. Notes are bei
 \begin{center}
     \href{https://github.com/tbrazel/math266-motivic}{https://github.com/tbrazel/math266-motivic}
 \end{center}
-Thank you to Merrick Cai and Matthew Niemiro for valuable changes and suggestions! Thank you to Liam Keenan for letting me bother them about technical things.
+Thank you to Merrick Cai, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions. Thank you to Liam Keenan for always letting me bother them about technical things.
 
 \section{Introduction}
 
@@ -1600,10 +1600,19 @@ This is some higher categorical analogue of the fact from topos theory that ever
 \end{proof}
 
 
-Actually more is true:
+\begin{terminology} We refer to the localization functor
+\begin{align*}
+    L_\tau \colon \Pre(\mathscr{C}) \leftrightarrows \Shv_\tau \noloc i
+\end{align*}
+as \textit{sheafification}.
+\end{terminology}
+
+In fact all $\infty$-topoi are of the form above.
 
 \begin{proposition} \cite[6.2.2.17]{HTT} If $\mathscr{C}$ is a small $\infty$-category there is a bijection between Grothendieck topologies on $\mathscr{C}$ and (equivalence classes of) topological localizations of $\Pre(\mathscr{C})$.
 \end{proposition}
+
+\subsection{About the sheaf topos}
 
 \begin{corollary}\label{cor:properties-sheafification} 
 Some consequences:
@@ -1616,7 +1625,8 @@ Some consequences:
 
 Explicitly, by this second point, we have that \textit{limits and filtered colimits of sheaves can be computed in the presheaf category}. This is a crucial fact.
 
-\begin{example} Some examples of $\tau$-sheaves:
+\begin{example}\label{exa:tau-sheaves}
+(Examples of $\tau$-sheaves):
 \begin{enumerate}
     \item Any $\tau$-sheaf of \textit{sets} is a $\tau$-sheaf of discrete spaces. So we have
     \begin{align*}
@@ -1629,58 +1639,48 @@ Explicitly, by this second point, we have that \textit{limits and filtered colim
     \end{align*}
     is a sheaf of sets, and hence a sheaf of spaces.
 
-    \item Any stack can be thought of as a sheaf
+    \item Consider any presheaf of groupoids
     \begin{align*}
-        \mathcal{F}\colon \mathscr{C}^\op \to \Grpd,
+        \mathscr{F}\colon \mathscr{C}^\op \to \Grpd.
     \end{align*}
-    and under the nerve construction $N \colon \Grpd \to \sSet$ this can be thought of as a sheaf of spaces.
+    We denote by $B \mathscr{F}$ the composite $\mathscr{C}^\op \xto{\mathscr{F}} \Grpd \xto{N} \sSet$. Then $\mathscr{F}$ is a $\tau$-stack if and only if $B \mathscr{F}$ is a $\tau$-sheaf \cite[3.9]{Hollander}.
 
     \item If $Y \in \mathcal{S}$ is any space, the constant functor $\underline{Y} \colon \mathscr{C}^\op \to \mathcal{S}$ is a $\tau$-sheaf.
 \end{enumerate}
 \end{example}
-\begin{proof} These are all immediate except perhaps that stacks are sheaves. For this, we use that the nerve $N$ is a right adjoint (\autoref{prop:nerve-adjunction}) in order to commute it with the limit. More explicitly, we need $N$ to send 2-limits in $\Grpd$ to homotopy limits in $\sSet$, and this follows from the adjunction $h\dashv N$ being a Quillen adjunction.
-\end{proof}
+%\begin{proof} These are all immediate except perhaps that stacks are sheaves. For this, we use that the nerve $N$ is a right adjoint (\autoref{prop:nerve-adjunction}) in order to commute it with the limit. More explicitly, we need $N$ to send 2-limits in $\Grpd$ to homotopy limits in $\sSet$, and this follows from the adjunction $h\dashv N$ being a Quillen adjunction.
+%\end{proof}
 
-
-
-We can ask what we're localizing at here, and it's essentially the covering sieves attached to the cover --- \S6.2.2 of \cite{HTT} works through this in detail. It's a technical result, but we record one corollary.
-
-\begin{corollary} Let $S$ be qcqs and Noetherian, and let $\tau$ be a topology on $\Sch_S$. Then given any $\tau$-cover $\mathcal{U}:=\left\{ U_i \to X \right\}$, we can look at the induced map from the \v{C}ech nerve (viewed as a simplicial object of representable presheaves) to $X$ viewed as a constant simplicial presheaf. This map
+\begin{terminology}\label{term:simplicial-object-in-sheaves}
+From the canonical equivalence 
 \begin{align*}
-    N(\mathcal{U}) \to X
+    \Fun(\DDelta^\op, \Fun(\mathscr{C}^\op, \Set)) \cong \Fun(\mathscr{C}^\op, \sSet),
 \end{align*}
-is an equivalence in the sheaf topos $\Shv_\tau(\Sch_S)$.
-\end{corollary}
-\begin{proof} One way to prove this is by identifying the sheaf topos, as a simplicial model category, with the Bousfield localization of the category of simplicial presheaves, endowed with the projective model structure, at the class of hypercovers in the topology. We insist on $S$ being qcqs and Noetherian so we don't have to stress about the difference between covers and hypercovers here, although there is a more general statement over any base. This follows a body of work by Jardine, Bousfield and Kan, Dugger, Hollander and Isaksen.
-\end{proof}
+simplicial objects in set-valued presheaves naturally give rise to $\infty$-categorical presheaves. Consider an object on the left, of the form $X_\bullet \colon\DDelta^\op \to \Pre(\mathscr{C};\Set)$. If this functor factors through $\Sh_\tau(\mathscr{C};\Set) \subseteq \Pre(\mathscr{C};\Set)$, that is if $X_n$ is a sheaf of sets for each $n$, we call this a \textit{simplicial object in sheaves}.
+\end{terminology}
 
-
-Another technical thing we might need is the following:
-
-\begin{proposition} 
-  \cite[6.4.4.6]{HTT} Colimits in any $\infty$-topos (in particular in $\Shv_\tau(\mathscr{C})$) are \textit{universal}, meaning they commute with pullbacks.
-\end{proposition}
-
+\begin{warning} (c.f.~\cite[7.1.3.1]{HTT}) In the literature, we can find objects $X_\bullet$ of the form in \autoref{term:simplicial-object-in-sheaves} referred to as ``simplicial sheaves.'' This is overloaded terminology, and suggests that $\infty$-categorical sheaves are just those presheaves of simplicial sets which are levelwise sheaves of sets, an erroneous claim that can be found throughout the literature.
+\end{warning}
 
 \subsection{Slice categories}
 
 Recall if $\mathscr{C}$ is any ($\infty$-)category and $x\in \mathscr{C}$, we have the under and over categories $\mathscr{C}_{x/}$ and $\mathscr{C}_{/x}$, respectively. If $\ast\in \mathscr{C}$ is a terminal object, then it becomes both initial and terminal in $\mathscr{C}_{\ast/}$, that is, it is a zero object. We call a category with a zero object \textit{pointed}.
 
-\begin{proposition} We have that $\Delta^0$, viewed as a constant sheaf, is terminal in $\Shv_\Nis(\Sm_S)$.
+\begin{proposition} We have that $\Delta^0 \in \mathcal{S}$, viewed as a constant sheaf, is terminal in the sheaf topos $\Shv_\tau(\mathscr{C})$ for any site.
 \end{proposition}
 \begin{proof} A terminal object is a limit over an empty diagram, and we can compute limits of sheaves in the category of presheaves by \autoref{cor:properties-sheafification}. Since limits and colimits of presheaves are computed pointwise, it is clear that $\Delta^0$ is terminal.
 \end{proof}
 
-\begin{notation} We denote by $\Shv_\Nis(\Sm_S)_\ast := \Shv_\Nis(\Sm_S)_{\Delta^0/}$ the pointed slice category. An object here is a map of sheaves $\Delta^0 \to F$, which we observe is equivalent to picking a basepoint in $F(U)$ for every $U \in \Sm_S$. Hence we can think of these as sheaves of \textit{pointed} spaces.
+\begin{notation} We denote by $\Shv_\tau(\mathscr{C})_\ast := \Shv_\tau(\mathscr{C})_{\Delta^0/}$ the pointed slice category. An object here is a map of sheaves $\Delta^0 \to F$, which we observe is equivalent to picking a basepoint in $F(U)$ for every $U \in \mathscr{C}$. Hence we can think of these as sheaves of \textit{pointed} spaces.
 \end{notation}
 
 \subsection{Connectivity}
 
 
 
-\begin{definition} Let $(X,x)\in\Shv_\Nis(\Sm_S)_\ast$ and $n\ge0$. Then we denote by $\pi_n(X,x)$ the $n$th \textit{homotopy sheaf}, defined to be the sheafification of the presheaf
+\begin{definition} Let $(X,x)\in\Shv_\tau(\mathscr{C})_\ast$ and $n\ge0$. Then we denote by $\pi_n(X,x)$ the $n$th \textit{homotopy sheaf}, defined to be the $\tau$-sheafification of the presheaf of sets
 \begin{align*}
-    \Sch_S^\op &\to \Set \\
+    \mathscr{C}^\op &\to \Set \\
     U &\mapsto \pi_n(X(U),x).
 \end{align*}
 \end{definition}
@@ -1703,37 +1703,53 @@ and considering the map $X^{S^n} \to X$ in the slice topos $\Shv_{/X}$, and defi
 \end{enumerate}
 \end{proposition}
 
+\begin{notation} If $\mathscr{C}$ is any pointed $\infty$-category admitting limits, and $X\in \mathscr{C}$, we denote by $\Omega X$ its \textit{loop space}, defined as the pullback
+\[ \begin{tikzcd}
+    \Omega X\rar\dar\pb & \ast\dar\\
+    \ast\rar & X.
+\end{tikzcd} \]
+\end{notation}
+
+The loop space interacts with the homotopy groups in a topos in the way we might expect from topology:
+
+\begin{proposition} If $\mathscr{C}$ is an $\infty$-topos and $(X,x) \in \mathscr{C}_\ast$, then
+\begin{align*}
+    \pi_n(X,x) = \pi_0 (\Omega^n (X,x)).
+\end{align*}
+\end{proposition}
+\begin{proof} (reference needed)
+\end{proof}
+
+
+
+
 \begin{example} Let $\mathcal{F} \colon \Sm_S^\op \to \Set$ be any sheaf of sets, groups, abelian groups, etc. Then $\pi_n \mathcal{F} = 0$ for $n>0$.
 \end{example}
-\begin{proof} The presheaf $\pi_n \mathcal{F}$ is identically zero in sections, and hence so is its sheafification.
-\end{proof}
-
-\begin{example} If $\mathcal{G}$ is a sheaf of discrete groups, we have that
-\begin{align*}
-    \pi_n B_\bullet \mathcal{G} = \begin{cases} \mathcal{G} & i=1 \\ 0 & \text{otherwise}
-    \end{cases}
-\end{align*}
-\end{example}
-\begin{proof} We see that $(B_\bullet \mathcal{G}) (U)$ is exactly the simplicial bar construction for the group $\mathcal{G}(U)$. It is a $K(\pi,1)$ so it only has homotopy groups concentrated in each degree.
+\begin{proof} The presheaf $\pi_n \mathcal{F}$ is identical to the constant sheaf $\Delta^0$.
 \end{proof}
 
 
+\begin{definition} \cite[6.5.1.10]{HTT} Let $\mathscr{C}$ be an $\infty$-topos, and take $X\in \mathscr{C}$.
+\begin{enumerate}
+    \item We say $X$ is $n$\textit{-connective} if $\pi_k(X,x) = \ast$ for every $k<n$ and for every basepoint $x$.
 
-\begin{definition} \cite[6.5.1.10]{HTT} We say $X\in \Shv_\Nis(\Sch_S)$ is $n$\textit{-connective} if $\pi_k(X) = \ast$ for every $k<n$. Say that $X$ is \textit{connected} if it is 1-connective, meaning $\tau_{\le 0}X = \ast$.
+    \item We say that $X$ is \textit{connected} if it is 1-connective, meaning $\tau_{\le 0} X = \ast$.
+    \item We say $X$ is $n$\textit{-truncated} if $\pi_k(X,x) = \ast$ for all $k>n$ and for every basepoint $x$.
+\end{enumerate}
 \end{definition}
 
 \begin{proposition} \cite[5.5.6.18]{HTT}
 If $\mathscr{C}$ is a presentable category, and $\tau_{\le k} \mathscr{C} \subseteq \mathscr{C}$ the full subcategory spanned by the $k$-truncated objects, then the inclusion admits an accessible left adjoint, in other words there is a truncation functor $\tau_{\le k}$ which is a localization.
 \end{proposition}
 
+In particular the collection of $n$-truncated spaces is closed under limits.
 
 
-\begin{definition} The category $\tau_{\le 0}\Shv_\Nis(\Sch_S) =: \Shv_\Nis(\Sch_S)_{\le 0}$ is the category of Nisnevich sheaves of sets.
+\begin{definition} If $(\mathscr{C},\tau)$ is any site, then the category $\tau_{\le 0}\Sh_\tau(\mathscr{C}) =: \Sh_\tau(\mathscr{C}) _{\le 0}$ is the category of sheaves of sets $\Sh_\tau(\mathscr{C};\Set)$.
 \end{definition}
 
-\begin{notation} We write $\Ab(\Shv_\Nis(\Sch_S)_{\le 0})$ for the Nisnevich sheaves of abelian groups.
+\begin{notation} We write $\Ab(\Sh_\tau(\mathscr{C})_{\le 0})$ for the sheaves of abelian groups.
 \end{notation}
-
 
 
 
@@ -1756,6 +1772,9 @@ A way to say this is that $\infty$-connective morphisms are homotopy equivalence
 \begin{theorem} If an $\infty$-topos has finite homotopy dimension then it is hypercomplete.
 \end{theorem}
 
+\begin{warning} The \'etale topos $\Shv_\et(\Sm_S)$ need not be hypercomplete, even for nice $S$ (reference needed).
+\end{warning}
+
 \begin{theorem} (Voevodsky) If $S$ is qcqs and Noetherian, then the homotopy dimension of $\Shv_\Nis(\Sm_S)$ is bounded above by $\dim(S)$. In particular this implies it is hypercomplete.
 \end{theorem}
 
@@ -1777,16 +1796,60 @@ is an equivalence. That is, the Postnikov towers converge and we can make sense 
 
 We'll see soon that this is a valuable perspective, e.g. for classifying torsors via homotopy theory. However the obstruction theory won't be very useful in the sheaf topos setting. This is one of the advantages we gain by passing to motivic spaces.
 
-\begin{corollary} Let $F \to G$ be a map in the sheaf topos $\Shv_\Nis(\Sm_S)$ where $S$ is qcqs and Noetherian. Then the following are equivalent:
+\begin{corollary} Let $F \to G$ be a map in the sheaf topos $\Shv_\Nis(\Sch_S)$ (or any hypercomplete topos) where $S$ is qcqs and Noetherian. Then the following are equivalent:
 \begin{enumerate}
     \item The map $F \to G$ is an equivalence in $\Shv_\Nis(\Sm_S)$
-    \item The induced maps $\pi_n(F) \to \pi_n(G)$ are equivalences for every $n\ge 0$.
+    \item The induced maps $\pi_n(F) \to \pi_n(G)$ are isomorphisms for every $n\ge 0$.
 \end{enumerate}
 \end{corollary}
 
-So this gives us a way to check equivalence on homotopy groups!
+So this gives us a way to check equivalence on homotopy groups.
 
-\subsection{Another way to check equivalence} We have seen that we can check equivalence of sheaves on homotopy sheaves, which gives us a topological way to check equivalence. Here we provide a more algebraic method.
+\begin{notation} For $F,G \in \Shv_\tau(\Sch_S)$, we denote by 
+\begin{align*}
+    \left[ F,G \right]_\tau := \pi_0 \Map_{\Shv_\tau(\Sch_S)}(F,G).
+\end{align*}
+\end{notation}
+
+\begin{remark} If $F,G$ are presheaves, then their mapping space in presheaves and the mapping space of their associated sheafifications are quite different. We notice that if $G$ is already a sheaf, then the unit $G \to i L_\Nis G$ is an equivalence, inducing an equivalence of mapping spaces
+\begin{align*}
+    \Map_{\Pre(\Sch_S)}(F,G) \cong \Map_{\Pre(\Sch_S)}(F, i L_\Nis G) \cong \Map_{\Shv_\tau(\Sch_S)}(L_\Nis F, L_\Nis G).
+\end{align*}
+We think of this as a higher categorical analogue of sheafification, that a map from a presheaf to a sheaf factors uniquely through its sheafification.
+\end{remark}
+
+
+
+\subsection{Equivalences of sheaves and presheaves}
+
+Recall that if $f\colon F \to G$ is a map in $\Pre(\Sch_S)$, then it is an equivalence if and only if $F(U) \to G(U)$ is an equivalence of spaces for each $U \in \Sch_S$. If $f\colon F \to G$ is an equivalence, then so is the associated map after sheafification. The converse doesn't hold though, since different presheaves can admit the same sheafification. To that end, we introduce a new notion.
+
+\begin{definition} Let $F,G\in \Pre(\Sch_S)$ be presheaves, and let $f \colon F \to G$ be a map of presheaves. We say that $f$ is a \textit{local weak equivalence} if
+\begin{align*}
+    L_\Nis (f) \colon L_\Nis F \to L_\Nis G
+\end{align*}
+is an equivalence of sheaves.
+\end{definition}
+
+\begin{example}\label{exa:sheafification-local-equivalence}
+The counit of the sheafification adjunction $L_\Nis \dashv i$ has components
+\begin{align*}
+    F \to L_\Nis F,
+\end{align*}
+which are all local equivalences.
+\end{example}
+\begin{proof} Since $i$ is fully faithful, we have that the counit $L_\Nis i \to \id$ is a natural equivalence. We'd like to argue that
+\begin{align*}
+    L_\Nis F \to L_\Nis i L_\Nis F
+\end{align*}
+is an equivalence. Since $i$ is fully faithful, it reflects equivalences, so it suffices to check that
+\begin{align*}
+    i L_\Nis F \to i L_\Nis i L_\Nis F
+\end{align*}
+is a natural equivalence, which follows from the counit being a natural equivalence.
+\end{proof}
+
+
 
 \begin{notation} Let $X$ be a scheme and $x\in X$. We denote by $\Hen_{X,x}$ the category of maps $f \colon (Y,y) \to (X,x)$ where $f \colon Y \to X$ is \'etale, $f(y) = x$, and $f$ induces an isomorphism $k(x) \xto{\sim} k(y)$.
 \end{notation}
@@ -1799,22 +1862,89 @@ So this gives us a way to check equivalence on homotopy groups!
 See \cite[04GV]{Stacks}, or \cite[2.22]{Bachmann-K}.
 \end{definition}
 
+\begin{notation} Denote by $\Sm_S \subseteq \Sch_S$ the full subcategory of smooth $S$-schemes. Here $S$ is still qcqs and Noetherian as assumed. We will restrict our attention here as it will be needed for upcoming results.
+\end{notation}
 
-\begin{theorem} Let $S$ be qcqs and Noetherian, and let $f \colon F \to G$ be a map of presheaves. Then $L_\Nis f$ is an equivalence if and only if for every smooth $X$ and $x\in X$, the induced map
+\begin{definition} Let $f \colon F \to G$ be a map of presheaves in $\Pre(\Sm_S)$. Then we say $f$ is a \textit{stalkwise (Nisnevich) weak equivalence} if for every $X\in \Sm_S$ and every $x\in X$, the induced map
 \begin{align*}
     \colim_{\Hen_{X,x}} F(Y) \to \colim_{\Hen_{X,x}} G(Y)
 \end{align*}
-is an equivalence of spaces. (c.f. \cite[2.23]{Bachmann-K})
+is an equivalence of spaces.
+\end{definition}
+
+
+
+\begin{theorem}\label{thm:local-and-stalkwise-equiv} 
+(Voevodsky) Let $S$ be qcqs and Noetherian, and let $f \colon F \to G$ in $\Pre(\Sm_S)$. Then $f$ is a local equivalence if and only if it is a stalkwise equivalence.
+\end{theorem}
+\begin{proof} (todo)
+\end{proof}
+
+As a particular case of \autoref{thm:local-and-stalkwise-equiv} applied to \autoref{exa:sheafification-local-equivalence}, we recover the familiar result that a presheaf and its sheafification have the same stalks.
+
+\subsection{Torsors revisited}
+
+\begin{proposition} Let $S$ be qcqs and Noetherian, and let $\tau$ be a topology on $\Sch_S$. Then given any $\tau$-cover $\mathcal{U}:=\left\{ U_i \to X \right\}$, we can look at the induced map from the \v{C}ech nerve (viewed as a simplicial object of representable presheaves) to $X$ viewed as a discrete representable simplicial presheaf. This map
+\begin{align*}
+    N(\mathcal{U}) \to X
+\end{align*}
+is a local equivalence of presheaves.
+\end{proposition}
+
+\begin{remark} (How to prove this)
+\begin{enumerate}
+    \item  One way to prove this is by identifying the sheaf topos, as a simplicial model category, with the Bousfield localization of the category of simplicial presheaves, endowed with the projective model structure, at the class of hypercovers in the topology. We insist on $S$ being qcqs and Noetherian so we don't have to stress about the difference between covers and hypercovers here, although there is a more general statement over any base. This follows a body of work by Jardine, Bousfield and Kan, Dugger, Hollander and Isaksen.
+    \item Another direction is by formal nonsense of $\infty$-topos theory. For instance if $X\in \Sm_S$, we can apply \cite[A.5.3.1]{SAG} to the \v{C}ech nerve of a cover after pulling it back to the slice topos $\Shv_{\tau}(\Sm_S)_{/X}$.
+\end{enumerate}
+
+\end{remark}
+
+What about classifying spaces $B_{\bullet}\mathcal{G}\in \Pre(\Sch_S)$? We would like to understand them in the sheaf topos.
+
+\begin{notation} If $\tau$ is a topology, we denote by $B_\tau \mathcal{G} := L_\tau B_\bullet \mathcal{G}$ the sheafification of the bar construction in the $\tau$ topology.\footnote{%
+This is overloaded notation so we technically shouldn't be using it, since $B_\tau \mathcal{G}$ generally refers in the literature to a \textit{fibrant replacement} of $B_\bullet \mathcal{G}$ in the local model structure on simplicial presheaves.}
+\end{notation}
+
+\begin{example}
+For any $\mathcal{G}$, we have a stack of $\mathcal{G}$-torsors, which we denote by
+\begin{align*}
+    \Tors_\tau(\mathcal{G}) \colon \mathscr{C}^\op \to \Grpd.
+\end{align*}
+This gives rise to a sheaf $B\Tors_\tau(\mathcal{G})$ by post-composing with the nerve (\autoref{exa:tau-sheaves}).
+\end{example}
+
+
+
+
+\begin{theorem}\label{thm:BG-BTorsG} 
+\cite[2.3.2]{AHW2}
+There is a morphism of simplicial presheaves $B_\bullet \mathcal{G} \to B\Tors_\tau(\mathcal{G})$, defined on sections by sending the unique vertex of $B_\bullet \mathcal{G}(U)$ to the trivial $\mathcal{G}$-torsor over $U$. This map is a local equivalence.
 \end{theorem}
 
-This follows from a more general idea that isomorphism can be checked on stalks \cite[1.15]{Nisnevich}. Nisnevich refers the reader to SGA4 VIII.3.5b for the analogous result in the \'etale topology and indicates that a nearly identical proof works for the Nisnevich topology.
+\begin{corollary} For any $\tau$-sheaf of groups $\mathcal{G}$, there is a natural isomorphism of sheaves of sets
+\begin{align*}
+    [-, B_\tau \mathcal{G}]_\tau = \pi_0 \Map_{\Shv_\tau(\Sch_S)}(-,B_\tau \mathcal{G}) \cong H^1_\tau(-,\mathcal{G}).
+\end{align*}
+\end{corollary}
 
+This is the result we've been hoping for. It tells us we can classify torsors in the sheaf topos $\Sh_\tau(\Sch_S)$, and it is a completely topos-theoretic fact. In particular we gain access to all the homotopically flavored tools available to us in an $\infty$-topos. For instance, we could attempt to leverage Postnikov towers to deal with obstruction theory for the classifying sheaf $B_\tau \mathcal{G}$. The following result indicates that this tower won't contain any interesting information.
+
+\begin{example} If $\mathcal{G}$ is a sheaf of discrete groups, we have that
+\begin{align*}
+    \pi_n B_\tau \mathcal{G} = \begin{cases}
+    \mathcal{G} & i=1 \\
+    0 & \text{otherwise}
+    \end{cases}
+\end{align*}
+\end{example}
+\begin{proof} By \autoref{thm:BG-BTorsG} we have that $B_\tau \mathcal{G} \simeq B\Tors_\tau \mathcal{G}$, and the latter is a sheaf whose sections are exactly the nerves of discrete groupoids, and hence $K(\pi,1)$'s.
+\end{proof}
 
 \newpage
 \appendix
 \section{More category theory}
 
-\subsection{Filtered and sifted colimits}
+\subsection{Cofinality}
 \begin{definition}\label{def:cofinal} 
 We say a subcategory $I \subseteq J$ is \textit{cofinal} if for any functor $F \colon J \to \mathscr{C}$, the induced map on colimits
 \begin{equation}\label{eqn:cofinality}
@@ -1892,6 +2022,12 @@ is $1$-cofinal, however none of these inclusions are $\infty$-cofinal.
 \end{proposition}
 \begin{proof} The universal property of the 1-categorical colimit for both $\DDelta_{\le1}^{\inj,\,\op}$ and $\DDelta_{\le1}^\op$ agree, so this is direct. The other inclusion now follows by \autoref{exa:1-cofinal-parallel-arrows-ddelta}.
 \end{proof}
+
+In general we cannot truncate in order to obtain an $\infty$-cofinal diagram. We can, however, restrict only to face maps and throw out degeneracies:
+
+\begin{lemma} \cite[6.5.3.7]{HTT} The inclusion $\DDelta^{\inj,\op} \subseteq \DDelta$ is cofinal.
+\end{lemma}
+
 
 
 \begin{definition} An $\infty$-category $\mathscr{C}$ is \textit{sifted} if the diagonal map $\mathscr{C} \to \mathscr{C} \times \mathscr{C}$ is cofinal \cite[5.5.8.1]{HTT}.
