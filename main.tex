@@ -37,7 +37,7 @@ These are notes for a topics class taught at Harvard in Fall 2024. Notes are bei
 \begin{center}
     \href{https://github.com/tbrazel/math266-motivic}{https://github.com/tbrazel/math266-motivic}
 \end{center}
-Thank you to Merrick Cai, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions. Thank you to Liam Keenan for always letting me bother them about technical things.
+Thank you to Merrick Cai, Jake Levinson, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions. Thank you to Liam Keenan for always letting me bother them about technical things.
 
 \section{Introduction}
 
@@ -114,7 +114,9 @@ Then every line bundle on $X \times \A^1$ is extended from a line bundle on $X$,
 
 
 \begin{example} \cite[3.7.1.5]{Aravind}
-Check this doesn't hold for all rings, for example $R = k[x,y]/(y^2-x^3)$.
+Check this doesn't hold for all rings, for example $R = k[x,y]/(y^2-x^3)$.\footnote{%
+More generally if $A$ is reduced, Noetherian, and has a finite normalization, then its Picard group will be $\A^1$-invariant if and only if $A$ is seminormal \cite[3.6]{Traverso}.
+}
 \end{example}
 
 \begin{definition} An \textit{inner product space} over a ring $R$ is a finitely generated productive $R$-module $M$ and a symmetric bilinear form $\beta \colon M \times M \to R$ for which $m \mapsto \beta(-,m)$ defines an isomorphism $M \cong M^\ast$.
@@ -265,7 +267,8 @@ If $L/k$ is a Galois field extension then $\Spec(L) \to \Spec(k)$ is a $\Gal(L/k
 \item \textit{the inverse Galois problem}: which groups $G$ occur as Galois groups of number fields? This is asking to scratch the surface of understanding $G$-torsors over $\Spec(\Q)$ for all finite groups $G$.
 \end{itemize}
 
-\begin{example} A $\GL_n$-torsor (say, in the Zariski topology) is an algebraic vector bundle.
+\begin{example}
+The associated frame bundle of an algebraic vector bundle is a $\GL_n$-torsor (say, in the Zariski topology).
 \end{example}
 \begin{proof} Since $\GL_n$ is affine, every torsor is representable, hence $\GL_n$-torsors are just principal $\GL_n$-bundles, which are precisely algebraic vector bundles.
 \end{proof}
