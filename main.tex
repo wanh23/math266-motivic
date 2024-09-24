@@ -1761,13 +1761,10 @@ In particular the collection of $n$-truncated spaces is closed under limits.
 \begin{theorem} (Whitehead's theorem) Let $f \colon X \to Y$ be a map of CW complexes. Then $f$ is a homotopy equivalence if and only if $f \colon \pi_i(X) \to \pi_i(Y)$ is an isomorphism for each $i\ge0$.
 \end{theorem}
 
-A way to say this is that $\infty$-connective morphisms are homotopy equivalences. The $\infty$-categorical analogue of this is the notion of \textit{hypercompleteness}.
+A way to say this is that ``$\infty$-connective morphisms are homotopy equivalences.'' The $\infty$-categorical analogue of this is the notion of \textit{hypercompleteness}.
 
 \begin{definition} An $\infty$-topos is \textit{hypercomplete} if and only if every object is $\infty$-connective.
 \end{definition}
-
-\begin{upshot} In a hypercomplete topos, equivalences can be checked on homotopy sheaves.
-\end{upshot}
 
 \begin{definition} \cite[7.2.11]{HTT} An $\infty$-topos has \textit{homotopy dimension} $\le n$ if every $(n-1)$-connected object $X$ receives a map from the terminal object $\ast \to X$.
 \end{definition}
@@ -1799,6 +1796,9 @@ is an equivalence. That is, the Postnikov towers converge and we can make sense 
 
 We'll see soon that this is a valuable perspective, e.g. for classifying torsors via homotopy theory. However the obstruction theory won't be very useful in the sheaf topos setting. This is one of the advantages we gain by passing to motivic spaces.
 
+\begin{upshot} In a hypercomplete topos, equivalences can be checked on homotopy sheaves.
+\end{upshot}
+
 \begin{corollary} Let $F \to G$ be a map in the sheaf topos $\Shv_\Nis(\Sch_S)$ (or any hypercomplete topos) where $S$ is qcqs and Noetherian. Then the following are equivalent:
 \begin{enumerate}
     \item The map $F \to G$ is an equivalence in $\Shv_\Nis(\Sm_S)$
@@ -1818,7 +1818,7 @@ So this gives us a way to check equivalence on homotopy groups.
 \begin{align*}
     \Map_{\Pre(\Sch_S)}(F,G) \cong \Map_{\Pre(\Sch_S)}(F, i L_\Nis G) \cong \Map_{\Shv_\tau(\Sch_S)}(L_\Nis F, L_\Nis G).
 \end{align*}
-We think of this as a higher categorical analogue of sheafification, that a map from a presheaf to a sheaf factors uniquely through its sheafification.
+We think of this as a higher categorical analogue of the universal property of sheafification: that a map from a presheaf to a sheaf factors uniquely through its sheafification.
 \end{remark}
 
 
@@ -1860,7 +1860,7 @@ is a natural equivalence, which follows from the counit being a natural equivale
 
 \begin{definition} Let $X$ be a scheme and $x\in X$. We denote by 
 \begin{align*}
-    X_x^h := \lim_{\Hen_{X,x}} Y = \lim_{\Hen_{X,x}} Y_y
+    X_x^h := \lim_{(Y,y) \in \Hen_{X,x}} Y = \lim_{(Y,y) \in \Hen_{X,x}} Y_y
 \end{align*}
 See \cite[04GV]{Stacks}, or \cite[2.22]{Bachmann-K}.
 \end{definition}
@@ -1875,15 +1875,23 @@ See \cite[04GV]{Stacks}, or \cite[2.22]{Bachmann-K}.
 is an equivalence of spaces.
 \end{definition}
 
+\begin{warning} This is \textit{not} the same as saying that $F(X_x^h) \to G(X_x^h)$ is an equivalence.
+\end{warning}
+
 
 
 \begin{theorem}\label{thm:local-and-stalkwise-equiv} 
 (Voevodsky) Let $S$ be qcqs and Noetherian, and let $f \colon F \to G$ in $\Pre(\Sm_S)$. Then $f$ is a local equivalence if and only if it is a stalkwise equivalence.
 \end{theorem}
-\begin{proof} (todo)
+\begin{proof} (todo --- hard)
 \end{proof}
 
-As a particular case of \autoref{thm:local-and-stalkwise-equiv} applied to \autoref{exa:sheafification-local-equivalence}, we recover the familiar result that a presheaf and its sheafification have the same stalks.
+As a particular case of \autoref{thm:local-and-stalkwise-equiv} applied to \autoref{exa:sheafification-local-equivalence}, we recover the following familiar result.
+
+\begin{corollary} A presheaf and its Nisnevich sheafification admit the same stalks in the Nisnevich site.
+\end{corollary}
+
+
 
 \subsection{Torsors revisited}
 
@@ -1995,6 +2003,10 @@ We have that $\DDelta_{\le1}^{\inj,\,\op} \subseteq \DDelta^\op$ is 1-cofinal (c
 \end{example}
 % \begin{proof} It's easier to check the dual properties hold before taking the opposite category. It's clear both $[0]$ and $[1]$ map to any element in $\DDelta$. For the second condition we have to check the zig-zag condition. If $i=i'$ in this setting, then it is clear
 % \end{proof}
+
+\begin{proposition} The inclusion $\DDelta_{\le n}^{\inj,\op} \subseteq \DDelta^\op$ is $n$-cofinal for any $1\le n \le \infty$.
+\end{proposition}
+
 
 It turns out by a souped-up extension of Quillen Theorem A, originally due to Joyal, we have a necessary condition for cofinality in the $\infty$-categorical setting.
 
