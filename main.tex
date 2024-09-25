@@ -1445,7 +1445,8 @@ is an equivalence.
 \end{remark}
 Let $\mathscr{C}_0 \subseteq \mathscr{C}$ be the full subcategory of $S$-local objects. If this admits a left adjoint, it makes sense to call that adjoint $L_S$, that is, $S$-localization, since it inverts every morphism in $S$.
 
-\begin{proposition} \cite[5.5.4.15]{HTT} If $\mathscr{C}$ is presentable and $S \subseteq \mor \mathscr{C}$ is small, then the inclusion of the full subcategory of $S$-local objects admits a left adjoint.\footnote{The terminology for this is that $\mathscr{C}_0 \subseteq \mathscr{C}$ is a \textit{reflective subcategory}.}
+\begin{proposition}\label{prop:localization-at-set-of-morphisms} 
+\cite[5.5.4.15]{HTT} If $\mathscr{C}$ is presentable and $S \subseteq \mor \mathscr{C}$ is small, then the inclusion of the full subcategory of $S$-local objects admits a left adjoint.\footnote{The terminology for this is that $\mathscr{C}_0 \subseteq \mathscr{C}$ is a \textit{reflective subcategory}.}
 \end{proposition}
 
 \begin{example} In the next talk, our primary application of this machinery will be looking at the presheaf category $\Pre(\mathscr{C})$, which is presentable by \autoref{ex:presheaves-presentable}. We can look at full subcategories of presheaves which satisfy a certain sheaf condition and argue this is a reflective subcategory hence we will have an adjoint we call \textit{sheafification}.
@@ -1610,8 +1611,6 @@ This is some higher categorical analogue of the fact from topos theory that ever
 as \textit{sheafification}.
 \end{terminology}
 
-In fact all $\infty$-topoi are of the form above.
-
 \begin{proposition} \cite[6.2.2.17]{HTT} If $\mathscr{C}$ is a small $\infty$-category there is a bijection between Grothendieck topologies on $\mathscr{C}$ and (equivalence classes of) topological localizations of $\Pre(\mathscr{C})$.
 \end{proposition}
 
@@ -1648,7 +1647,7 @@ Explicitly, by this second point, we have that \textit{limits and filtered colim
     \end{align*}
     We denote by $B \mathscr{F}$ the composite $\mathscr{C}^\op \xto{\mathscr{F}} \Grpd \xto{N} \sSet$. Then $\mathscr{F}$ is a $\tau$-stack if and only if $B \mathscr{F}$ is a $\tau$-sheaf \cite[3.9]{Hollander}.
 
-    \item If $Y \in \mathcal{S}$ is any space, the constant functor $\underline{Y} \colon \mathscr{C}^\op \to \mathcal{S}$ is a $\tau$-sheaf.
+    \item If $Y \in \mathcal{S}$ is any space, we may sheafify the constant presheaf valued at $Y$ in order to obtain a sheaf $\underline{Y}$.
 \end{enumerate}
 \end{example}
 %\begin{proof} These are all immediate except perhaps that stacks are sheaves. For this, we use that the nerve $N$ is a right adjoint (\autoref{prop:nerve-adjunction}) in order to commute it with the limit. More explicitly, we need $N$ to send 2-limits in $\Grpd$ to homotopy limits in $\sSet$, and this follows from the adjunction $h\dashv N$ being a Quillen adjunction.
@@ -1671,7 +1670,8 @@ Recall if $\mathscr{C}$ is any ($\infty$-)category and $x\in \mathscr{C}$, we ha
 
 \begin{proposition} We have that $\Delta^0 \in \mathcal{S}$, viewed as a constant sheaf, is terminal in the sheaf topos $\Shv_\tau(\mathscr{C})$ for any site.
 \end{proposition}
-\begin{proof} A terminal object is a limit over an empty diagram, and we can compute limits of sheaves in the category of presheaves by \autoref{cor:properties-sheafification}. Since limits and colimits of presheaves are computed pointwise, it is clear that $\Delta^0$ is terminal.
+\begin{proof}
+The inclusion $\Sh_\tau(\mathscr{C}) \subseteq \PSh(\mathscr{C})$ will preserve terminal objects, being a limit over an empty diagram, so it suffices to observe that the constant presheaf $\Delta^0$ is already a sheaf.
 \end{proof}
 
 \begin{notation} We denote by $\Shv_\tau(\mathscr{C})_\ast := \Shv_\tau(\mathscr{C})_{\Delta^0/}$ the pointed slice category. An object here is a map of sheaves $\Delta^0 \to F$, which we observe is equivalent to picking a basepoint in $F(U)$ for every $U \in \mathscr{C}$. Hence we can think of these as sheaves of \textit{pointed} spaces.
@@ -1726,9 +1726,12 @@ The loop space interacts with the homotopy groups in a topos in the way we might
 
 
 
-\begin{example} Let $\mathcal{F} \colon \Sm_S^\op \to \Set$ be any sheaf of sets, groups, abelian groups, etc. Then $\pi_n \mathcal{F} = 0$ for $n>0$.
+\begin{example} Let $\mathscr{F} \colon \Sm_S^\op \to \Set$ be any sheaf of sets, groups, abelian groups, etc. Then
+\begin{align*}
+    \pi_n(\mathscr{F}) = \begin{cases} \mathscr{F} & n=0 \\ \ast & n>0. \end{cases}
+\end{align*}
 \end{example}
-\begin{proof} The presheaf $\pi_n \mathcal{F}$ is identical to the constant sheaf $\Delta^0$.
+\begin{proof} It suffices to observe that the presheaf $\pi_n \mathscr{F}$ is identical to the constant presheaf sheaf $\Delta^0$ since $\mathscr{F}(U)$ has no higher homotopy for each $U \in \Sm_S$.
 \end{proof}
 
 
@@ -1825,9 +1828,9 @@ We think of this as a higher categorical analogue of the universal property of s
 
 \subsection{Equivalences of sheaves and presheaves}
 
-Recall that if $f\colon F \to G$ is a map in $\Pre(\Sch_S)$, then it is an equivalence if and only if $F(U) \to G(U)$ is an equivalence of spaces for each $U \in \Sch_S$. If $f\colon F \to G$ is an equivalence, then so is the associated map after sheafification. The converse doesn't hold though, since different presheaves can admit the same sheafification. To that end, we introduce a new notion.
+Recall that if $f\colon F \to G$ is a map in $\Pre(\Sch_S)$, then it is an equivalence if and only if $F(U) \to G(U)$ is an equivalence of spaces for each $U \in \Sch_S$, also called a \textit{sectionwise equivalence}. If $f\colon F \to G$ is an equivalence, then so is the associated map after sheafification. The converse doesn't hold though, since different presheaves can admit the same sheafification. To that end, we introduce a new notion.
 
-\begin{definition} Let $F,G\in \Pre(\Sch_S)$ be presheaves, and let $f \colon F \to G$ be a map of presheaves. We say that $f$ is a \textit{local weak equivalence} if
+\begin{definition} Let $F,G\in \Pre(\Sch_S)$ be presheaves, and let $f \colon F \to G$ be a map of presheaves. We say that $f$ is a \textit{local equivalence} if
 \begin{align*}
     L_\Nis (f) \colon L_\Nis F \to L_\Nis G
 \end{align*}
@@ -1897,7 +1900,7 @@ As a particular case of \autoref{thm:local-and-stalkwise-equiv} applied to \auto
 
 \begin{proposition} Let $S$ be qcqs and Noetherian, and let $\tau$ be a topology on $\Sch_S$. Then given any $\tau$-cover $\mathcal{U}:=\left\{ U_i \to X \right\}$, we can look at the induced map from the \v{C}ech nerve (viewed as a simplicial object of representable presheaves) to $X$ viewed as a discrete representable simplicial presheaf. This map
 \begin{align*}
-    N(\mathcal{U}) \to X
+    N_\bullet(\mathcal{U}) \to X
 \end{align*}
 is a local equivalence of presheaves.
 \end{proposition}
@@ -1951,126 +1954,392 @@ This is the result we've been hoping for. It tells us we can classify torsors in
 \begin{proof} By \autoref{thm:BG-BTorsG} we have that $B_\tau \mathcal{G} \simeq B\Tors_\tau \mathcal{G}$, and the latter is a sheaf whose sections are exactly the nerves of discrete groupoids, and hence $K(\pi,1)$'s.
 \end{proof}
 
+
+
+\section{\sectionheader Motivic spaces}
+
+Recall we have
+\begin{align*}
+    \Shv_\Nis(\Sm_S) \subseteq \Pre(\Sm_S),
+\end{align*}
+the accessible subcategory of Nisnevich sheaves.
+
+\begin{proposition}\label{prop:terminal-object-sheaves} 
+Let $h_S \in \PSh(\Sm_S)$ denote the representable sheaf attached to the base. Then the map $h_S \xto{!} \Delta^0$ of presheaves is a local equivalence.
+\end{proposition}
+\begin{proof} It suffices to observe that the presheaves are identical, which is true because for any $U\in \Sm_S$, we have that $h_S(U) = \Hom_S(U,S)$, which is just a point consisting of the structure map (or since $S$ is terminal in $\Sm_S$).
+\end{proof}
+
+We are interested in studying \textit{$\A^1$-invariance} of presheaves. There are a few ways we might impose this, the first being the most naive --- we can study presheaves $F$ for which
+\begin{enumerate}
+    \item any projection $X \times \A^1 \to X$ induces an equivalence $F(X) \xto{\sim} F(X \times \A^1)$
+    \item any algebraic vector bundle $E \to X$ induces an equivalence $F(X) \xto{\sim} F(E)$
+    \item any algebraic vector bundle \textit{torsor} $Y \to X$ induces an equivalence $F(X) \to F(Y)$.
+\end{enumerate}
+We have a strengthening of conditions here, but we notice that in the context of sheaves they all become equivalent, so the definition is only really important for presheaves. We will work with the first one as it is classically what people work with, and the last one since it will simplify some proofs. Let's first define vector bundle torsors explicitly.
+
+\begin{definition} \cite[4.2]{Weibel-KH}
+A \textit{vector bundle torsor} is an affine map $Y \to X$ which is a torsor for an algebraic vector bundle $E \to X$. Explicitly, $Y$ is locally isomorphic to $E$, but the patching maps are algebraic and need not be affine.
+\end{definition}
+
+\begin{example} If $X = \Spec(A)$ is an affine scheme, then algebraic vector bundle torsors over $X$ are the same as vector bundles over $X$.
+\end{example}
+
+todo - find an example of a non-affine $X$ for which vector bundle torsors and vector bundles don't agree
+
+
+
+\begin{definition} Let $F \in \PSh(\Sm_S)$ be a presheaf.
+\begin{enumerate}
+    \item We say $F$ is $\A^1$\textit{-invariant} if for every $X \in \Sm_S$, the projection map $X \times \A^1 \to X$ induces an equivalence
+    \begin{align*}
+        F(X) \xto{\sim} F(X \times \A^1).
+    \end{align*}
+    %
+    \item We say $F$ is \textit{strongly homotopy invariant} if for every vector bundle torsor $Y \to X$, the restriction map
+    \begin{align*}
+        F(X) \xto{\sim} F(Y)
+    \end{align*}
+    is an equivalence.
+\end{enumerate}
+We denote by $\Pre_{\A^1}(\Sm_S)$ and $\Pre_{\htp}(\Sm_S)$ the full subcategories of $\Pre(\Sm_S)$ spanned by the $\A^1$-invariant and strongly homotopy invariant presheaves, respectively.
+\end{definition}
+
+\begin{remark} It is clear that we have containments
+\begin{align*}
+    \Pre_{\htp}(\Sm_S) \subseteq \Pre_{\A^1}(\Sm_S) \subseteq \Pre(\Sm_S),
+\end{align*}
+but neither of the reverse inclusions hold.
+\end{remark}
+
+\begin{proposition} Both of $\Pre_{\A^1}(\Sm_S)$ and $\Pre_{\htp}(\Sm_S)$ are accessible subcategories of $\Pre(\Sm_S)$.
+\end{proposition}
+\begin{proof} By \autoref{prop:localization-at-set-of-morphisms} it suffices to check they are defined by being local with respect to a \textit{set} of maps. In the first case note that
+a presheaf $F$ is $\A^1$-invariant if and only if it is $S$-local, meaning that
+\begin{align*}
+    \Map_{\PSh(\Sm_S)}(h_{X},F) \xto{\sim} \Map_{\PSh(\Sm_S)}(h_{X \times \A^1},F)
+\end{align*}
+is an equivalence. Here we are using the Yoneda lemma together with the fact that the Yoneda embedding preserves products. Since $\Sm_S$ has a small skeleton, we may pick a set of maps $\left\{ X \times \A^1 \to X \right\}$ for each isomorphism class of smooth scheme $X$. An analogous argument works for $\Pre_{\htp}(\Sm_S)$.
+\end{proof}
+
+
+
+\begin{terminology} In light of the previous remark, we might also call presheaves or sheaves $\A^1$\textit{-local} instead of $\A^1$-invariant. This is the terminology used in \cite{MV}.
+\end{terminology}
+
+\begin{example}\label{ex:non-a1-invt-representables} \textit{(Not every representable is $\A^1$-invariant)} Representable presheaves need not be $\A^1$-invariant. For example:
+\begin{itemize}
+    \item $\mathbb{G}_m$ is $\A^1$ invariant assuming the base is reduced. This is because it represents units, which are $\A^1$-invariant.
+    \item $\A^1$ is not $\A^1$-invariant, since it represents global sections.
+\end{itemize}
+\end{example}
+
+
+
+\begin{notation} We denote by
+\begin{align*}
+    L_{\A^1} \colon \PSh(\Sm_S) &\to \PSh_{\A^1}(\Sm_S), \\
+    L_{\htp} \colon \PSh(\Sm_S) &\to \PSh_{\htp}(\Sm_S)
+\end{align*}
+the associated localizations which are left adjoint to the inclusions.
+\end{notation}
+
+\subsection{Singular chains}
+
+Here we develop an explicit formula for $L_{\A^1}$ which will help us do computations.
+
+\begin{notation} We denote by $\Delta^n$ the \textit{algebraic $n$-simplex}
+\begin{align*}
+    \Delta^n := \Spec (\Z[t_0, \ldots, t_n]/(\sum t_i -1)).
+\end{align*}
+These give a cosimplicial scheme $\Delta^\bullet \in \Fun(\DDelta, \Sch)$.
+\end{notation}
+
+\begin{definition}\label{def:sing-construction} We define the \textit{singular chains} construction
+\begin{align*}
+    \Sing \colon \Pre(\Sm_S) &\to \Pre(\Sm_S)
+\end{align*}
+by the formula
+\begin{align*}
+    \Sing (F)(X) = \colim_{\DDelta^\op} F(X \times \Delta^n)
+\end{align*}
+\end{definition}
+
+\begin{proposition} We have that $\Sing(F)$ is $\A^1$-invariant for any $F$.
+\end{proposition}
+\begin{proof} We want to prove for any $X\in \Sch_S$ that the projection map $\pi \colon X \times \A^1 \to X$ induces an equivalence
+\begin{align*}
+    \pi^\ast \colon (\Sing F)(X \times \A^1) \to (\Sing F)(X).
+\end{align*}
+%
+Let $z \colon X \to X \times \A^1$ denote the zero section. Then we claim $z^\ast$ exhibits a simplicial homotopy equivalence with $\pi^\ast$. Since $\pi z = \id$, it is clear that $z^\ast \pi^\ast = \id$, so it suffices to exhibit a simplicial homotopy $\pi^\ast z^\ast \simeq \id$. Since any functor will preserve simplicial homotopies, and geometric realizations will send simplicial homotopies to honest homotopies, it suffices to exhibit a homotopy of cosimplicial simplicial varieties
+\begin{align*}
+    \id, z\circ \pi \colon X \times \A^1 \times \Delta^\bullet \to X \times \A^1 \times \Delta^\bullet,
+\end{align*}
+meaning maps whose opposites satisfy the simplicial homotopy identities. (todo: add explicit simplicial homotopy)
+\end{proof}
+
+\begin{proposition}\label{prop:sing-of-a1-invt-presheaf} 
+If $F$ is already $\A^1$-invariant, then the natural map
+\begin{align*}
+    F \to \Sing(F)
+\end{align*}
+is an equivalence of presheaves.
+\end{proposition}
+\begin{proof} Immediate since $F$ is $\A^1$-invariant, so we can turn $F(X \times \Delta^\bullet)$ into a constant diagram.
+\end{proof}
+
+\begin{proposition} There is a natural equivalence of functors $L_{\A^1} \simeq \Sing$.
+\end{proposition}
+\begin{proof}
+We note that the essential image of $\Sing$ is precisely $\Pre_{\A^1}(\Sm_k)$ by \autoref{prop:sing-of-a1-invt-presheaf}. By that same result, the natural transformation
+\begin{align*}
+    \eta \colon \id \to \Sing
+\end{align*}
+induces an equivalence between the maps $\Sing(\eta_{(-)})$ and $\eta_{\Sing(-)}$ on its components. By \cite[5.2.7.4]{HTT}, this implies that $\Sing(-)$ is a left adjoint, with right adjoint given by the fully faithful inclusion of its essential image $\Pre_{\A^1}(\Sm_k) \subseteq \Pre(\Sm_k)$. By uniqueness of adjoints, this implies $\Sing \simeq L_{\A^1}$.
+\end{proof}
+
+\begin{corollary} $L_{\A^1}$ preserves finite products.
+\end{corollary}
+\begin{proof} This is not immediate from the definition, but it follows after identifying $L_{\A^1}$ with $\Sing(-)$. Since $\DDelta^\op$ is sifted (c.f. \cite[5.5.4.8]{HTT}), colimits indexed over $\DDelta^\op$ commute with products, hence the result follows.
+\end{proof}
+
+\begin{proposition}\label{prop:la1-sends-proj-to-equivalence} 
+For any $X\in \Sm_S$, we have that $X \times \A^n_S \to X$ is an equivalence after $\A^n$-localization.
+\end{proposition}
+\begin{proof} For $n=1$ this is by definition of the localization, and for higher $n$ this follows from $L_{\A^1}$ preserving finite products.
+\end{proof}
+
+\begin{remark} An analogous formula holds for $L_\htp$ --- if we let $\text{VBT}_{/X}$ denote the category of vector bundle torsors over $X$, then $\text{VBT}_{/X}$ is cosifted, and we obtain an identification
+\begin{equation}\label{eqn:formula-Lhtp}
+\begin{aligned}
+    (L_\htp F)(X) = \colim_{Y\in \text{VBT}_{/X}}F(Y),
+\end{aligned}
+\end{equation}
+with the same properties that it preserves finite products and is locally cartesian \cite[3.5]{Hoyois6}
+\end{remark}
+
+
+\subsection{The category of motivic spaces}
+
+
+\begin{definition} We define the category of \textit{motivic spaces} $\Spc(k)$ as
+\begin{align*}
+    \Spc(k) = \Shv_\Nis(\Sm_k) \cap \Pre_{\A^1}(\Sm_k) \subseteq \Pre(\Sm_k),
+\end{align*}
+that is, the full subcategory of presheaves which are both Nisnevich sheaves and are $\A^1$-invariant.
+\end{definition}
+
+\begin{remark} Since every affine bundle torsor is locally trivialized, once we impose the sheaf condition, the properties of being $\A^1$-invariant and strongly homotopy invariant can be checked locally, and hence agree:
+\begin{align*}
+    \Shv_\Nis(\Sm_S) \cap \PSh_{\A^1}(\Sm_S) = \Shv_\Nis(\Sm_S) \cap \PSh_\htp(\Sm_S).
+\end{align*}
+In other words we could equivalently define motivic spaces via $L_{\A^1}$, or via a different localization $L_\htp \colon \Pre(\Sm_S) \to \Pre_\htp(\Sm_S)$. The former is more common, although the latter has some nice advantages (see \cite[p.~204]{Hoyois6} for a discussion, and \cite[3.13]{Hoyois6} for the equality above).
+\end{remark}
+
+
+ 
+\textbf{Problem}: Nisnevich sheafifying an $\A^1$-invariant presheaf needs not preserve $\A^1$-invariance, and $\A^1$-localizing a sheaf may break the sheaf condition. 
+
+\begin{example} \cite[3.2.7]{MV} Let $U_0 = \A^1-0$ and $U_1 = \A^1-1$, and let $U_{01} = U_0 \cap U_1 \subseteq \A^1$. Since both $U_0$ and $U_1$ are $\A^1$-invariant, we claim that $U_{01}$ is as well. Pick a closed embedding of $U_{01}$ in $\A^n$ for some $n$, and consider the non-smooth scheme
+\begin{align*}
+    Y:=(U_0 \times \A^n) \amalg_{U_{01}} (U_1 \times \A^n) \in \Sch_S.
+\end{align*}
+Then for any connected $X\in \Sm_S$, we have that
+\begin{align*}
+    \Hom_{\Sch_S}(X,Y) = \Hom_{\Sm_S}(X, U_0 \times \A^n) \coprod_{\Hom_{\Sm_S}(X,U_{01})} \Hom_{\Sm_S}(X, U_1 \times \A^n).
+\end{align*}
+%
+Since $L_{\A^1}$ preserves pushouts, we have that
+\begin{align*}
+    L_{\A^1} h_Y = L_{\A^1}(U_0 \times\A^n) \amalg_{L_{\A^1}(U_{01})} L_{\A^1}(U_1 \times \A^n) \simeq .
+\end{align*}
+By \autoref{prop:la1-sends-proj-to-equivalence} we can contract away the $\A^n$'s, and we invoke that $U_0$, $U_1$, and $U_{01}$ were already $\A^1$-local to get that the above is equivalent to
+\begin{align*}
+    &\simeq L_{\A^1}(U_0) \coprod_{L_{\A^1}(U_{01})} L_{\A^1}(U_1) = U_0 \coprod_{U_{01}} A_1.
+\end{align*}
+If this were a sheaf, it would agree with its sheafification, and since sheafification preserves pushouts, we would have that it is equal to the \textit{pushout of sheaves}
+\begin{align*}
+    U_0 \amalg_{U_{01}} U_1 = \A^1,
+\end{align*}
+which is the representable sheaf given by $\A^1$ by Zariski descent. But note that $\A^1$ is not $\A^1$-invariant, so we get that $L_{\A^1}h_Y$ cannot be a sheaf.
+\end{example}
+
+
+\begin{proposition} The category $\Spc(S) \subseteq \PSh(\Sm_S)$ is an accessible localization, hence the inclusion admits a left adjoint.
+\end{proposition}
+We call this adjoint \textit{motivic localization}, and we can describe it explicitly as the infinite composition of both functors.
+
+\begin{definition} We define $L_\mot \colon \Pre(\Sm_S) \to \Spc(S)$ by the formula
+\begin{align*}
+    L_\mot := \colim_{n\to \infty}(L_{\A^1}\circ L_\Nis)^{\circ n},
+\end{align*}
+where this colimit is computed in the presheaf category.
+\end{definition}
+
+\subsection{Properties of motivic localization}
+
+We know that $L_\mot$ preserves colimits, being a left adjoint. What other properties does it admit?
+
+\begin{proposition} \cite[C.6]{Hoyois} We have that $L_\mot$ preserves finite products.
+\end{proposition}
+\begin{proof} This follows by both $L_\Nis$ and $L_{\A^1}$ preserving finite products, together with transfinite composition preserving products.
+\end{proof}
+
+
+\begin{proposition} \cite[3.15]{Hoyois6}
+$L_\mot$ is locally cartesian, meaning that for a cospan $X \to Y \from Z$ in $\PSh(\Sm_S)$, if both $X$ and $Y$ are motivic spaces, then the natural map
+\begin{align*}
+    L_\mot \left( X \times_Y Z \right) \to X \times_Y L_\mot(Z)
+\end{align*}
+is an equivalence. Note the pullback on the domain is in the category of presheaves, while the pullback on the right is in the category of motivic spaces.
+\end{proposition}
+
+\begin{corollary}\label{cor:universal-colimits-motivic-spaces}
+Colimits in $\Spc(S)$ are universal (pullback-stable). 
+\end{corollary}
+\begin{proof} Let $X$ and $Y$ be some motivic spaces, and let $j \colon I \to \Spc(S)$ be a diagram, whose colimit maps to $Y$. We claim that
+\begin{align*}
+    \colim_{i\in I} \left( X \times_Y j(i) \right) \to X \times_Y \colim_{i\in I} j(i)
+\end{align*}
+is an equivalence in $L_\mot$. This is true in the ambient presheaf category since it is a topos, but this doesn't immediately imply the result for motivic spaces, since pullbacks of presheaves do not in general yield pullbacks of motivic spaces. However by applying $L_\mot$ to both sides, and using the fact that it is locally cartesian, the result follows.
+\end{proof}
+
+
+\begin{proposition} We have that $L_\mot$ is \textit{not left exact}. In particular $\Spc(k)$ is not an $\infty$-topos.
+\end{proposition}
+\begin{proof} We will come back to prove this later when we have a little more machinery.
+\end{proof}
+
+
+\subsection{Motivic equivalences}
+
+
+\begin{definition} We say that $f \colon F \to G$ in $\PSh(\Sm_S)$ is a \textit{motivic equivalence} if $L_\mot f$ is an equivalence in $\Spc(S)$.
+\end{definition}
+
+\begin{proposition}\label{prop:terminal-object-motivic-spaces} 
+We have that $\Delta^0 \cong S$ in $\Spc(S)$, and moreover these are terminal, hence we denote them by $\ast$.
+\end{proposition}
+\begin{proof} This follows from $\Spc(S) \subseteq \Shv_\Nis(\Sm_S)$ being an accessible subcategory (hence preserving terminal objects) together with \autoref{prop:terminal-object-sheaves}.
+\end{proof}
+
+\begin{proposition} The map to the terminal object in schemes $\A^n_S \to S$ is a motivic equivalence.
+\end{proposition}
+\begin{proof} It is clear that $\A^1_S \to S$ is a motivic equivalence essentially by definition. The more general statement follows from both the Yoneda embedding and motivic localization preserving finite products.
+\end{proof}
+
+The following proposition is also essentially by definition.
+
+\begin{proposition}\label{prop:proj-scheme-to-a1-equivalence} 
+For any $X\in \Sm_S$, the projection map $X \times \A^n_S \to X$ is a motivic equivalence.
+\end{proposition}
+
+\begin{proposition} For any $F\in \Pre(\Sm_S)$, the projection map $F \times \A^n \to F$ is a motivic equivalence.
+\end{proposition}
+\begin{proof} By the co-Yoneda lemma, any presheaf is a colimit of representable presheaves. Since $L_\mot$ is locally cartesian, colimits are pullback stable, and hence product-stable, meaning that
+\begin{align*}
+    F \times \A^n \cong \left(\colim_U h_U\right) \times \A^n.
+\end{align*}
+Since colimits are universal in any $\infty$-topos (in particular in the presheaf category), we have that we can distribute the colimit over the product. Then the result follows by \autoref{prop:proj-scheme-to-a1-equivalence}.
+\end{proof}
+
+
+
+
+\begin{theorem} (Jouanalou--Thomason trick) Suppose that $S$ is qcqs and further suppose either $S$ is affine or it is noetherian, regular, and separated. Then for any quasi-projective $X\in \Sch_S$, there exists an affine bundle $Y \to X$, where $Y$ is affine.
+\end{theorem}
+
+\begin{remark} The above result probably holds under weaker assumptions -- we're citing \cite[2.20]{Hoyois6}, pulling our assumptions on $S$ from \cite[2.8]{Hoyois6} and letting $G$ be trivial. In most cases we apply this, $S$ will be a field, and $X$ will be smooth, and we can apply this trick by e.g. \cite[3.3.3]{AF-spheres}.
+\end{remark}
+
+
+\begin{example} The easiest example is $\P^1_k$ over a field $k$. There is a map
+\begin{align*}
+    \Spec \left( \frac{k[x,y,z,w]}{x+w-1,xw-yz} \right) &\to \P^1 \\
+    (x,y,z,w) &\mapsto \begin{cases} [x:y] & (x,y)\ne (0,0) \\ [z:w] & (z,w)\ne (0,0). \end{cases}
+\end{align*}
+We claim this is well-defined, exhibiting an affine torsor over $\P^1$.
+\end{example}
+
+\begin{example} In a similar vein, the map
+\begin{align*}
+    \SL_2 &\to \A^2\minus 0 \\
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix} &\mapsto (b,d)
+\end{align*}
+is an affine vector bundle torsor over $\A^2\minus 0$. More generally
+\begin{align*}
+    \SL_n &\to \A^n\minus\{0\}
+\end{align*}
+is an affine vector bundle torsor, by sending an invertible determinant one matrix to its last column.
+\end{example}
+
+\begin{proposition} Any affine vector bundle torsor $E \to B$ is a motivic equivalence.
+\end{proposition}
+\begin{proof} It suffices to verify on a local cover where the bundle is trivialized, at which point it follows by \autoref{prop:proj-scheme-to-a1-equivalence}.
+\end{proof}
+
+\subsection{Checking motivic equivalences on affines}
+
+
+\begin{proposition}\label{prop:motivic-spaces-sifted-colimits-affines} 
+The category $\Spc(S)$ is generated under sifted colimits by (the motivic localization of the representable presheaves attached to) affine $S$-schemes in $\Sm_S$ \cite[3.16]{Hoyois6}.
+\end{proposition}
+\begin{proof} We do this in two steps:
+\begin{enumerate}
+    \item First we argue that $\Spc(S)$ is generated under filtered colimits by $\Sm_S$. Let $F \in \Spc(S)$ be any motivic space, then, considered as a presheaf, it is a colimit of representable presheaves. What is furthermore true is that it is a filtered colimit of coproducts of representable presheaves. While it is not true that $h_U \amalg h_V$ is $h_{U\amalg V}$ in the category of presheaves, it \textit{is true} in the category of sheaves (and hence in the category of motivic spaces), by descent. Hence any motivic localization is in fact a filtered colimit of the motivic localization of representable sheaves.
+
+    \item Second we argue that $\Sm_S \subseteq \Spc(S)$ is generated under sifted colimits by affine $S$-schemes in $\Sm_S$. Given any $X\in \Sm_S$, we can write it as an $\DDelta^\op$-indexed colimit in the category $\Spc(S)$ over the \v{C}ech nerve of a Nisnevich cover. Each fiber product appearing in the cover is equivalent to a smooth affine scheme by Jouanalou's trick, and we can get rid of finite coproducts by the same trick. Hence $X$ can be written as a $\DDelta^\op$-indexed colimit over smooth affine $S$-schemes. 
+\end{enumerate}
+As sifted colimits are combinations of filtered colimits and geometric realizations (\autoref{prop:sifted-is-filtered-plus-geometric-realizations}), the result follows.
+\end{proof}
+
+This gives us a powerful way to check motivic equivalences between presheaves.
+
+
+
+\begin{proposition} \cite[3.16]{Hoyois6} Let $f \colon F \to G$ be a morphism in $\PSh(\Sm_S)$. If
+\begin{align*}
+    F(U) \to G(U)
+\end{align*}
+is an equivalence for every affine $U\in \Sm_S$, then $f$ is a motivic equivalence.
+\end{proposition}
+\begin{proof} 
+
+
+By Yoneda it suffices to argue that
+\begin{align*}
+    \Map_{\Spc(S)} (-,L_\mot F) \to \Map_{\Spc(S)} (-,L_\mot G)
+\end{align*}
+is a natural equivalence. Since $\Map(-,-)$ sends colimits to limits in the first variable, by \autoref{prop:motivic-spaces-sifted-colimits-affines} it suffices to argue that
+\begin{align*}
+    \Map_{\Spc(S)}(L_\mot h_U, L_\mot F) \to \Map_{\Spc(S)}(L_\mot h_U, L_\mot G)
+\end{align*}
+is an equivalence for each affine $U \in \Sm_S$. By adjunction, this is equivalent to asking that $L_\mot F \to L_\mot G$ is a sectionwise equivalence of presheaves when restricted to affines.
+
+We first argue $L_\htp F \to L_\htp G$ is a sectionwise equivalence. Since every $X\in \Sm_S$ admits an affine bundle torsor $U \to X$ which is itself affine by the Jouanalou trick, we have that $(L_{\htp}F)(X) \xto{\sim} (L_\htp F)(U)$ is an equivalence, so it suffices to check that $L_\htp F \to L_\htp G$ is a sectionwise equivalence on affines. Since every vector bundle torsor over an affine is affine\footnote{%
+Over an affine scheme, vector bundle torsors are just vector bundles. If $\mathscr{F}$ is a vector bundle (considered as a sheaf of modules) over $X = \Spec(A)$, then the underlying scheme is $\underline{\Spec}_X(\Sym(\mathcal{F}^\ast))$ which is affine over $X$, and hence is itself affine over the base.
+}, we can leverage the formula for $L_\htp$ (\autoref{eqn:formula-Lhtp}) in order to write
+\begin{align*}
+    (L_\htp F)(U) = \colim_{V\in \text{VBT}_{/U}} F(V).
+\end{align*}
+Since $F(V) \to G(V)$ is an equivalence for each $V$ above, it is clear that $(L_\htp F)(U) \to (L_\htp G)(U)$ is an equivalence for each affine $U$, hence $L_\htp F \to L_\htp G$ is a sectionwise equivalence.
+
+Finally, since a sectionwise equivalence of presheaves is a local equivalence, we have that
+\begin{align*}
+    L_\Nis L_\htp F \to L_\Nis L_\htp G
+\end{align*}
+is an equivalence of presheaves. Passing to the colimit it is now clear that $F \to G$ is a motivic equivalence.
+\end{proof}
+
+
+
+
 \newpage
 \appendix
 \section{More category theory}
 
-\subsection{Cofinality}
-\begin{definition}\label{def:cofinal} 
-We say a subcategory $I \subseteq J$ is \textit{cofinal} if for any functor $F \colon J \to \mathscr{C}$, the induced map on colimits
-\begin{equation}\label{eqn:cofinality}
-\begin{aligned}
-    \colim_I F \to \colim_J F
-\end{aligned}
-\end{equation}
-is an isomorphism.\footnote{%
-We dually say $I \subseteq J$ is \textit{final} if the natural map $\lim_I F \to \lim_J F$ is an isomorphism for any $F$.%
-}
-In other words, in order to compute a $J$-shaped colimit, it suffices to restrict to the subdiagram $I \subseteq J$.
-\end{definition}
-
-\begin{remark} This definition makes sense in 1-category theory as well as it does in $\infty$-category theory, however we remark that the two notions are different, so let's differentiate between the two, continuing the story of \autoref{def:cofinal}:
-\begin{itemize}
-    \item $I \subseteq J$ is $1$\textit{-cofinal} if for any $1$-category $\mathscr{C}$ and $1$-functor $F \colon J \to \mathscr{C}$, the induced map \autoref{eqn:cofinality} is an isomorphism.
-    \item $I \subseteq J$ is \textit{cofinal} ($\infty$-cofinal if we want to be really pedantic) if for any $\infty$-category and $\infty$-functor $F \colon J \to \mathscr{C}$, the induced map \autoref{eqn:cofinality} is an equivalence.
-\end{itemize}
-Note this latter definition extends to the case where $I$ and $J$ are themselves $\infty$-categories, or even just simplicial sets.
-
-\end{remark}
-
-It is straightforward to check when a subdiagram is 1-cofinal:
-\begin{proposition} \cite[04E6]{Stacks}
-$I \subseteq J$ is $1$-cofinal if
-\begin{itemize}
-    \item every $j\in J$ has some $i \in I$ with a morphism $j \to i$
-    \item for every $j \in J$ and pair of objects $i,i'\in I$, there is a zig-zag of morphisms between $i,i'\in I$ and maps from $j$ into the zig-zag making the diagram commute:
-\[ \begin{tikzcd}
-     &  & j\dar\ar[dr]\ar[dl] &  & \\
-    \cdots\rar & i_n & i_{n+1}\lar\rar & i_{n+2} & \lar\cdots \\
-\end{tikzcd} \]
-\end{itemize}
-\end{proposition}
-
-\begin{notation} Let $\DDelta^\inj \subseteq \DDelta$ be the subcategory of injective maps, and let $\DDelta_{\le n} \subseteq \DDelta$ denote the full subcategory of objects $[k]$ for $k\le n$. For example $\DDelta^\inj_{\le 1}$ is just a the category with two parallel arrows, i.e. the ``(co)equalizer'' category:
-\begin{align*}
-    \DDelta^\inj_{\le 1} := \bullet \rightrightarrows \bullet
-\end{align*}
-\end{notation}
-
-
-\begin{example}\label{exa:1-cofinal-parallel-arrows-ddelta} 
-We have that $\DDelta_{\le1}^{\inj,\,\op} \subseteq \DDelta^\op$ is 1-cofinal (c.f. \cite[8.3.8]{Riehl}).
-\end{example}
-% \begin{proof} It's easier to check the dual properties hold before taking the opposite category. It's clear both $[0]$ and $[1]$ map to any element in $\DDelta$. For the second condition we have to check the zig-zag condition. If $i=i'$ in this setting, then it is clear
-% \end{proof}
-
-\begin{proposition} The inclusion $\DDelta_{\le n}^{\inj,\op} \subseteq \DDelta^\op$ is $n$-cofinal for any $1\le n \le \infty$.
-\end{proposition}
-
-
-It turns out by a souped-up extension of Quillen Theorem A, originally due to Joyal, we have a necessary condition for cofinality in the $\infty$-categorical setting.
-
-\begin{theorem} (Joyal, Quillen) Let $f \colon I \to J$ be a functor of 1-categories which is ($\infty$-)cofinal. Then the induced map on classifying spaces
-\begin{align*}
-    BI \to BJ
-\end{align*}
-is a weak homotopy equivalence \cite[4.1.3.1,~4.1.3.3]{HTT}.
-\end{theorem}
-
-
-\begin{example} The same subcategory $\DDelta_{\le1}^{\inj,\,\op} \subseteq \DDelta^\op$ is \textit{not} $\infty$-cofinal.
-\end{example}
-\begin{proof} The classifying space of the coequalizer diagram is $S^1$, however since $[0] \in\DDelta$ is terminal, it is initial in $\DDelta^\op$, hence $B\DDelta^\op \simeq \ast$ is contractible.
-\end{proof}
-
-\begin{remark} Removing this injectivity hypothesis is also interesting, since we include the opposite of the map $[1] \to [0]$ --- the category $\DDelta_{\le1}^\op$ is the \textit{split coequalizer} category:
-\[\begin{tikzcd}[column sep=small]
-    \bullet\rar[bend right=30]\rar[bend left=30] & \bullet\lar
-\end{tikzcd} \]
-\end{remark}
-
-\begin{proposition} Each of the composites
-\begin{align*}
-    \DDelta_{\le1}^{\inj,\,\op} \subseteq \DDelta_{\le1}^\op \subseteq \DDelta^\op
-\end{align*}
-is $1$-cofinal, however none of these inclusions are $\infty$-cofinal.
-\end{proposition}
-\begin{proof} The universal property of the 1-categorical colimit for both $\DDelta_{\le1}^{\inj,\,\op}$ and $\DDelta_{\le1}^\op$ agree, so this is direct. The other inclusion now follows by \autoref{exa:1-cofinal-parallel-arrows-ddelta}.
-\end{proof}
-
-In general we cannot truncate in order to obtain an $\infty$-cofinal diagram. We can, however, restrict only to face maps and throw out degeneracies:
-
-\begin{lemma} \cite[6.5.3.7]{HTT} The inclusion $\DDelta^{\inj,\op} \subseteq \DDelta$ is cofinal.
-\end{lemma}
-
-
-
-\begin{definition} An $\infty$-category $\mathscr{C}$ is \textit{sifted} if the diagonal map $\mathscr{C} \to \mathscr{C} \times \mathscr{C}$ is cofinal \cite[5.5.8.1]{HTT}.
-\end{definition}
-
-\begin{proposition}\label{prop:sifted-colimits-finite-limits} 
-Sifted colimits valued in $\Set$ commute with finite limits.
-\end{proposition}
-
-\begin{remark} In the 1-categorical setting, the converse of \autoref{prop:sifted-colimits-finite-limits} holds, meaning we can take this to be the definition of sifted colimits.
-\end{remark}
-
-\begin{example} $\ $
-\begin{enumerate}
-    \item The category $\DDelta^\op$ is sifted
-    \item Any filtered category is sifted
-\end{enumerate}
-\end{example}
-
-The examples above are the only interesting examples, in the following more precise sense.
-
-\begin{proposition} A category $\mathscr{C}$ admits all sifted colimits if and only if it admits all filtered colimits and it admits geometric realizations (meaning $\DDelta^\op$-indexed colimits).
-\end{proposition}
-
-\begin{corollary} A 1-category admits all sifted colimits if and only if it admits all filtered colimits and it has coequalizers.
-\end{corollary}
-\begin{proof} $\DDelta^\op$-indexed colimits are just coequalizers in 1-categories by \autoref{exa:1-cofinal-parallel-arrows-ddelta}.
-\end{proof}
+\input{appendices/category-theory.tex}
 
 \printbibliography
 \end{document}
