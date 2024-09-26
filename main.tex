@@ -199,7 +199,7 @@ Therefore any homotopy invariant functor out of spaces provides another example 
 \end{remark}
 
 \newpage
-\section{\sectionheader Torsors}
+\section{Torsors}
 
 \begin{assumption} For this lecture, every time we say ``cover'' you can assume we are working with Zariski covers, or even open covers of topological spaces, since the intuition will be the same and the results here will be mostly identical. If you know about other topologies, the statements here work for any site. We will go into sheaves and sites more next week, when we will remark that everything here works for other nice sites (\'etale, Nisnevich, flat, etc.).
 \end{assumption}
@@ -615,7 +615,7 @@ given by the nonzero class in $\left[ \BGL_n(\R), B\Z/2 \right] = \Z/2$. This is
 
 The answer to both will be yes, but \textit{not in the category of varieties}. We need more machinery than is available to us there.
 
-\section{\sectionheader Torsors II: Simplicial methods}
+\section{Torsors II: Simplicial methods}
 
 
 \begin{definition} We denote by $\DDelta$ the category whose objects are finite ordered sets of the form $[n] = \left\{ 0<1< \cdots<n \right\}$, and whose morphisms $[n] \to [m]$ are order-preserving maps.
@@ -1010,7 +1010,7 @@ This category $\Pre(\Var_k)$ will take care of item (1) on our checklist! After 
 This doesn't take care of point (2), and we shouldn't really expect it to. The equivalence between a variety and the \v{C}ech nerve of the cover should depend on \textit{what covers are permissible}. In other words, it should bake in the Grothendieck topology somehow. We'll see that we can get point (2) (while retaining a notion of homotopy compatible with that of presheaves) by passing to the category of \textit{sheaves} in our site. We'll make all this precise soon.
 
 
-\section{\sectionheader Torsors III: Sites, sheaves, and Hilbert 90}
+\section{Torsors III: Sites, sheaves, and Hilbert 90}
 
 We have seen that $H^1(X,G)$ classifies $G$-torsors for $X$, but we've been a little vague about Grothendieck topologies (i.e. what kinds of covers are we considering for our varieties). Today we'll make things more precise.
 
@@ -1138,7 +1138,7 @@ Hence any of the groups above can be thought of as parametrizing isomorphism cla
 
 
 
-\section{\sectionheader Infinity categories}
+\section{Infinity categories}
 
 \begin{example} If $\mathscr{C}$ is a small 1-category, it gives rise to a simplicial set $N_\bullet \mathscr{C}$, called the \textit{nerve} of $\mathscr{C}$, with the following data:
 \begin{itemize}
@@ -1467,7 +1467,7 @@ Hence we think about $\Pre(\mathscr{C}) = \Fun(\mathscr{C}^\op, \mathcal{S})$ as
 
 
 
-\section{\sectionheader Descent}
+\section{Descent}
 
 \begin{goal} Define the $\infty$-topos of Nisnevich sheaves $\Sh_\Nis(\Sm_k)$.
 \end{goal}
@@ -1672,6 +1672,12 @@ Recall if $\mathscr{C}$ is any ($\infty$-)category and $x\in \mathscr{C}$, we ha
 \end{proposition}
 \begin{proof}
 The inclusion $\Sh_\tau(\mathscr{C}) \subseteq \PSh(\mathscr{C})$ will preserve terminal objects, being a limit over an empty diagram, so it suffices to observe that the constant presheaf $\Delta^0$ is already a sheaf.
+\end{proof}
+
+\begin{proposition}\label{prop:terminal-object-sheaves} 
+Let $h_S \in \PSh(\Sm_S)$ denote the representable sheaf attached to the base. Then the map $h_S \xto{!} \Delta^0$ of presheaves is a local equivalence.
+\end{proposition}
+\begin{proof} It suffices to observe that the presheaves are identical, which is true because for any $U\in \Sm_S$, we have that $h_S(U) = \Hom_S(U,S)$, which is a one-object set consisting of the structure map (since $S$ is terminal in $\Sm_S$).
 \end{proof}
 
 \begin{notation} We denote by $\Shv_\tau(\mathscr{C})_\ast := \Shv_\tau(\mathscr{C})_{\Delta^0/}$ the pointed slice category. An object here is a map of sheaves $\Delta^0 \to F$, which we observe is equivalent to picking a basepoint in $F(U)$ for every $U \in \mathscr{C}$. Hence we can think of these as sheaves of \textit{pointed} spaces.
@@ -1955,19 +1961,7 @@ This is the result we've been hoping for. It tells us we can classify torsors in
 
 
 
-\section{\sectionheader Motivic spaces}
-
-Recall we have
-\begin{align*}
-    \Shv_\Nis(\Sm_S) \subseteq \Pre(\Sm_S),
-\end{align*}
-the accessible subcategory of Nisnevich sheaves.
-
-\begin{proposition}\label{prop:terminal-object-sheaves} 
-Let $h_S \in \PSh(\Sm_S)$ denote the representable sheaf attached to the base. Then the map $h_S \xto{!} \Delta^0$ of presheaves is a local equivalence.\footnote{todo --- move this earlier}
-\end{proposition}
-\begin{proof} It suffices to observe that the presheaves are identical, which is true because for any $U\in \Sm_S$, we have that $h_S(U) = \Hom_S(U,S)$, which is a one-object set consisting of the structure map (since $S$ is terminal in $\Sm_S$).
-\end{proof}
+\section{Motivic spaces}
 
 We are interested in studying \textit{$\A^1$-invariance} of presheaves. There are a few ways we might impose this, the first being the most naive --- we can study presheaves $F$ for which
 \begin{enumerate}
@@ -1986,6 +1980,8 @@ A \textit{vector bundle torsor} is an affine map $Y \to X$ which is a torsor for
 
 todo - find an example of a non-affine $X$ for which vector bundle torsors and vector bundles don't agree
 
+\begin{notation} Let $\Sm_S$ denote the category of smooth $S$-schemes of finite type over $S$. The finite type assumption is needed in order to guarantee that $\Sm_S$ is essentially small (see \autoref{thm:finite-type-schemes-essentially-small}).
+\end{notation}
 
 
 \begin{definition} Let $F \in \PSh(\Sm_S)$ be a presheaf.
@@ -2066,7 +2062,8 @@ by the formula
 
 \begin{proposition} We have that $\Sing(F)$ is $\A^1$-invariant for any $F$.
 \end{proposition}
-\begin{proof} We want to prove for any $X\in \Sch_S$ that the projection map $\pi \colon X \times \A^1 \to X$ induces an equivalence
+\begin{proof}[Proof sketch]
+We want to prove for any $X\in \Sch_S$ that the projection map $\pi \colon X \times \A^1 \to X$ induces an equivalence
 \begin{align*}
     \pi^\ast \colon (\Sing F)(X \times \A^1) \to (\Sing F)(X).
 \end{align*}
@@ -2243,6 +2240,7 @@ Since colimits are universal in any $\infty$-topos (in particular in the preshea
 \end{proof}
 
 
+\section{Jouanolou devices and motivic equivalences}
 
 
 \begin{theorem} (Jouanolou--Thomason trick) Suppose that $S$ is qcqs and further suppose either $S$ is affine or it is noetherian, regular, and separated. Then for any quasi-projective $X\in \Sch_S$, there exists an affine bundle $Y \to X$, where $Y$ is affine.

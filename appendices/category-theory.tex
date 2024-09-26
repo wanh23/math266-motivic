@@ -116,3 +116,17 @@ A category $\mathscr{C}$ admits all sifted colimits if and only if it admits all
 \begin{proof} $\DDelta^\op$-indexed colimits are just coequalizers in 1-categories by \autoref{exa:1-cofinal-parallel-arrows-ddelta}.
 \end{proof}
 
+
+\section{Essential smallness}
+
+Being small is not a property of categories that is invariant under equivalence, so it is more meaningful to ask whether a category is \textit{essentially small} (whether it is equivalent to a small category). This is equivalent to a category admitting a small skeleton, although the axiom of choice is required in order to pick representatives for each isomorphism class of object.
+
+\begin{theorem}\label{thm:finite-type-schemes-essentially-small} 
+The category of finite type $S$-schemes is essentially small.
+\end{theorem}
+\begin{proof}[Proof sketch] (see \href{https://mathoverflow.net/a/251044}{MO251044} for details) If $S = \Spec(A)$ is affine, then the category $\Alg_A^{\text{f.t.}}$ of finite type $A$-algebras is essentially small, since all the objects are isomorphic to algebras of the form $A[x_1, \ldots, x_n]/(f_1, \ldots, f_r)$, of which there are a set. We can glue finite type $S$-schemes over affines, and then bootstrap to the more general case of the base $S$ not being affine by gluing finite type schemes over all affine subschemes of $S$.
+\end{proof}
+
+\begin{remark} The category of all $S$-schemes is not essentially small.
+\end{remark}
+
