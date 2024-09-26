@@ -1915,8 +1915,7 @@ is a local equivalence of presheaves.
 
 What about classifying spaces $B_{\bullet}\mathcal{G}\in \Pre(\Sch_S)$? We would like to understand them in the sheaf topos.
 
-\begin{notation} If $\tau$ is a topology, we denote by $B_\tau \mathcal{G} := L_\tau B_\bullet \mathcal{G}$ the sheafification of the bar construction in the $\tau$ topology.\footnote{%
-This is overloaded notation so we technically shouldn't be using it, since $B_\tau \mathcal{G}$ generally refers in the literature to a \textit{fibrant replacement} of $B_\bullet \mathcal{G}$ in the local model structure on simplicial presheaves.}
+\begin{notation} If $\tau$ is a topology, we denote by $B_\tau \mathcal{G} := L_\tau B_\bullet \mathcal{G}$ the sheafification of the bar construction in the $\tau$ topology.
 \end{notation}
 
 \begin{example}
@@ -1965,21 +1964,21 @@ Recall we have
 the accessible subcategory of Nisnevich sheaves.
 
 \begin{proposition}\label{prop:terminal-object-sheaves} 
-Let $h_S \in \PSh(\Sm_S)$ denote the representable sheaf attached to the base. Then the map $h_S \xto{!} \Delta^0$ of presheaves is a local equivalence.
+Let $h_S \in \PSh(\Sm_S)$ denote the representable sheaf attached to the base. Then the map $h_S \xto{!} \Delta^0$ of presheaves is a local equivalence.\footnote{todo --- move this earlier}
 \end{proposition}
-\begin{proof} It suffices to observe that the presheaves are identical, which is true because for any $U\in \Sm_S$, we have that $h_S(U) = \Hom_S(U,S)$, which is just a point consisting of the structure map (or since $S$ is terminal in $\Sm_S$).
+\begin{proof} It suffices to observe that the presheaves are identical, which is true because for any $U\in \Sm_S$, we have that $h_S(U) = \Hom_S(U,S)$, which is a one-object set consisting of the structure map (since $S$ is terminal in $\Sm_S$).
 \end{proof}
 
 We are interested in studying \textit{$\A^1$-invariance} of presheaves. There are a few ways we might impose this, the first being the most naive --- we can study presheaves $F$ for which
 \begin{enumerate}
     \item any projection $X \times \A^1 \to X$ induces an equivalence $F(X) \xto{\sim} F(X \times \A^1)$
-    \item any algebraic vector bundle $E \to X$ induces an equivalence $F(X) \xto{\sim} F(E)$
+    \item any  vector bundle torsor $E \to X$ induces an equivalence $F(X) \xto{\sim} F(E)$
     \item any algebraic vector bundle \textit{torsor} $Y \to X$ induces an equivalence $F(X) \to F(Y)$.
 \end{enumerate}
 We have a strengthening of conditions here, but we notice that in the context of sheaves they all become equivalent, so the definition is only really important for presheaves. We will work with the first one as it is classically what people work with, and the last one since it will simplify some proofs. Let's first define vector bundle torsors explicitly.
 
 \begin{definition} \cite[4.2]{Weibel-KH}
-A \textit{vector bundle torsor} is an affine map $Y \to X$ which is a torsor for an algebraic vector bundle $E \to X$. Explicitly, $Y$ is locally isomorphic to $E$, but the patching maps are algebraic and need not be affine.
+A \textit{vector bundle torsor} is an affine map $Y \to X$ which is a torsor for an algebraic vector bundle $E \to X$. Explicitly, $Y \to X$ is a Zariski locally trivial affine morphism with fibers isomorphic to affine space.
 \end{definition}
 
 \begin{example} If $X = \Spec(A)$ is an affine scheme, then algebraic vector bundle torsors over $X$ are the same as vector bundles over $X$.
@@ -2134,7 +2133,7 @@ that is, the full subcategory of presheaves which are both Nisnevich sheaves and
 \begin{align*}
     \Shv_\Nis(\Sm_S) \cap \PSh_{\A^1}(\Sm_S) = \Shv_\Nis(\Sm_S) \cap \PSh_\htp(\Sm_S).
 \end{align*}
-In other words we could equivalently define motivic spaces via $L_{\A^1}$, or via a different localization $L_\htp \colon \Pre(\Sm_S) \to \Pre_\htp(\Sm_S)$. The former is more common, although the latter has some nice advantages (see \cite[p.~204]{Hoyois6} for a discussion, and \cite[3.13]{Hoyois6} for the equality above).
+In other words we could equivalently define motivic spaces via $\Pre_{\A^1}$, or via $\Pre_\htp$. The former is more common, although the latter has some nice advantages (see \cite[p.~204]{Hoyois6} for a discussion, and \cite[3.13]{Hoyois6} for the equality above).
 \end{remark}
 
 
@@ -2152,7 +2151,7 @@ Then for any connected $X\in \Sm_S$, we have that
 %
 Since $L_{\A^1}$ preserves pushouts, we have that
 \begin{align*}
-    L_{\A^1} h_Y = L_{\A^1}(U_0 \times\A^n) \amalg_{L_{\A^1}(U_{01})} L_{\A^1}(U_1 \times \A^n) \simeq .
+    L_{\A^1} h_Y = L_{\A^1}(U_0 \times\A^n) \amalg_{L_{\A^1}(U_{01})} L_{\A^1}(U_1 \times \A^n).
 \end{align*}
 By \autoref{prop:la1-sends-proj-to-equivalence} we can contract away the $\A^n$'s, and we invoke that $U_0$, $U_1$, and $U_{01}$ were already $\A^1$-local to get that the above is equivalent to
 \begin{align*}
@@ -2206,11 +2205,10 @@ is an equivalence in $L_\mot$. This is true in the ambient presheaf category sin
 \end{proof}
 
 
-\begin{proposition} We have that $L_\mot$ is \textit{not left exact}. In particular $\Spc(k)$ is not an $\infty$-topos.
+\begin{proposition}\label{prop:spc-not-a-topos} 
+We have that $L_\mot$ is \textit{not left exact}. In particular $\Spc(k)$ is not an $\infty$-topos.
 \end{proposition}
-\begin{proof} We will come back to prove this later when we have a little more machinery.
-\end{proof}
-
+We will come back to prove \autoref{prop:spc-not-a-topos} later when we have a little more machinery.
 
 \subsection{Motivic equivalences}
 
@@ -2219,7 +2217,7 @@ is an equivalence in $L_\mot$. This is true in the ambient presheaf category sin
 \end{definition}
 
 \begin{proposition}\label{prop:terminal-object-motivic-spaces} 
-We have that $\Delta^0 \cong S$ in $\Spc(S)$, and moreover these are terminal, hence we denote them by $\ast$.
+We have that $\Delta^0 \cong S$ in $\Spc(S)$, and moreover these are terminal, hence we will often denote them by $\ast$.
 \end{proposition}
 \begin{proof} This follows from $\Spc(S) \subseteq \Shv_\Nis(\Sm_S)$ being an accessible subcategory (hence preserving terminal objects) together with \autoref{prop:terminal-object-sheaves}.
 \end{proof}
@@ -2247,7 +2245,7 @@ Since colimits are universal in any $\infty$-topos (in particular in the preshea
 
 
 
-\begin{theorem} (Jouanalou--Thomason trick) Suppose that $S$ is qcqs and further suppose either $S$ is affine or it is noetherian, regular, and separated. Then for any quasi-projective $X\in \Sch_S$, there exists an affine bundle $Y \to X$, where $Y$ is affine.
+\begin{theorem} (Jouanolou--Thomason trick) Suppose that $S$ is qcqs and further suppose either $S$ is affine or it is noetherian, regular, and separated. Then for any quasi-projective $X\in \Sch_S$, there exists an affine bundle $Y \to X$, where $Y$ is affine.
 \end{theorem}
 
 \begin{remark} The above result probably holds under weaker assumptions -- we're citing \cite[2.20]{Hoyois6}, pulling our assumptions on $S$ from \cite[2.8]{Hoyois6} and letting $G$ be trivial. In most cases we apply this, $S$ will be a field, and $X$ will be smooth, and we can apply this trick by e.g. \cite[3.3.3]{AF-spheres}.
@@ -2289,7 +2287,7 @@ The category $\Spc(S)$ is generated under sifted colimits by (the motivic locali
 \begin{enumerate}
     \item First we argue that $\Spc(S)$ is generated under filtered colimits by $\Sm_S$. Let $F \in \Spc(S)$ be any motivic space, then, considered as a presheaf, it is a colimit of representable presheaves. What is furthermore true is that it is a filtered colimit of coproducts of representable presheaves. While it is not true that $h_U \amalg h_V$ is $h_{U\amalg V}$ in the category of presheaves, it \textit{is true} in the category of sheaves (and hence in the category of motivic spaces), by descent. Hence any motivic localization is in fact a filtered colimit of the motivic localization of representable sheaves.
 
-    \item Second we argue that $\Sm_S \subseteq \Spc(S)$ is generated under sifted colimits by affine $S$-schemes in $\Sm_S$. Given any $X\in \Sm_S$, we can write it as an $\DDelta^\op$-indexed colimit in the category $\Spc(S)$ over the \v{C}ech nerve of a Nisnevich cover. Each fiber product appearing in the cover is equivalent to a smooth affine scheme by Jouanalou's trick, and we can get rid of finite coproducts by the same trick. Hence $X$ can be written as a $\DDelta^\op$-indexed colimit over smooth affine $S$-schemes. 
+    \item Second we argue that $\Sm_S \subseteq \Spc(S)$ is generated under sifted colimits by affine $S$-schemes in $\Sm_S$. Given any $X\in \Sm_S$, we can write it as an $\DDelta^\op$-indexed colimit in the category $\Spc(S)$ over the \v{C}ech nerve of a Nisnevich cover. Each fiber product appearing in the cover is equivalent to a smooth affine scheme by Jouanolou's trick, and we can get rid of finite coproducts by the same trick. Hence $X$ can be written as a $\DDelta^\op$-indexed colimit over smooth affine $S$-schemes. 
 \end{enumerate}
 As sifted colimits are combinations of filtered colimits and geometric realizations (\autoref{prop:sifted-is-filtered-plus-geometric-realizations}), the result follows.
 \end{proof}
@@ -2317,7 +2315,7 @@ is a natural equivalence. Since $\Map(-,-)$ sends colimits to limits in the firs
 \end{align*}
 is an equivalence for each affine $U \in \Sm_S$. By adjunction, this is equivalent to asking that $L_\mot F \to L_\mot G$ is a sectionwise equivalence of presheaves when restricted to affines.
 
-We first argue $L_\htp F \to L_\htp G$ is a sectionwise equivalence. Since every $X\in \Sm_S$ admits an affine bundle torsor $U \to X$ which is itself affine by the Jouanalou trick, we have that $(L_{\htp}F)(X) \xto{\sim} (L_\htp F)(U)$ is an equivalence, so it suffices to check that $L_\htp F \to L_\htp G$ is a sectionwise equivalence on affines. Since every vector bundle torsor over an affine is affine\footnote{%
+We first argue $L_\htp F \to L_\htp G$ is a sectionwise equivalence. Since every $X\in \Sm_S$ admits an affine bundle torsor $U \to X$ which is itself affine by the Jouanolou trick, we have that $(L_{\htp}F)(X) \xto{\sim} (L_\htp F)(U)$ is an equivalence, so it suffices to check that $L_\htp F \to L_\htp G$ is a sectionwise equivalence on affines. Since every vector bundle torsor over an affine is affine\footnote{%
 Over an affine scheme, vector bundle torsors are just vector bundles. If $\mathscr{F}$ is a vector bundle (considered as a sheaf of modules) over $X = \Spec(A)$, then the underlying scheme is $\underline{\Spec}_X(\Sym(\mathcal{F}^\ast))$ which is affine over $X$, and hence is itself affine over the base.
 }, we can leverage the formula for $L_\htp$ (\autoref{eqn:formula-Lhtp}) in order to write
 \begin{align*}
