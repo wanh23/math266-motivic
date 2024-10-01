@@ -91,8 +91,8 @@ In general we cannot truncate in order to obtain an $\infty$-cofinal diagram. We
 \begin{definition} An $\infty$-category $\mathscr{C}$ is \textit{sifted} if the diagonal map $\mathscr{C} \to \mathscr{C} \times \mathscr{C}$ is cofinal \cite[5.5.8.1]{HTT}.
 \end{definition}
 
-\begin{proposition}\label{prop:sifted-colimits-finite-limits} 
-Sifted colimits valued in $\Set$ commute with finite limits.
+\begin{proposition} \cite[5.5.8.11]{HTT} \label{prop:sifted-colimits-finite-limits} 
+  Sifted colimits valued in $\Set$ commute with finite products.
 \end{proposition}
 
 \begin{remark} In the 1-categorical setting, the converse of \autoref{prop:sifted-colimits-finite-limits} holds, meaning we can take this to be the definition of sifted colimits.
@@ -116,7 +116,39 @@ A category $\mathscr{C}$ admits all sifted colimits if and only if it admits all
 \begin{proof} $\DDelta^\op$-indexed colimits are just coequalizers in 1-categories by \autoref{exa:1-cofinal-parallel-arrows-ddelta}.
 \end{proof}
 
-
+Moreover, we may add in \emph{finite coproducts} to capture all colimits.
+\def\cC{\mathcal{C}}
+\def\cD{\mathcal{D}}
+\begin{proposition}\label{prop:colimit-is-sifted-plus-finite-coproducts}
+  Let $\cC$ be a category, $\cD \subset \cC$, a full subcategory, and $X$ an object.
+  Then, the following are equivalent.
+  \begin{enumerate}[label={(\alph*)}]
+    \item $X$ is a geometric realization of coproducts of elements in $\cD$.
+    \item $X$ is a sifted colimit of finite coproducts of elements in $\cD$.
+    \item $X$ is a colimit of object in $\cD$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  The implication (a) $\implies$ (b) is essentially \autoref{prop:sifted-is-filtered-plus-geometric-realizations} (as coproducts are filtered colimits of finite coproducts) and the implication (b) $\implies$ (c) is the fact that colimits of colimits are colimits.
+  The implication (c) $\implies$ (a) follows from the Bousfield-Kan formula for a limit of $p\colon K \rightarrow \cC$:
+  \[
+    \colim_K p \xleftarrow{\;\;\sim\;\;} \colim \left(
+\begin{tikzcd}
+	{\coprod\limits_{x \in K_0} p(x)} & {\coprod\limits_{\alpha \in K_1} p(\alpha(0))} & {\coprod\limits_{\alpha \in K_2} p(\alpha(0))} & \vdots
+	\arrow[shift left, from=1-2, to=1-1]
+	\arrow[shift right, from=1-2, to=1-1]
+	\arrow[from=1-3, to=1-2]
+	\arrow[shift right=2, from=1-3, to=1-2]
+	\arrow[shift left=2, from=1-3, to=1-2]
+	\arrow[shift left, from=1-4, to=1-3]
+	\arrow[shift right, from=1-4, to=1-3]
+	\arrow[shift left=3, from=1-4, to=1-3]
+	\arrow[shift right=3, from=1-4, to=1-3]
+\end{tikzcd}
+    \right)
+  \] 
+  see e.g. \cite[Cor~12.5]{Shah}.
+\end{proof}
 \section{Essential smallness}
 
 Being small is not a property of categories that is invariant under equivalence, so it is more meaningful to ask whether a category is \textit{essentially small} (whether it is equivalent to a small category). This is equivalent to a category admitting a small skeleton, although the axiom of choice is required in order to pick representatives for each isomorphism class of object.
