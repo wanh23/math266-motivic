@@ -14,6 +14,7 @@
 \let\del\partial
 \renewcommand{\Pre}{\mathrm{PSh}}
 \providecommand{\Hen}{\mathrm{Hen}}
+\let\smashprod\wedge
 
 \begin{document}
 \begin{abstract} Notes from MATH266: Motivic homotopy theory, taught at Harvard in Fall 2024. Last compiled: \today
@@ -1721,7 +1722,8 @@ and considering the map $X^{S^n} \to X$ in the slice topos $\Shv_{/X}$, and defi
 
 The loop space interacts with the homotopy groups in a topos in the way we might expect from topology:
 
-\begin{proposition} If $\mathscr{C}$ is an $\infty$-topos and $(X,x) \in \mathscr{C}_\ast$, then
+\begin{proposition}\label{prop:pi-n-loops} 
+If $\mathscr{C}$ is an $\infty$-topos and $(X,x) \in \mathscr{C}_\ast$, then
 \begin{align*}
     \pi_n(X,x) = \pi_0 (\Omega^n (X,x)).
 \end{align*}
@@ -2329,6 +2331,338 @@ is an equivalence of presheaves. Passing to the colimit it is now clear that $F 
 \end{proof}
 
 
+
+
+\section{Pointed motivic spaces}
+
+\begin{notation} By abuse of notation, if $X \in \Sm_S$, then we also denote by $X \in \Spc(S)$ the motivic space $L_\mot h_S$.
+\end{notation}
+
+\begin{notation} We denote by $\Spc(S)_\ast$ the category of pointed motivic spaces. This has a zero object, which we denote by $\ast$. This comes with an adjunction
+\begin{align*}
+    (-)_+ \colon \Spc(S) \leftrightarrows \Spc(S) \noloc U,
+\end{align*}
+where $X_+$ is the coproduct $X \amalg S$, pointed at that copy of $S$, and the right adjoint forgets the basepoint.
+\end{notation}
+
+\begin{notation} If $Y \to X$ is a map of (pointed) motivic spaces, we denote by $X/Y$ the cofiber, computed as the pushout
+\[\begin{tikzcd}
+    Y\rar\dar & X\dar\\
+    \ast\rar & X/Y.
+\end{tikzcd} \]
+\end{notation}
+
+We denote by $X \vee Y$ the coproduct in the category $\Spc(S)_\ast$ of pointed motivic spaces, and by
+\begin{align*}
+    X \smashprod Y = \frac{X \times Y}{X \vee Y}
+\end{align*}
+the \textit{smash product}.
+
+\begin{notation} Since $\Spc(S)_\ast$ has a zero object, we can denote by $\Sigma X$ the pushout
+\[\begin{tikzcd}
+    X\rar\dar & \ast\dar\\
+    \ast\rar & \Sigma X\po,
+\end{tikzcd} \]
+for any motivic space $X$.
+\end{notation}
+
+\begin{proposition} If $X$ is a pointed motivic space, then there is a canonical equivalence
+\begin{align*}
+    \Sigma X \simeq S^1 \smashprod X.
+\end{align*}
+\end{proposition}
+\begin{proof} Since $L_\mot$ preserves coproducts and $\PSh(\Sm_S)$ is cocomplete, it suffices to compute the pushout at the level of simplicial presheaves. In this setting, the coproduct is computed levelwise, in which case it is clear that $\Sigma X(U) = S^1 \smashprod X(U)$ for any $U \in \Sm_S$. Hence as pointed presheaves, we have that $\Sigma X \simeq S^1 \smashprod  X$. Finally, $L_\mot$ preserves the smash product construction since it preserves finite products, as well as coproducts and cofibers.
+\end{proof}
+%
+
+By descent, Nisnevich covers of schemes give rise to colimits of motivic spaces. One of the most immediate examples is the following:
+
+\begin{example} The following diagram of (pointed) motivic spaces is a pushout:
+\[ \begin{tikzcd}
+    \mathbb{G}_m\rar["z"]\dar["z^{-1}" left] & \A^1\dar\\
+    \A^1\rar & \P^1.
+\end{tikzcd} \]
+\end{example}
+Since $\A^1 \xto{\sim} \ast$ is trivial, and since all our colimits are $\infty$-colimits, we can replace the above diagram with the weakly equivalent span $\ast \from \mathbb{G}_m \to \mathbb{G}_m$ and compute the same colimit. This implies that the natural map
+\begin{equation}\label{eqn:suspension-gm-is-p1}
+\begin{aligned}
+    \Sigma \mathbb{G}_m \xto{\sim} \P^1
+\end{aligned}
+\end{equation}
+is a motivic equivalence.
+
+\subsection{Motivic spheres}
+
+\begin{terminology} We have \textit{two kinds of spheres} in motivic homotopy theory: ones coming from algebraic geometry (the multiplicative group scheme $\mathbb{G}_m$ or the projective line $\P^1$) and ones coming from algebraic topology (the constant presheaf at $S^1$ or at $S^n$ for any $n$). So we get bigradings on the spheres. There are competing conventions in the literature for motivic grading, but the increasingly standardized convention is to write
+\begin{align*}
+    S^{1,1} &:= \mathbb{G}_m \\
+    S^{1,0} &= S^1 \\
+    S^{2,1} &= \P^1.
+\end{align*}
+\end{terminology}
+
+\begin{example} We have that $S^1 \simeq \A^1/\left\{ 0,1 \right\}$.
+\end{example}
+\begin{proof} We can consider the cofiber diagram
+\[ \begin{tikzcd}
+    S^0\rar["{(0,1)}" above]\dar & \A^1\dar\\
+    \ast\rar & S^1.\po
+\end{tikzcd} \]
+\end{proof}
+
+
+
+\begin{exercise} The diagram
+\[ \begin{tikzcd}
+    X \times Y\rar\dar & X\dar\\
+    Y\rar & \Sigma(X \smashprod Y)\po
+\end{tikzcd} \]
+is a pushout.
+\end{exercise}
+
+\begin{proposition} There is a motivic equivalence
+\begin{align*}
+    \A^n \minus \{0\} \simeq (S^1)^{\smashprod (n-1)} \smashprod (\mathbb{G}_m)^{\smashprod  n} = S^{2n-1,n}.
+\end{align*}
+\end{proposition}
+
+\begin{corollary} We have that
+\begin{align*}
+    \frac{\A^n}{\A^n\minus\{0\}} \simeq S^{2n,n}.
+\end{align*}
+\end{corollary}
+
+
+\begin{proposition} We have that
+\begin{align*}
+    \frac{\P^n}{\P^n-0}\simeq S^{n,n}.
+\end{align*}
+\end{proposition}
+\begin{proof} By covering $\P^n$ with $\A^n$ and $\P^n\minus\left\{ 0 \right\}$, we get a pushout diagram
+\[ \begin{tikzcd}
+    \A^n\minus \left\{ 0 \right\}\rar\dar & \P^n\minus\left\{ 0 \right\}\dar\\
+    \A^n\rar & \P^n.\po
+\end{tikzcd} \]
+The cofibers of the vertical maps are equivalent, yielding
+\begin{align*}
+    S^{2n,n} \xto{\sim} \frac{\P^n}{\P^n-0}.
+\end{align*}
+\end{proof}
+
+
+
+\section{$\A^1$-homotopy classes of maps}
+
+Given two simplicial presheaves $F,G \in \PSh(\Sm_S)$, by abuse of notation we denote by $\left[ F,G \right]_{\A^1}$ homotopy classes of maps of their associated motivic localizations
+\begin{align*}
+    \left[ F,G \right]_{\A^1} := \pi_0 \Map_{\Spc(S)} (L_\mot F, L_\mot G).
+\end{align*}
+%
+A goal is to understand how to compute this. There are some easy cases first:
+
+\begin{example} Let $X$ be a representable sheaf and $\mathcal{Y}$ be a motivic space. Then via the Yoneda lemma, we have
+\begin{align*}
+    \Map_{\Spc(S)}(L_\mot h_X, \mathcal{Y}) \cong \Map_{\Pre(\Sm_S)} (h_X, \mathcal{Y}) \cong \mathcal{Y}(X).
+\end{align*}
+Hence $\left[ X,\mathcal{Y} \right]_{\A^1} = \pi_0 \mathcal{Y}(X)$.
+\end{example}
+
+\begin{example} We have a bijection
+\begin{align*}
+    \left[ X, \mathbb{G}_m \right]_{\A^1} = \mathbb{G}_m(X)
+\end{align*}
+for any $X\in \Sm_S$.
+\end{example}
+
+\begin{example} If $X$ and $Y$ are both varieties, then
+\begin{align*}
+    \left[ X,Y \right]_{\A^1} = \pi_0 \left( L_\mot h_Y \right)(X).
+\end{align*}
+This is much harder to access in general.
+\end{example}
+
+\subsection{Connected components}
+
+Given a motivic space $X$, we can consider the presheaf of sets
+\begin{align*}
+    \Sm_S^\op &\to \Set \\
+    U &\mapsto \left[ U,X \right]_{\A^1}.
+\end{align*}
+%
+Its sheafification is called the \textit{sheaf of connected components}, and we denote it by
+\begin{align*}
+    \pi_0^{\A^1}(X) \in \Shv_\Nis(\Sm_k).
+\end{align*}
+%
+\begin{note} We have that $\pi_0^{\A^1}(X) = \pi_0(X)$ is the same as the homotopy sheaf in the sheaf topos, provided $X$ is a motivic space. We have to be a bit careful what we mean here --- if $F$ is an arbitrary presheaf, then $\pi_0(F)$ will mean $\pi_0 (L_\Nis F)$ by convention, while $\pi_0^{\A^1}F$ will mean $\pi_0 (L_\mot F)$.
+\end{note}
+
+\begin{proposition} For $n\ge 3$, we have that $\pi_0^{\A^1}(\SL_n) \simeq \ast$.
+\end{proposition}
+\begin{proof} First suppose $M$ is an elementary matrix. Then there is a map
+\begin{align*}
+    \A^1 &\to \SL_n,
+\end{align*}
+sending $0$ to the identity and $1$ to $M$. Since $\SL_n$ is generated by elementary matrices for $n\ge 3$, the result follows.
+\end{proof}
+
+
+
+
+\begin{definition} If $(X,x)$ is a pointed motivic space, we have that $\pi_n^{\A^1}(X,x)$ is defined to be the Nisnevich presheaf of
+\begin{align*}
+    U &\mapsto \left[ \Sigma^n U_+, X \right]_{\Spc(S)_\ast}.
+\end{align*}
+\end{definition}
+
+\begin{proposition} If $(X,x)$ is a motivic space, then $\pi_n^{\A^1}(X,x) = \pi_n(X,x)$.
+\end{proposition}
+\begin{proof} We show the presheaves are identical before sheafifying. By adjunction we have that
+\begin{align*}
+    \left[ \Sigma^n U_+, X \right]_{\Spc(S)_\ast} \cong \left[ U_+, \Omega^n X \right]_{\Spc(S)_\ast} = \left[ U, \Omega^n X \right]_{\Spc(S)}.
+\end{align*}
+The latter is the presheaf attached to $\pi_n(X,x)$ by \autoref{prop:pi-n-loops}.
+\end{proof}
+
+\begin{proposition} Let $f\colon F\to G$ be a map of simplicial presheaves. Then it is a motivic equivalence if and only if
+\begin{align*}
+    \pi_n^{\A^1}(f) \colon \pi_n^{\A^1}(F,x) &\to \pi_n^{\A^1}(G,f(x))
+\end{align*}
+is an equivalence for all $n\ge0$ and all basepoints $x\in F$.
+\end{proposition}
+\begin{proof} The forward direction is clear, since $f$ being a motivic equivalence would induce a natural isomorphism $[-,X]_{\A^1} \cong \left[ -,Y \right]_{\A^1}$, hence the associated homotopy (pre)sheaves would be identical.
+
+For the backwards direction, this condition on homotopy groups unwinds to tell us that $L_\mot F \to L_\mot G$ is an equivalence of sheaves by \autoref{}, which in particular implies it is an equivalence of motivic spaces.
+\end{proof}
+
+\begin{terminology} We say that a motivic space $X$ is $\A^1$\textit{-$n$-connected} if $\pi_i^{\A^1}(X,x)$ is trivial for all $i\le n$ and all basepoints. Some special cases:
+\begin{center}
+    \begin{tabular}{l l l}
+    $\A^1$\textit{-connected} &= & $\A^1$-0-connected \\
+    $\A^1$\textit{-simply connected} &= & $\A^1$-1-connected \\
+    $\A^1$\textit{-contractible} &= & $\A^1$-$\infty$-connected.
+    \end{tabular}
+\end{center}
+\end{terminology}
+
+
+\begin{example} We have that $S^{i,j}$ is $\A^1$-$(i-1)$-connected (see \cite[2.4.5]{AO-contractible}).
+\end{example}
+
+% \subsection{Testing $\A^1$-connectedness}
+
+
+% todo:
+% \begin{itemize}
+%     \item 2.7 and 2.8 here: https://arxiv.org/pdf/0902.1564
+% \end{itemize}
+
+% \subsection{$\A^1$-contractibility}
+
+% \begin{itemize}
+%     \item https://arxiv.org/pdf/1903.07851
+% \end{itemize}
+
+
+
+\section{Strong and strict $\A^1$-invariance}
+
+\begin{goal} 
+We have seen that in order to check a map is a motivic equivalence, it suffices to look at homotopy sheaves. We'd therefore like to better understand when homotopy sheaves are equivalent. It turns out homotopy sheaves (for $n\ge 2$) are a prototypical example of a particularly nice class of sheaves of abelian groups called \textit{strictly invariant} sheaves. These have nice properties that make them easier to work with.
+\end{goal}
+
+
+
+Note that $\pi_n^{\A^1}(X)$ is a Nisnevich sheaf of sets, but it is not necessarily a motivic space. We can ask to what extent it is $\A^1$-invariant.
+
+It was conjectured by Morel that $\pi_0^{\A^1}(X)$ was always $\A^1$-invariant, but a counterexample was found by Ayoub (todo). Nevertheless we can ask for $\pi_i^{\A^1}(X)$ for $i\ge 1$. A more general question is to understand conditions that tell us a sheaf of groups is invariant.
+
+Let $\mathcal{G}$ denote a Nisnevich sheaf of groups. Since $\mathcal{G}(X) = H^0_\Nis(X,\mathcal{G})$, the condition that $\mathcal{G}$ is $\A^1$-invariant is equivalent to asking whether
+\begin{align*}
+    H^0(X; \mathcal{G}) \to H^0(X \times \A^1 ; \mathcal{G})
+\end{align*}
+is $\A^1$-invariant.
+
+
+\begin{definition} Let $\mathcal{G}$ be a Nisnevich sheaf of groups over $S$. Then we say
+\begin{enumerate}
+    \item $\mathcal{G}$ is $\A^1$\textit{-invariant} if $H^0(X; \mathcal{G}) \to H^0(X \times \A^1 ; \mathcal{G})$ is an equivalence for every $X\in \Sm_S$
+    \item $\mathcal{G}$ is \textit{strongly $\A^1$-invariant} if
+    \begin{align*}
+        H^i(X; \mathcal{G}) \to H^i(X \times \A^1; \mathcal{G})
+    \end{align*}
+    is an equivalence for $i=0,1$ and for all $X$
+    \item if $\mathcal{G}$ is a sheaf of abelian groups, we say it is \textit{strictly $\A^1$-invariant} if
+    \begin{align*}
+        H^i(X; \mathcal{G}) \to H^i(X \times \A^1; \mathcal{G})
+    \end{align*}
+    is an equivalence for all $i$ and for all $X$.
+\end{enumerate}
+\end{definition}
+
+
+\begin{example} We have that $\mathbb{G}_m$ is strongly invariant, since both units and the Picard group are $\A^1$-invariant over a base field.
+\end{example}
+
+\begin{example} The additive group $\mathbb{G}_a = (\A^1,+)$ is not $\A^1$-invariant.
+\end{example}
+
+\begin{theorem}
+Let $f \colon F\to G$ be a morphism of strictly invariant sheaves on $\Sm_k$, where $k$ is a perfect field. Then $f$ is an isomorphism if and only if
+\begin{align*}
+    f(L) \colon F(L) \to G(L)
+\end{align*}
+is an equivalence for every finitely generated (separable) field extension $L/k$.
+\end{theorem}
+\begin{proof} See \cite[2.7]{HMH} for this statement, and \cite[2.3,~2.8]{Morel} for the proof.
+\end{proof}
+
+\begin{corollary} Let $f \colon X \to Y$ be a map of motivic spaces in $\Spc(k)$, for $k$ perfect. Then it is an equivalence if and only if it induces an isomorphism on $\pi_0$, and for $n\ge 1$ and every finitely generated field extension $L/k$ we have that
+\begin{align*}
+    \pi_n(X,x)(L) \to \pi_n(Y,y)(L)
+\end{align*}
+is an equivalence.
+\end{corollary}
+
+
+\begin{theorem}\label{thm:pi1-strongly-invt} 
+(Morel) If $X$ is a motivic space over a field $k$, then $\pi_1^{\A^1}(X)$ is strongly $\A^1$-invariant.
+\end{theorem}
+
+\begin{theorem}\label{thm:strong-strict}
+(Morel)
+If $k$ is a perfect field, and $\mathcal{A}$ is a sheaf of abelian groups on $\Sm_k$, then it is strong if and only if it is strict.
+\end{theorem}
+
+The proof of these theorems is hard --- to see them worked out in detail we refer the reader to an amazing recent survey paper of Bachmann \cite{bachmannstrongly}.
+
+\begin{assumption} From here on out, we'll assume $k$ is a perfect field, so that we can access these results.
+\end{assumption}
+
+\begin{corollary} If $X\in \Spc(k)_\ast$, then $\pi_n^{\A^1}(X)$ is strictly invariant for $n\ge 2$ and strongly invariant for $n=1$.
+\end{corollary}
+\begin{proof} We apply \autoref{thm:pi1-strongly-invt} to $\Omega^{n-1}X$ and get that
+\begin{align*}
+    \pi_n(X) = \pi_1(\Omega X)
+\end{align*}
+is strongly invariant, which is strictly invariant for $n>1$ by \autoref{thm:strong-strict}.
+\end{proof}
+
+\begin{theorem} \cite[\S.3.22]{MV} (c.f. \cite[2.7]{AD-excision})
+For any $F\in \Shv_\Nis(\Sm_k)$, the map to its singularization $F \to \Sing(F)$ induces a surjection on $\pi_0$.
+\end{theorem}
+
+\begin{corollary} (c.f. \cite[1.2]{bachmannstrongly}) If $F\in \Shv_\Nis(\Sm_k)$ is connected, then so is $L_\mot F$.
+\end{corollary}
+\begin{proof} Homotopy sheaves commute with filtered colimits, so we have that
+\begin{align*}
+    \pi_0 L_\mot X = \colim \left( \pi_0 L_\Nis X \to \pi_0 L_\Nis L_{\A^1} L_\Nis X \to \cdots  \right).
+\end{align*}
+Since the colimit will be a quotient of the sheaf $\pi_0 X$, which is trivial, the result follows
+\end{proof}
+
+
+This is the $n=0$ of the \textit{unstable connectivity theorem}, which says that if $F$ is $n$-connected then so is $L_\mot F$. We will come back to prove this.
 
 
 \newpage
