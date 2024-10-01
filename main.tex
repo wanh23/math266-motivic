@@ -24,7 +24,7 @@
 
 \setcounter{tocdepth}{1}
 \tableofcontents{}
-
+ 
 
 % Set parskip after toc
 \setlength{\parskip}{0.2em}
@@ -2285,7 +2285,7 @@ The category $\Spc(S)$ is generated under sifted colimits by (the motivic locali
 \end{proposition}
 \begin{proof} We do this in two steps:
 \begin{enumerate}
-    \item First we argue that $\Spc(S)$ is generated under filtered colimits by $\Sm_S$. Let $F \in \Spc(S)$ be any motivic space, then, considered as a presheaf, it is a colimit of representable presheaves. What is furthermore true is that it is a filtered colimit of coproducts of representable presheaves. While it is not true that $h_U \amalg h_V$ is $h_{U\amalg V}$ in the category of presheaves, it \textit{is true} in the category of sheaves (and hence in the category of motivic spaces), by descent. Hence any motivic localization is in fact a filtered colimit of the motivic localization of representable sheaves.
+  \item First we argue that $\Spc(S)$ is generated under sifted colimits by $\Sm_S$. Let $F \in \Spc(S)$ be any motivic space, then, considered as a presheaf, it is a colimit of representable presheaves. What is furthermore true is that it is a sifted colimit of finite coproducts of representable presheaves (\autoref{prop:colimit-is-sifted-plus-finite-coproducts}). While it is not true that $h_U \amalg h_V$ is $h_{U\amalg V}$ in the category of presheaves, it \textit{is true} in the category of sheaves (and hence in the category of motivic spaces), by descent. Hence any motivic localization is in fact a sifted colimit of the motivic localization of representable sheaves.
 
     \item Second we argue that $\Sm_S \subseteq \Spc(S)$ is generated under sifted colimits by affine $S$-schemes in $\Sm_S$. Given any $X\in \Sm_S$, we can write it as an $\DDelta^\op$-indexed colimit in the category $\Spc(S)$ over the \v{C}ech nerve of a Nisnevich cover. Each fiber product appearing in the cover is equivalent to a smooth affine scheme by Jouanolou's trick, and we can get rid of finite coproducts by the same trick. Hence $X$ can be written as a $\DDelta^\op$-indexed colimit over smooth affine $S$-schemes. 
 \end{enumerate}
