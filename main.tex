@@ -14,6 +14,7 @@
 \let\del\partial
 \renewcommand{\Pre}{\mathrm{PSh}}
 \providecommand{\Hen}{\mathrm{Hen}}
+\providecommand{\HI}{\mathrm{HI}}
 \let\smashprod\wedge
 
 \begin{document}
@@ -1810,7 +1811,8 @@ We'll see soon that this is a valuable perspective, e.g. for classifying torsors
 \begin{upshot} In a hypercomplete topos, equivalences can be checked on homotopy sheaves.
 \end{upshot}
 
-\begin{corollary} Let $F \to G$ be a map in the sheaf topos $\Shv_\Nis(\Sch_S)$ (or any hypercomplete topos) where $S$ is qcqs and Noetherian. Then the following are equivalent:
+\begin{corollary}\label{cor:equivalence-in-hypercomplete-topos} 
+Let $F \to G$ be a map in the sheaf topos $\Shv_\Nis(\Sch_S)$ (or any hypercomplete topos) where $S$ is qcqs and Noetherian. Then the following are equivalent:
 \begin{enumerate}
     \item The map $F \to G$ is an equivalence in $\Shv_\Nis(\Sm_S)$
     \item The induced maps $\pi_n(F) \to \pi_n(G)$ are isomorphisms for every $n\ge 0$.
@@ -2532,7 +2534,7 @@ is an equivalence for all $n\ge0$ and all basepoints $x\in F$.
 \end{proposition}
 \begin{proof} The forward direction is clear, since $f$ being a motivic equivalence would induce a natural isomorphism $[-,X]_{\A^1} \cong \left[ -,Y \right]_{\A^1}$, hence the associated homotopy (pre)sheaves would be identical.
 
-For the backwards direction, this condition on homotopy groups unwinds to tell us that $L_\mot F \to L_\mot G$ is an equivalence of sheaves by \autoref{}, which in particular implies it is an equivalence of motivic spaces.
+For the backwards direction, this condition on homotopy groups unwinds to tell us that $L_\mot F \to L_\mot G$ is an equivalence of sheaves by \autoref{cor:equivalence-in-hypercomplete-topos}, which in particular implies it is an equivalence of motivic spaces.
 \end{proof}
 
 \begin{terminology} We say that a motivic space $X$ is $\A^1$\textit{-$n$-connected} if $\pi_i^{\A^1}(X,x)$ is trivial for all $i\le n$ and all basepoints. Some special cases:
@@ -2607,24 +2609,6 @@ is $\A^1$-invariant.
 \begin{example} The additive group $\mathbb{G}_a = (\A^1,+)$ is not $\A^1$-invariant.
 \end{example}
 
-\begin{theorem}
-Let $f \colon F\to G$ be a morphism of strictly invariant sheaves on $\Sm_k$, where $k$ is a perfect field. Then $f$ is an isomorphism if and only if
-\begin{align*}
-    f(L) \colon F(L) \to G(L)
-\end{align*}
-is an equivalence for every finitely generated (separable) field extension $L/k$.
-\end{theorem}
-\begin{proof} See \cite[2.7]{HMH} for this statement, and \cite[2.3,~2.8]{Morel} for the proof.
-\end{proof}
-
-\begin{corollary} Let $f \colon X \to Y$ be a map of motivic spaces in $\Spc(k)$, for $k$ perfect. Then it is an equivalence if and only if it induces an isomorphism on $\pi_0$, and for $n\ge 1$ and every finitely generated field extension $L/k$ we have that
-\begin{align*}
-    \pi_n(X,x)(L) \to \pi_n(Y,y)(L)
-\end{align*}
-is an equivalence.
-\end{corollary}
-
-
 \begin{theorem}\label{thm:pi1-strongly-invt} 
 (Morel) If $X$ is a motivic space over a field $k$, then $\pi_1^{\A^1}(X)$ is strongly $\A^1$-invariant.
 \end{theorem}
@@ -2636,8 +2620,11 @@ If $k$ is a perfect field, and $\mathcal{A}$ is a sheaf of abelian groups on $\S
 
 The proof of these theorems is hard --- to see them worked out in detail we refer the reader to an amazing recent survey paper of Bachmann \cite{bachmannstrongly}.
 
+
+
 \begin{assumption} From here on out, we'll assume $k$ is a perfect field, so that we can access these results.
 \end{assumption}
+
 
 \begin{corollary} If $X\in \Spc(k)_\ast$, then $\pi_n^{\A^1}(X)$ is strictly invariant for $n\ge 2$ and strongly invariant for $n=1$.
 \end{corollary}
@@ -2648,21 +2635,174 @@ The proof of these theorems is hard --- to see them worked out in detail we refe
 is strongly invariant, which is strictly invariant for $n>1$ by \autoref{thm:strong-strict}.
 \end{proof}
 
-\begin{theorem} \cite[\S.3.22]{MV} (c.f. \cite[2.7]{AD-excision})
-For any $F\in \Shv_\Nis(\Sm_k)$, the map to its singularization $F \to \Sing(F)$ induces a surjection on $\pi_0$.
+
+
+
+\subsection{Unramified sheaves}
+
+
+
+Let $\mathcal{F}$ be a sheaf of sets. We say it \textit{ramifies} if, for some $X$, the map
+\begin{align*}
+    \mathcal{F}(X) \to \bigcap_{x\in X^{(1)}} \mathcal{F}(\Spec \O_{X,x})
+\end{align*}
+has nontrivial kernel (here the intersection takes place in $\mathcal{F}(\kappa(X))$). This is very related to the idea of \textit{purity} for torsors.
+
+\begin{definition} \cite[2.1]{Morel} An \textit{unramified presheaf of sets} on $\Sm_k$ is a presheaf $\mathcal{F}$ so that
+\begin{enumerate}
+    \item If $X$ has irreducible components $\left\{ X_\alpha \right\}$, then
+    \begin{align*}
+        \mathcal{F}(X) \to \prod_\alpha \mathcal{F}(X_\alpha)
+    \end{align*}
+    is a bijection
+    \item If $U \subseteq X$ is open and dense, then the restriction map
+    \begin{align*}
+        \mathcal{F}(X) \to \mathcal{F}(U)
+    \end{align*}
+    is injective
+    \item The map
+    \begin{align*}
+        \mathcal{F}(X) \bigcap_{x\in X^{(1)}} \mathcal{F}(\Spec \O_{X,x})
+    \end{align*}
+    is an injection.
+\end{enumerate}
+\end{definition}
+
+\begin{example} Any unramified presheaf of sets is automatically a Zariski sheaf.
+\end{example}
+
+\begin{theorem} (Morel) Any strictly $\A^1$-invariant sheaf is unramified.
 \end{theorem}
 
-\begin{corollary} (c.f. \cite[1.2]{bachmannstrongly}) If $F\in \Shv_\Nis(\Sm_k)$ is connected, then so is $L_\mot F$.
-\end{corollary}
-\begin{proof} Homotopy sheaves commute with filtered colimits, so we have that
+\begin{example} Some other examples of unramified sheaves:
+\begin{enumerate}
+    \item Homotopy modules with transfers
+    \item Rost cycle modules
+    \item Unramified \'etale cohomology (ref needed)
+\end{enumerate}
+\end{example}
+
+Unramified sheaves are determined in a precise sense by their values on fields.
+
+\subsection{Unramified sheaves from theories on fields}
+
+
+\begin{definition} A \textit{homotopy sheaf} is a strongly (=strictly) $\A^1$-invariant sheaf of abelian groups. We denote by $\HI(k) \subseteq \Ab_\Nis(k)$ the full category of homotopy sheaves.
+\end{definition}
+
+
+\begin{theorem} \cite[6.24]{Morel}
+The subcategory $\HI(k) \subseteq \Ab_\Nis(k)$ is abelian, with exact inclusion.
+\end{theorem}
+
+
+\begin{notation} Let $\mathcal{F}_k$ denote the category of fields $F/k$ so that the transcendence degree of $F/k$ is finite.
+\end{notation}
+
+We'll work with unramified sheaves of abelian groups here (c.f. \cite[\S1.5]{Feld-thesis}), but the more general definitions are for sheaves of pointed sets.
+
+\begin{definition} \cite[2.6,2.9]{Morel}
+An \textit{unramified $\mathcal{F}_k$-datum} is the data of
+\setlist[enumerate]{align=left,wide=0,leftmargin=\parindent, labelsep=*}
+\begin{enumerate}
+    \item[\textbf{D1}] A continuous functor $M \colon \mathcal{F}_k \to \Ab$
+    \item[\textbf{D2}] For every $F\in \mathcal{F}_k$ and discrete valuation $v$ on $F$, a subgroup
+    \begin{align*}
+        M(\O_v) \subseteq M(F),
+    \end{align*}
+    \item[\textbf{D3}] For every $F\in \mathcal{F}_k$ and valuation $v$ on $F$ a specialization map
+    \begin{align*}
+        s_v \colon M(\O_v) \to M(\kappa(v)).
+    \end{align*}
+\end{enumerate}
+This data is subject to the axioms
+\begin{enumerate}
+    \item[\textbf{A1}] If $(E,v) \subseteq (F,w)$ is a separable extension of discretely valued fields (so that $w_{|E} = v$), and $v$ has ramificiation index $1$ on $E$\footnote{%
+    This means that $\pi_v = u\pi_w$ for some unit $u$, c.f. \cite[09E4]{Stacks}.
+    }
+    then the square commutes
+\[ \begin{tikzcd}
+    M(\O_w)\dar[hook]\rar[dashed] & M(\O_w)\dar[hook]\\
+    M(E)\rar & M(F).
+\end{tikzcd} \]
+If the field extension $\kappa(v) \to \kappa(w)$ is an isomorphism then this square is cartesian.
+
+    \item[\textbf{A2}] If $X$ is irreducible with function field $F$, and $m\in M(F)$, then $m$ lies in all but a finite number of $S(\O_{X,x})$, where $x\in X^{(1)}$.
+    \item[\textbf{A3(i)}] If $(E,w) \subseteq (F,v)$ is an extension in $\mathcal{F}_k$, then the diagram commutes:
+\[ \begin{tikzcd}
+    M(\mathcal{O}_v)\dar\rar[dashed] & M(\O_w)\dar\\
+    M(\kappa(v))\rar & M(\kappa(w)).
+\end{tikzcd} \]
+    
+    \item[\textbf{A3(ii)}] If $E \subseteq F$ is an extension in $\mathcal{F}_k$ and $v$ a discrete valuation on $F$ restricting to zero on $E$, and $j \colon E \hookto \kappa(v)$ the induced field extension, then the diagram commutes
+\[ \begin{tikzcd}
+     & M(\kappa(v))\\
+    M(E)\ar[ur,"M(j)" above left]\ar[dr]\rar[dashed] & M(\O_v)\dar[hook]\uar["s_v" right]\\
+     & M(F).
+\end{tikzcd} \]
+    
+    \item[\textbf{A4(i)}] If $X\in \Sm_k$ is local of dimension two with closed point $z$, and $y_0 \in X^{(1)}$ has smooth reduced scheme $\bar{y}_0$, then the diagram commutes
+\[ \begin{tikzcd}
+    \bigcap_{y\in X^{(1)}} M(\O_y)\dar[hook]\rar[dashed] & M(\O_{\bar{y}_0,z})\dar[hook]\\
+    M(\O_{y_0})\rar["s_{y_0}" below] & M(\kappa(y_0)).
+\end{tikzcd} \]
+
+    \item[\textbf{A4(ii)}] The composite
+    \begin{align*}
+        \bigcap_{y\in X^{(1)}}M(\O_y) \to M(\O_{\bar{y}_0,z}) \to M(\kappa(z))
+    \end{align*}
+    doesn't depend on the choice of $y_0$.
+\end{enumerate}
+We say that $M$ is \textit{strongly unramified} if it satisfies some further axioms (see \cite[\S2]{Morel}).
+\end{definition}
+
+\begin{theorem} \cite[2.27]{Morel} By restricting $\mathcal{F}\in \Ab_\Nis(k)$ to its values on $\mathcal{F}_k$, we obtain the following results.
+\begin{enumerate}
+    \item There is an equivalence of categories between unramified sheaves of abelian groups and unramified $\mathcal{F}_k$-data.
+    \item There is an equivalence of categories between $\HI(k)$ and \textit{strongly} unramified $\mathcal{F}_k$ data.
+\end{enumerate}
+\end{theorem}
+
+This lets us take theories on fields and bootstrap them up to presheaves of abelian groups! Suppose that $M$ is an unramified sheaf, and $X\in \Sm_k$ is an irreducible smooth scheme. Then we can define
 \begin{align*}
-    \pi_0 L_\mot X = \colim \left( \pi_0 L_\Nis X \to \pi_0 L_\Nis L_{\A^1} L_\Nis X \to \cdots  \right).
+    M(X) := \bigcap_{x\in X^{(1)}} M(\O_x) \subseteq M(F).
 \end{align*}
-Since the colimit will be a quotient of the sheaf $\pi_0 X$, which is trivial, the result follows
+If $X$ is smooth with irreducible components $X_\alpha$, we define
+\begin{align*}
+    M(X) := \prod_{\alpha\in X^{(0)}}M(X_\alpha).
+\end{align*}
+This defines $M$ on objects. Now if $f \colon X \to Y$ is any morphism in $\Sm_k$ we can factor it as
+\[ \begin{tikzcd}
+    X\rar[hook]\ar[dr,"f" below left] & Z\dar[two heads]\\
+     & Y,
+\end{tikzcd} \]
+where the first map is a closed immersion and the latter is a smooth projection. Factoring the closed immersion as a sequence of closed immersions, each of which is codimension one, we can define $M(X) \to M(Z)$ \cite[2.13]{Morel}. To define $M(Z) \to M(Y)$, we leverage that $Z \to Y$ is smooth and define it in terms of the induced map on function fields \cite[p.~17]{Morel}.
+
+
+\begin{motivation} We'll leverage this equivalence of categories to construct certain unramified sheaves (Milnor $K$-theory, Milnor--Witt $K$-theory, Witt theory, etc.) by defining them on fields. We'll then be able to have a strong handle on cohomology with coefficients in these elements in $\HI(k)$, and we will better understand how to construct Eilenberg--MacLane spaces for them in the category of motivic spaces.
+\end{motivation}
+
+As an immediate application of this equivalence of categories, we obtain the following.
+
+\begin{theorem}
+Let $f \colon F\to G$ be a morphism of strictly invariant sheaves on $\Sm_k$, where $k$ is a perfect field. Then $f$ is an isomorphism if and only if
+\begin{align*}
+    f(L) \colon F(L) \to G(L)
+\end{align*}
+is an equivalence for every finitely generated (separable) field extension $L/k$ (\cite[2.3,~2.8]{Morel}, c.f. \cite[2.7]{HMH}).
+\end{theorem}
+\begin{proof} By the equivalence above, we can restrict to $\mathcal{F}_k$, and continuity allows us to further restrict to finite separable field extensions.
 \end{proof}
 
 
-This is the $n=0$ of the \textit{unstable connectivity theorem}, which says that if $F$ is $n$-connected then so is $L_\mot F$. We will come back to prove this.
+\begin{corollary} Let $f \colon X \to Y$ be a map of motivic spaces in $\Spc(k)$, for $k$ perfect. Then it is an equivalence if and only if it induces an isomorphism on $\pi_0$, and for $n\ge 1$ and every finitely generated field extension $L/k$ we have that
+\begin{align*}
+    \pi_n(X,x)(L) \to \pi_n(Y,y)(L)
+\end{align*}
+is an equivalence.
+\end{corollary}
+
+
 
 
 \newpage
