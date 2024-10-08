@@ -1589,10 +1589,11 @@ where $i$ is an open immersion, $p$ is \'etale, and $p$ restricts to an isomorph
 
 \subsection{Sheafification and accessible localizations}
 
-\begin{definition} If $\mathscr{C} \subseteq \mathscr{D}$, then we say a localization $L \colon \mathscr{D} \to \mathscr{C}$ is \textit{accessible} if and only if the composite $\mathscr{D} \xto{L} \mathscr{C} \hookto \mathscr{D}$ is accessible. If $\mathscr{D}$ is an accessible category, this is equivalent to the statement that $\mathscr{C} \subseteq \mathscr{D}$ is an accessible subcategory \cite[5.5.4.2]{HTT}.
+\begin{definition} \cite[5.4.2.5]{HTT} We say a functor between accessible $\infty$-categories is \textit{accessible} if it is $\kappa$-continuous (i.e., preserves $\kappa$-limits by a regular cardinal $\kappa$).
 \end{definition}
 
-
+\begin{definition} If $\mathscr{C} \subseteq \mathscr{D}$, then we say a localization $L \colon \mathscr{D} \to \mathscr{C}$ is \textit{accessible} if and only if the composite $\mathscr{D} \xto{L} \mathscr{C} \hookto \mathscr{D}$ is accessible. If $\mathscr{D}$ is an accessible category, this is equivalent to the statement that $\mathscr{C} \subseteq \mathscr{D}$ is an accessible subcategory \cite[5.5.4.2]{HTT}.
+\end{definition}
 
 \begin{definition} \cite[6.1.0.4]{HTT} If $\mathscr{X}$ is an $\infty$-category, we say it is an $\infty$\textit{-topos} if there exists a small category $\mathscr{C}$ and an accessible left exact localization functor $\Pre(\mathscr{C}) \to \mathscr{X}$.
 \end{definition}
@@ -1677,7 +1678,7 @@ The inclusion $\Sh_\tau(\mathscr{C}) \subseteq \PSh(\mathscr{C})$ will preserve 
 \end{proof}
 
 \begin{proposition}\label{prop:terminal-object-sheaves} 
-Let $h_S \in \PSh(\Sm_S)$ denote the representable sheaf attached to the base. Then the map $h_S \xto{!} \Delta^0$ of presheaves is a local equivalence.
+Let $h_S \in \PSh(\Sm_S)$ denote the representable sheaf attached to the base. Then the map $h_S \xto{!} \Delta^0$ of presheaves is a \emph{local equivalence}, i.e. it sheafifies to an equivalence.
 \end{proposition}
 \begin{proof} It suffices to observe that the presheaves are identical, which is true because for any $U\in \Sm_S$, we have that $h_S(U) = \Hom_S(U,S)$, which is a one-object set consisting of the structure map (since $S$ is terminal in $\Sm_S$).
 \end{proof}
@@ -1754,11 +1755,10 @@ If $\mathscr{C}$ is an $\infty$-topos and $(X,x) \in \mathscr{C}_\ast$, then
 \end{definition}
 
 \begin{proposition} \cite[5.5.6.18]{HTT}
-If $\mathscr{C}$ is a presentable category, and $\tau_{\le k} \mathscr{C} \subseteq \mathscr{C}$ the full subcategory consisting of the $k$-truncated objects, then the inclusion admits an accessible left adjoint, in other words there is a truncation functor $\tau_{\le k}$ which is a localization.
+Let $\mathscr{C}$ denote a presentable category and $\tau_{\le k} \mathscr{C} \subseteq \mathscr{C}$ the full subcategory spanned by $k$-truncated objects. Then the inclusion admits an accessible left adjoint, in other words there is a truncation functor $\tau_{\le k} : \mathscr{C} \to \tau_{\leq k} \mathscr{C}$ which is a localization.
 \end{proposition}
 
-In particular the collection of $n$-truncated spaces is closed under limits.
-
+\noindent In particular, the collection of $n$-truncated spaces is closed under limits.
 
 \begin{definition} If $(\mathscr{C},\tau)$ is any site, then the category $\tau_{\le 0}\Sh_\tau(\mathscr{C}) =: \Sh_\tau(\mathscr{C}) _{\le 0}$ is the category of sheaves of sets $\Sh_\tau(\mathscr{C};\Set)$.
 \end{definition}
@@ -2013,12 +2013,12 @@ but neither of the reverse inclusions hold.
 
 \begin{proposition} Both of $\Pre_{\A^1}(\Sm_S)$ and $\Pre_{\htp}(\Sm_S)$ are accessible subcategories of $\Pre(\Sm_S)$, and therefore their inclusions admit left adjoints.
 \end{proposition}
-\begin{proof} By \autoref{prop:localization-at-set-of-morphisms} it suffices to check they are defined by being local with respect to a \textit{set} of maps. In the first case note that
+\begin{proof} By \autoref{prop:localization-at-set-of-morphisms} it suffices to check they are defined by being local with respect to a \textit{set} of maps. Note that $\Sm_S$ has a small skeleton, hence we may pick a form a set $S$ containing a projection $X \times \A^1 \to X$ for each isomorphism class of smooth schemes $X$. Now note that
 a presheaf $F$ is $\A^1$-invariant if and only if it is $S$-local, meaning that
 \begin{align*}
     \Map_{\PSh(\Sm_S)}(h_{X},F) \xto{\sim} \Map_{\PSh(\Sm_S)}(h_{X \times \A^1},F)
 \end{align*}
-is an equivalence. Here we are using the Yoneda lemma together with the fact that the Yoneda embedding preserves products. Since $\Sm_S$ has a small skeleton, we may pick a set of maps $\left\{ X \times \A^1 \to X \right\}$ for each isomorphism class of smooth scheme $X$. An analogous argument works for $\Pre_{\htp}(\Sm_S)$.
+is an equivalence. We have used here the Yoneda lemma, and we conclude by noting that the Yoneda embedding preserves finite products. This proves the statement for $\A^1$-invariant presheaves, and an analogous argument works for $\Pre_{\htp}(\Sm_S)$.
 \end{proof}
 
 
@@ -2385,7 +2385,7 @@ By descent, Nisnevich covers of schemes give rise to colimits of motivic spaces.
     \A^1\rar & \P^1.
 \end{tikzcd} \]
 \end{example}
-Since $\A^1 \xto{\sim} \ast$ is trivial, and since all our colimits are $\infty$-colimits, we can replace the above diagram with the weakly equivalent span $\ast \from \mathbb{G}_m \to \mathbb{G}_m$ and compute the same colimit. This implies that the natural map
+Since $\A^1 \xto{\sim} \ast$ is trivial, and since all our colimits are $\infty$-colimits, we can replace the above diagram with the weakly equivalent span $\ast \from \mathbb{G}_m \to \pt$ and compute the same colimit. This implies that the natural map
 \begin{equation}\label{eqn:suspension-gm-is-p1}
 \begin{aligned}
     \Sigma \mathbb{G}_m \xto{\sim} \P^1
