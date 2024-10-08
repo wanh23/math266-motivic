@@ -24,6 +24,8 @@
 \providecommand{\KM}{\mathbf{K}^\mathrm{M}}
 \providecommand{\KMW}{\mathbf{K}^\mathrm{MW}}
 
+\newcommand{\Pfister}[1]{\left\langle\! \left\langle #1 \right\rangle\! \right\rangle}
+
 \begin{document}
 \begin{abstract} Notes from MATH266: Motivic homotopy theory, taught at Harvard in Fall 2024. Last compiled: \today
 \end{abstract}
@@ -2392,7 +2394,7 @@ By descent, Nisnevich covers of schemes give rise to colimits of motivic spaces.
     \A^1\rar & \P^1.
 \end{tikzcd} \]
 \end{example}
-Since $\A^1 \xto{\sim} \ast$ is trivial, and since all our colimits are $\infty$-colimits, we can replace the above diagram with the weakly equivalent span $\ast \from \mathbb{G}_m \to \pt$ and compute the same colimit. This implies that the natural map
+Since $\A^1 \xto{\sim} \ast$ is trivial, and since all our colimits are $\infty$-colimits, we can replace the above diagram with the weakly equivalent span $\ast \from \mathbb{G}_m \to \ast$ and compute the same colimit. This implies that the natural map
 \begin{equation}\label{eqn:suspension-gm-is-p1}
 \begin{aligned}
     \Sigma \mathbb{G}_m \xto{\sim} \P^1
@@ -2857,16 +2859,27 @@ We will see later that the sheaf cohomology of $\KM_n$ computes the Chow groups 
 which is an isomorphism for $n\le 2$. (For $n=0,1$ this is easy, for $n=2$ this is \textit{Matsumoto's theorem}).
 \end{proposition}
 
-\subsection{Example: Milnor--Witt $K$-theory}
+\subsection{Example: Milnor--Witt $K$-theory} We refer the reader to \cite{Deglise,Carlier} for more in-depth discussions of what's found here.
 
-\begin{definition} \textit{Milnor--Witt $K$-theory} of a field $F$ is defined to be the graded algebra $K_\ast^\MW(F)$ defined by symbols $[a]\in K_1^{\MW}(F)$ for $a\in F^\times$ and $\eta \in K_{-1}^\MW(F)$, modulo the relations:
+\begin{definition}\label{def:MW} 
+\textit{Milnor--Witt $K$-theory} of a field $F$ is defined to be the graded algebra $K_\ast^\MW(F)$ defined by symbols $[a]\in K_1^{\MW}(F)$ for $a\in F^\times$ and $\eta \in K_{-1}^\MW(F)$, modulo the relations:
 \begin{enumerate}
-    \item $[a][1-a] = 0$ for $a\ne 0,1$
-    \item $[a][b] = [a]+[b] + \eta[a][b]$
-    \item $\eta[a]=[a]\eta$
-    \item $\eta(2+\eta[-1]) = 0$.
+\setlist[enumerate]{align=left,wide=0,leftmargin=\parindent, labelsep=*}
+    \item[(MW1)] $[a][1-a] = 0$ for $a\ne 0,1$
+    \item[(MW2)] $[ab] = [a]+[b] + \eta[a][b]$
+    \item[(MW3)] $\eta[a]=[a]\eta$
+    \item[(MW4)] $\eta(2+\eta[-1]) = 0$.
 \end{enumerate}
 \end{definition}
+
+\begin{exercise}\label{exer:bracket-1-is-0-in-MW} 
+Show that $[1] = 0$ in $K_\ast^\MW(F)$.
+\end{exercise}
+
+\begin{exercise}\label{exer:bracket-squared-MW} Show that $[a^2] = (2 + \eta[-1])[a]$.
+\end{exercise}
+
+
 
 \begin{proposition} There is a surjective homomorphism of graded algebras
 \begin{align*}
@@ -2887,12 +2900,20 @@ That is, Milnor $K$-theory is obtained from Milnor--Witt $K$-theory by killing $
 \end{align*}
 modulo the relations
 \begin{enumerate}
-    \item $\left\langle a \right\rangle \left\langle b \right\rangle = \left\langle ab \right\rangle$ 
-    \item $\left\langle a \right\rangle + \left\langle b \right\rangle = \left\langle ab(a+b) \right\rangle + \left\langle a+b \right\rangle$
-    \item $\left\langle 1 \right\rangle + \left\langle -1 \right\rangle = \left\langle a \right\rangle + \left\langle -a \right\rangle$
-    \item $\left\langle ab^2\right\rangle=\left\langle a\right\rangle$.
+    \item[(GW1)] $\left\langle ab^2 \right\rangle = \left\langle a \right\rangle$ for any $a,b\in F^\times$
+     \item[(GW2)] $\left\langle a \right\rangle + \left\langle b \right\rangle = \left\langle ab(a+b) \right\rangle + \left\langle a+b \right\rangle$
+     \item[(GW3)] $\left\langle a \right\rangle \left\langle b \right\rangle = \left\langle ab \right\rangle$.
 \end{enumerate}
 \end{proposition}
+
+\begin{exercise} Show that
+\begin{align*}
+    \left\langle 1 \right\rangle + \left\langle -1 \right\rangle = \left\langle a \right\rangle + \left\langle -a \right\rangle
+\end{align*}
+for any $a\in F^\times$. This is sometimes taken as a relation, but it is implied by (GW1) and (GW2).
+\end{exercise}
+
+
 
 \begin{notation} We often save space and write
 \begin{align*}
@@ -2908,7 +2929,52 @@ modulo the relations
     \left\langle a \right\rangle &\mapsto 1 + \eta[a].
 \end{align*}
 \end{proposition}
+\begin{proof} We first check this is well-defined. We first check (GW3):
+\begin{align*}
+    \left\langle a \right\rangle \left\langle b  \right\rangle &= \left( 1 + \eta[a] \right) \left( 1 + \eta[b] \right) = 1 + \eta([a]+[b]) + \eta^2[a][b] \\
+    &\overset{\text{(MW2)}}{=} 1 + \eta \left( [ab] - \eta [a][b] \right) + \eta^2[a][b] = 1 + \eta[ab] = \left\langle ab \right\rangle.
+\end{align*}
+Hence (GW3) holds. Since $\left\langle a \right\rangle$ is now multiplicative, checking GW1 reduces to showing $\left\langle b^2 \right\rangle = \left\langle 1 \right\rangle = 1 + \eta[1]$, and we recall $[1]=0$. Hence it suffices to show $\eta[b^2] = 0$. By \autoref{exer:bracket-squared-MW}, we have that
+\begin{align*}
+    \eta[b^2] &= \eta \left( 2 + \eta[-1] \right)[b] \overset{\text{(MW4)}}{=} 0.
+\end{align*}
+%
+Again using multiplicativity of $\left\langle a \right\rangle$, we can assume $b=1-a$ in (GW2), from which we get
+\begin{align*}
+    \left\langle a \right\rangle + \left\langle 1-a \right\rangle &= 1 + \eta[a] + 1 + \eta[1-a] \\
+    &= 2 + \eta \left( [a] + [1-a] \right) \\
+    &\overset{\text{(MW2)}}{=} 2 + \eta \left( [a(1-a)] - \eta[a][1-a] \right) \\
+    &\overset{\text{(MW1)}}{=} 2 + \eta[a(1-a)] \\
+    &\overset{[1]=0}{=} 1 + \eta[a(1-a)] + 1 + \eta[1] \\
+    &= \left\langle a(1-a) \right\rangle + \left\langle 1 \right\rangle.
+\end{align*}
+Hence (GW2) holds.
 
+It is clear by construction that this map is injective, so it suffices to see it is surjective by verifying that every element in $K_0^\MW(F)$ is a sum of elements in the image of the homomorphism produced above. Since $1 = \left\langle 1 \right\rangle$, we have that $\eta[a] = \left\langle a \right\rangle - \left\langle 1 \right\rangle$ is in the image of the homomorphism above. Iterated application of (MW2) and (MW3) yields the desired result.
+\end{proof}
+
+
+\begin{notation} We have some special notation for various elements in Milnor--Witt $K$-theory:
+\begin{enumerate}
+    \item We denote by $h := 1 + \eta[-1] \in K_0^\MW(F)$ the \textit{hyperbolic element}. It is equivalently thought of as the form $\left\langle 1,-1 \right\rangle$ in $\GW(F).$
+    \item We denote by $\epsilon := - \left\langle -1 \right\rangle = - (1 + \eta[-1])$.
+\end{enumerate}
+\end{notation}
+
+\begin{remark} The relation (MW4) in \autoref{def:MW} can be rewritten in either of the two ways:
+\begin{enumerate}
+    \item[(MW4)] $\eta h = 0$
+    \item[(MW4)] $\epsilon\eta = \eta$.
+\end{enumerate}
+\end{remark}
+
+The element $\epsilon$ measures the failure of commutativity in $K_\ast^\MW(F)$ as the following exercise illustrates.
+
+\begin{exercise} We have that
+\begin{align*}
+    [a][b] = \epsilon[b][a].
+\end{align*}
+\end{exercise}
 
 
 Via the equivalence of categories between unramified sheaves of groups and unramified data for fields, we get sheaves corresponding to each of the invariants above.
@@ -2923,29 +2989,67 @@ $\KMW_n$ is unramified and strongly $\A^1$-invariant.
 
 \subsection{The Milnor conjecture}
 
-\begin{notation} We denote by $h := 1 + \eta[-1] \in K_0^\MW(F)$ which is the same as the form $\left\langle 1,-1 \right\rangle \in \GW(F)$.
-\end{notation}
-
 \begin{definition} We define the \textit{Witt ring} to be the quotient $W(F) := \GW(F)/h$.
 \end{definition}
 
-\begin{definition} We define the \textit{fundamental ideal} $I(F)$ to be the kernel of the rank homomorphism $\GW(F) \to \Z$. We denote by $I^j$ the powers of the fundamental ideal.
+\begin{definition} We define the \textit{fundamental ideal} $I(F)$ to be the kernel of the modulo two rank homomorphism $W(F) \to \Z/2$. We denote by $I^j$ the powers of the fundamental ideal.
 \end{definition}
+
+\begin{proposition} We obtain unramified sheaves of groups
+\begin{align*}
+    \mathbf{GW},\ \mathbf{W},\ \mathbf{I}^j,
+\end{align*}
+associated to each of these $\mathcal{F}_k$-data.
+\end{proposition}
+
+\begin{proposition}\label{prop:GW-pullback} 
+There is a pullback square of abelian groups for any field $F$
+\[ \begin{tikzcd}
+    \GW(F)\rar\dar\pb & \Z\dar\\
+    W(F)\rar & \Z/2.
+\end{tikzcd} \]
+This extends to a pullback of unramified sheaves of groups.
+\end{proposition}
+
+\begin{proposition} $\ $
+\begin{enumerate}
+    \item The fundamental ideal is equivalently the kernel of the rank homomorphism $\GW(F) \to \Z(F)$, which we denote by $\hat{I}(F)$. Explicitly, there is an isomorphism
+\[ \begin{tikzcd}
+    \hat{I}(F)\rar\dar["\cong" left] & \GW(F)\rar\dar\pb & \Z\dar\\
+    I(F) \rar & W(F)\rar & \Z/2.
+\end{tikzcd} \]
+
+\item $\hat{I}(F)$ is generated by elements of the form $\left\langle 1 \right\rangle - \left\langle a \right\rangle$ for $a\in F^\times$
+
+\item The isomorphism $\hat{I}(F) \to I(F)$ is given by sending
+\begin{align*}
+    \hat{I}(F) &\to I(F) \\
+    \left\langle 1 \right\rangle - \left\langle a \right\rangle &\mapsto \left\langle 1,-a \right\rangle.
+\end{align*}
+\end{enumerate}
+\end{proposition}
+
+\begin{definition} For $a \in F^\times$ we denote by $\Pfister{a}:= \left\langle 1 \right\rangle - \left\langle a \right\rangle$ the \textit{Pfister form} attached to $a$.
+\end{definition}
+
+\begin{remark} (On notation) Authors in the literature use $\Pfister{a}$ to denote $\left\langle 1 \right\rangle - \left\langle a \right\rangle \in \GW(F)$ as we have done, or to denote $\left\langle 1,-a \right\rangle\in W(F)$ (see e.g. \cite[p.~24]{EKM}. We should be careful about the context when using this notation, and we also warn the reader that a different sign convention is used in \cite[X.1.1]{Lam}.
+\end{remark}
+
+
 
 \begin{example} \textit{(Examples of fundamental ideals)}
 \begin{enumerate}
-    \item We have that $I(F)$ is generated by $\left\langle a \right\rangle - \left\langle 1 \right\rangle$ for $a\in F^\times$. In particular it vanishes if $F$ is quadratically closed.
-    \item $I(\R) \cong \Z$, generated by $\left\langle 1  \right\rangle - \left\langle -1 \right\rangle$. We can check that
+    \item Every Pfister form is hyperbolic over an algebraically closed field, or even just a quadratically closed field. Hence $I(F) = 0$ if $F = \bar{F}$.
+    \item $I(\R) \cong \Z$, generated by $\Pfister{-1}$. We can check that
     \begin{align*}
-        (\left\langle 1 \right\rangle - \left\langle -1 \right\rangle)^n = 2^{n-1} \left\langle 1 \right\rangle - 2^{n -1} \left\langle -1 \right\rangle,
+         \Pfister{-1}^n = 2^{n -1}\Pfister{-1},
     \end{align*}
-    so $I(\R) \cong I^2(\R) \cong \cdots \cong I^n(\R)$.
-
-    \item Note that $I^2(\R) \subseteq I(\R)$ is isomorphic to $2\Z \subseteq \Z$. Hence
+    therefore $I(\R) \cong I^2(\R) \cong \cdots \cong I^n(\R) \cong \Z$, and we have that
     \begin{align*}
-        I(\R)/I^2(\R) \cong \Z/2.
+        I^n(\R)/I^{n+1}(\R) \cong \Z/2\Z.
     \end{align*}
-    This is a more general fact for any field that
+    %
+    \item This is a more general fact for any field that
     \begin{align*}
         I(F)/I^2(F) \cong F^\times/\left( F^\times \right)^2.
     \end{align*}
@@ -2958,29 +3062,13 @@ $\KMW_n$ is unramified and strongly $\A^1$-invariant.
     \end{align*}
     is the 2-torsion in the Brauer group.
 \end{enumerate}
-
 \end{example}
 
 
 
 
 
-\begin{proposition} We obtain unramified sheaves of groups
-\begin{align*}
-    \mathbf{GW},\ \mathbf{W},\ \mathbf{I}^j,
-\end{align*}
-associated to each of these $\mathcal{F}_k$-data.
-\end{proposition}
 
-
-
-\begin{proposition} There is a pullback square of abelian groups for any field $F$
-\[ \begin{tikzcd}
-    \GW(F)\rar\dar\pb & \Z\dar\\
-    W(F)\rar & \Z/2.
-\end{tikzcd} \]
-This extends to a pullback of unramified sheaves of groups.
-\end{proposition}
 
 \begin{proposition} Given two quadratic forms $\alpha,\beta \in \GW(F)$, they agree if and only if they agree modulo $I^n(F)$ for every $n$, and therefore if and only if they agree in the associated graded $I^n(F)/I^{n+1}(F)$ for every $n$.
 \end{proposition}
@@ -2997,8 +3085,8 @@ since we can show that if $\alpha - \beta \in \bigcap_{n=0}^\infty I^n(F)$, then
 \begin{proposition} (Milnor) There is a homomorphism
 \begin{equation}\label{eqn:milnor-mod-2-to-powers-ideal}
 \begin{aligned}
-    K_n^M(F)/2 &\to I^n/I^{n+1} \\
-    \left\{ a_1, \ldots, a_n \right\} &\mapsto \prod_{i=1}^n \left( \left\langle a_i \right\rangle - \left\langle 1 \right\rangle \right).
+    K_n^M(F)/2 &\to I^n(F)/I^{n+1}(F) \\
+    \left\{ a_1, \ldots, a_n \right\} &\mapsto \prod_{i=1}^n \Pfister{a_i}.
 \end{aligned}
 \end{equation}
 \end{proposition}
@@ -3014,6 +3102,17 @@ This homomorphism was constructed and shown to be surjective by Milnor \cite[4.1
 
 \begin{motivation} We'll double back and compute cohomology in these theories. We first want to show these cohomology groups are \textit{representable} by Eilenberg--MacLane spaces. Formal consequences of representability will motivate the construction of complexes which resolve these sheaves and let us carry out computations more directly.
 \end{motivation}
+
+\begin{corollary}\label{cor:MW-pullback} 
+There is a pullback diagram of unramified sheaves
+\[ \begin{tikzcd}
+    \KMW_n\rar\dar\pb & \KM_n\dar\\
+    \mathbf{I}^n\rar & \KM_n/2.
+\end{tikzcd} \]
+\end{corollary}
+
+\begin{remark} Note that when $n=0$, the pullback diagram in \autoref{cor:MW-pullback} recovers that of \autoref{prop:GW-pullback}.
+\end{remark}
 
 \section{Eilenberg--MacLane spaces}
 
