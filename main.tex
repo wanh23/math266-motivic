@@ -3111,7 +3111,11 @@ There is a pullback diagram of unramified sheaves
 \end{tikzcd} \]
 \end{corollary}
 
-\begin{remark} Note that when $n=0$, the pullback diagram in \autoref{cor:MW-pullback} recovers that of \autoref{prop:GW-pullback}.
+\begin{remark} $\ $
+\begin{enumerate}
+    \item Note that when $n=0$, the pullback diagram in \autoref{cor:MW-pullback} recovers that of \autoref{prop:GW-pullback}.
+    \item The map $\KMW_n \to \mathbf{I}^n$ is given by sending $[a]$ to $\Pfister{a}$.
+\end{enumerate}
 \end{remark}
 
 \section{Eilenberg--MacLane spaces}
@@ -3187,12 +3191,18 @@ Let $\mathcal{G}$ be a sheaf of groups and $\mathcal{A}$ a sheaf of abelian grou
 \end{enumerate}
 \end{proposition}
 \begin{proof} The backwards direction is immediate by representability of cohomology. The forwards direction needs a nontrivial argument, see \cite[1.5]{bachmannstrongly}.
-% For the forwards direction, we want to see that
-% \begin{align*}
-%     (B_\Nis G)(X) \to (B_\Nis G)(X \times \A^1)
-% \end{align*}
-% is an equivalence of spaces. Each space is 1-truncated and we have an isomorphism on $\pi_0$ since $H^0(-,G)$ is $\A^1$ invariant. So we just want to show an isomorphism on $\pi_1$ for each choice of basepoint.
-% Pick some $x \in \pi_0(B_\Nis G)(X)$, and consider the induced map..... \todo finish from Tom's note
+For the forwards direction, we want to see that
+\begin{align*}
+    (B_\Nis G)(X) \to (B_\Nis G)(X \times \A^1)
+\end{align*}
+is an equivalence of spaces. Each space is 1-truncated and we have an isomorphism on $\pi_0$ since $H^0(-,G)$ is $\A^1$ invariant. So we just want to show an isomorphism on $\pi_1$ for each choice of basepoint $x\in X$. Since the presheaf
+\begin{align*}
+    (\Sm_k)_{/X} &\to \Grp\\
+    Y &\mapsto \pi_1 \left( (B_\Nis G)(Y), x \right)
+\end{align*}
+is a Nisnevich sheaf (equivalent to $\Omega_x (B_\Nis G)_{|X}$), we can check it is $\A^1$-invariant locally. Locally $x$ is a trivial torsor, in which case the presheaf above is $H^0-,G)$ which we assumed $\A^1$-invariant.
+
+An analogous argument works for the forward direction of $K(\mathcal{A},n)$.
 \end{proof}
 
 We now have a list of nice properties that homotopy sheaves satisfy. For $\mathcal{A} \in \HI(k)$ we have that
@@ -3209,7 +3219,7 @@ We now have a list of nice properties that homotopy sheaves satisfy. For $\mathc
     \Omega K(A,n) \cong K(A,n-1).
 \end{align*}
 \end{proposition}
-\begin{proof} This is a formal consequence of $\pi_i(\Omega X) = \pi_{i+1}X$.
+\begin{proof} This is a formal consequence of the fact that $\pi_i(\Omega X) = \pi_{i+1}X$.
 \end{proof}
 
 If $A$ is strictly $\A^1$-invariant then $K(A,n)$ is $\A^1$-local, however it is not clear that motivic localization commutes with taking loops. To pass this statement to the category of motivic spaces, we need the following lemma.
@@ -3217,6 +3227,7 @@ If $A$ is strictly $\A^1$-invariant then $K(A,n)$ is $\A^1$-local, however it is
 \begin{lemma}\label{lem:fiber-seq-a1-local} \cite[1.9]{bachmannstrongly}
 Let $F \to E \to B$ be a fiber sequence in $\Shv_\Nis(\Sm_k)$, and let $B$ be connected and $\A^1$-local. Then $F$ is $\A^1$-local if and only if $E$ is $\A^1$-local. In particular if these conditions are satisfied, it is also a fiber sequence in $\Spc(k)$.
 \end{lemma}
+
 
 \begin{corollary} If $A$ is strictly $\A^1$-invariant, we have an identification in $\Spc(k)$ of the form
 \begin{align*}
