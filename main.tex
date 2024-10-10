@@ -2389,7 +2389,8 @@ for any motivic space $X$.
 
 By descent, Nisnevich covers of schemes give rise to colimits of motivic spaces. One of the most immediate examples is the following:
 
-\begin{example} The following diagram of (pointed) motivic spaces is a pushout:
+\begin{example}\label{exa:p1-pushout} 
+The following diagram of (pointed) motivic spaces is a pushout:
 \[ \begin{tikzcd}
     \mathbb{G}_m\rar["z"]\dar["z^{-1}" left] & \A^1\dar\\
     \A^1\rar & \P^1.
@@ -3225,32 +3226,29 @@ We now have a list of nice properties that homotopy sheaves satisfy. For $\mathc
     \item $\mathcal{A}$ lives in an abelian category $\HI(k)$
 \end{enumerate}
 
-\begin{proposition} In the sheaf topos, we have that
+\begin{proposition} For any sheaf of abelian groups, we have that
 \begin{align*}
     \Omega K(A,n) \cong K(A,n-1).
 \end{align*}
 \end{proposition}
-\begin{proof} This is a formal consequence of the fact that $\pi_i(\Omega X) = \pi_{i+1}X$.
+\begin{proof} The statement in the sheaf topos is a formal consequence of the fact that $\pi_i(\Omega X) = \pi_{i+1}X$.
 \end{proof}
 
-If $A$ is strictly $\A^1$-invariant then $K(A,n)$ is $\A^1$-local, however it is not clear that motivic localization commutes with taking loops. To pass this statement to the category of motivic spaces, we need the following lemma.
+If $A$ is strictly invariant, we will prove that this is an equivalence of motivic spaces as well. It's not immediately obvious that this is the case --- we first need to know that computing loops in the sheaf topos agrees with computing loops in motivic spaces. The following argument lets us prove this.
 
-\begin{lemma}\label{lem:fiber-seq-a1-local} \cite[1.9]{bachmannstrongly}
-Let $F \to E \to B$ be a fiber sequence in $\Shv_\Nis(\Sm_k)$, and let $B$ be connected and $\A^1$-local. Then $F$ is $\A^1$-local if and only if $E$ is $\A^1$-local. In particular if these conditions are satisfied, it is also a fiber sequence in $\Spc(k)$.
-\end{lemma}
+\begin{remark} If $B \in \Shv_\Nis(\Sm_k)$ is $\A^1$-local, and $\Omega B$ is $\A^1$-local, then
+\begin{align*}
+    \Omega B = \lim_{\Spc(k)} \left( \ast \to B \from \ast \right) = \lim_{\Shv_\Nis(\Sm_k)} \left( \ast \to B \from \ast \right).
+\end{align*}
+\end{remark}
 
-
-\begin{corollary} If $A$ is strictly $\A^1$-invariant, we have an identification in $\Spc(k)$ of the form
+\begin{corollary}
+If $A$ is strictly $\A^1$-invariant, we have an identification in $\Spc(k)$ of the form
 \begin{align*}
     \Omega^{1,0} K(A,n) \simeq K(A,n-1).
 \end{align*}
 \end{corollary}
-\begin{proof} The loops comes from the fiber sequence
-\begin{align*}
-    \Omega K(A,n) \to \ast \to K(A,n).
-\end{align*}
-The latter two spaces are $\A^1$-local, hence the loop space is as well.
-\end{proof}
+
 
 \subsection{Cofiber sequences}
 
@@ -3273,17 +3271,27 @@ Since adding a disjoint basepoint is a left adjoint, it doesn't matter if $X$ an
 if $G$ is a sheaf of abelian groups (hence strictly invariant), this continues to $H^2$ and so on.
 \end{proposition}
 
-Since colimits in $\Spc(k)$ are pullback-stable, any unpointed motivic space $B$ gives rise to a cofiber sequence of spaces\footnote{%
-Here one can compute that $C \smashprod B_+$ is the ``fiberwise'' cover in $\Spc(k)_{/B}$.
-}
+\begin{proposition}\label{prop:cofiber-product-sequence} 
+If $X \to Y \to C$ is a cofiber sequence in $\Spc(k)$, and $B \in \Spc(k)$ is arbitrary, then
 \begin{align*}
-    X \times B \to Y \times B \to C \smashprod B_+.
+    X \times B \to Y \times B \to C \smashprod B_+
 \end{align*}
+is a cofiber sequence.
+\end{proposition}
+\begin{proof} This is a direct consequence of universality of colimits in $\Spc(k)$. Alternatively, we can use that $B \times -$ is a left adjoint, to see that
+\[ \begin{tikzcd}
+    X \times B\rar\dar & Y \times B\dar\\
+    B\rar & C \times B\po
+\end{tikzcd} \]
+is a pushout. The induced maps on the cofibers of the horizontal arrows will be an equivalence, and the bottom is clearly $C \smashprod B_+$.
+\end{proof}
+
 %
 \begin{example} For any motivic space $B$, we have a cofiber sequence
 \begin{align*}
-    \mathbb{G}_m \times B \to \A^1 \times B \to \P^1 \smashprod B_+.
+    \mathbb{G}_m \times B \to B \to \P^1 \smashprod B_+.
 \end{align*}
+This follows from \autoref{exa:p1-pushout} and \autoref{prop:cofiber-product-sequence}.
 \end{example}
 
 
@@ -3308,9 +3316,9 @@ For any $U \in \Sm_k$ and any strongly $\A^1$-invariant sheaf of groups $G$, we 
 \begin{proof} This follows by connectivity -- smashing with $\P^1$ (and hence $S^1$) makes $\P^1 \smashprod U_+$ connected, so every map into $G=K(G,0)$ is trivial.
 \end{proof}
 
-\begin{remark} Now suppose If $G$ is strongly $\A^1$-invariant, we have our cofiber sequence
+\begin{remark} If $G$ is strongly $\A^1$-invariant, we have our cofiber sequence
 \begin{align*}
-    \mathbb{G}_m \times U \to \A^1 \times U \to \P^1 \smashprod U_+.
+    \mathbb{G}_m \times U \to  U \to \P^1 \smashprod U_+.
 \end{align*}
 Let's look at the long exact sequence with coefficients in $G$, together with the vanishing of $H^0(\P^1 \smashprod U_+,G)$ by \autoref{prop:H0-p1-smashed-U}. Then there is an induced map out of the contraction
 \[ \begin{tikzcd}
@@ -3328,7 +3336,7 @@ is a bijection (an isomorphism if $G$ is abelian).
 \end{lemma}
 \begin{proof} The map
 \begin{align*}
-    H^1(X,G) = H^1(\A^1 \times X,G) \to H^1(\mathbb{G}_m \times X,G)
+    H^1(U,G)  \to H^1(\mathbb{G}_m \times U,G)
 \end{align*}
 is split by evaluation at one and hence injective, so the sequence
 \begin{align*}
@@ -3359,6 +3367,9 @@ This suggests that $\A^1$-invariance of a sheaf is related to $\A^1$-invariance 
     \item If $F$ is $\A^1$-invariant, so is $F_{-1}$.
 \end{enumerate}
 \end{proposition}
+\begin{proof} The first statement is clear from its definition as a presheaf. The second statement follows from \autoref{cor:p1-loops-BG} --- if $G$ is strongly invariant, then $K(G_{-1},0) = G_{-1}$ is a motivic space, hence $\A^1$-invariant.
+\end{proof}
+
 
 \begin{lemma}\label{lem:loops-KG1} 
 If $G$ is a strongly $\A^1$-invariant sheaf of groups, then
@@ -3374,14 +3385,13 @@ is trivial for each $F/k$ finitely generated. By adjunction and representability
 \end{proof}
 
 
-\begin{corollary} $\ $
+\begin{corollary}\label{cor:strongly-invt-contraction} 
 \begin{enumerate}
     \item If $G$ is a strongly $\A^1$-invariant sheaf of groups, then so is $G_{-1}$.
     \item If $A$ is a strictly $\A^1$-invariant sheaf of abelian groups. Then there is a canonical equivalence
     \begin{align*}
         \Omega_{\mathbb{G}_m} K(A,n) \xto{\sim} K(A_{-1},n).
     \end{align*}
-    In particular if $A$ is strictly $\A^1$-invariant so is $A_{-1}$.
 \end{enumerate}
 \end{corollary}
 \begin{proof} $\ $
@@ -3394,6 +3404,11 @@ is trivial for each $F/k$ finitely generated. By adjunction and representability
     and the higher homotopy groups vanish. To check that $\pi_i \Omega^{1,1} K(A,n) = 0$ for $i<n$, it suffices to see that $H^i(\mathbb{G}_m(F), A) = 0$ for all $i<n$. This is clear for $i\ge 2$ since $\mathbb{G}_m$ has Krull dimension one, and the case $i=1$ follows by the proof of \autoref{lem:loops-KG1}.
 \end{enumerate}
 \end{proof}
+
+\begin{remark} 
+It is clear from \autoref{cor:strongly-invt-contraction}(1) that if $A$ is strictly $\A^1$-invariant then so is $A_{-1}$ by \autoref{thm:strong-strict}. However the argument in \autoref{cor:strongly-invt-contraction}(2) also allows us to prove that contraction preserves strict invariance without reference to the ``strong=strict'' theorem.
+\end{remark}
+
 
 
 \begin{corollary} We have that
