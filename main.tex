@@ -3274,7 +3274,7 @@ if $G$ is a sheaf of abelian groups (hence strictly invariant), this continues t
 \end{proposition}
 
 Since colimits in $\Spc(k)$ are pullback-stable, any unpointed motivic space $B$ gives rise to a cofiber sequence of spaces\footnote{%
-Here one can compute that $C \smashprod B_+$ is the ``fiberwise'' cover in $\Spc(k)_{/X}$.
+Here one can compute that $C \smashprod B_+$ is the ``fiberwise'' cover in $\Spc(k)_{/B}$.
 }
 \begin{align*}
     X \times B \to Y \times B \to C \smashprod B_+.
@@ -3289,11 +3289,11 @@ Here one can compute that $C \smashprod B_+$ is the ``fiberwise'' cover in $\Spc
 
 \section{Contraction}
 
-\begin{definition} If $F$ is a sheaf of pointed sets, we define the \textit{contraction} of $F$ to be the sheafification of the presheaf $F_{-1}$ definer as the kernel
+\begin{definition} If $F$ is a sheaf of pointed sets, we define the \textit{contraction} of $F$ to be the sheafification of the presheaf $F_{-1}$, where $F_{-1}$ is defined to be the kernel in the short exact sequence
 \begin{align*}
     0 \to F_{-1}(U) \to F(U \times \mathbb{G}_m) \to F(U) \to 0,
 \end{align*}
-where the latter map is $\id \times 1 \colon U \to U \times \mathbb{G}_m$. See \cite[2.1.10]{Freudenthal}.
+and the latter map is $\id \times 1 \colon U \to U \times \mathbb{G}_m$. See \cite[2.1.10]{Freudenthal}.
 \end{definition}
 
 \begin{remark} Since $F(U \times \mathbb{G}_m) \to F(U)$ is split by the inclusion of units, contraction is equivalently defined as the cokernel of the projection off of $\mathbb{G}_m$:
