@@ -15,6 +15,7 @@
 \renewcommand{\Pre}{\mathrm{PSh}}
 \providecommand{\Hen}{\mathrm{Hen}}
 \providecommand{\HI}{\mathrm{HI}}
+\providecommand{\HM}{\mathrm{HM}}
 \providecommand{\DK}{\mathrm{DK}}
 \providecommand{\Br}{\mathrm{Br}}
 \providecommand{\MW}{\mathrm{MW}}
@@ -48,7 +49,11 @@ These are notes for a topics class taught at Harvard in Fall 2024. Notes are bei
 \begin{center}
     \href{https://github.com/tbrazel/math266-motivic}{https://github.com/tbrazel/math266-motivic}
 \end{center}
-Thank you to Merrick Cai, Juan Fernando Valdes, Jake Levinson, Isabel Longbottom, Sof\'ia Marlasca Apararicio, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions. Thank you to Elden Elmanto and Matthias Wendt for answering random motivic questions, and thank you to David Chan and Liam Keenan for letting be bother them about technical categorical questions.
+Thank you to Merrick Cai, Juan Fernando Valdes, Jake Levinson, Isabel Longbottom, Sof\'ia Marlasca Apararicio, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions.
+
+Thank you to Aravind Asok, Elden Elmanto, Niels Feld, and Matthias Wendt for answering random motivic questions.
+
+Thank you to Maxine Calle, Connor Cassady, David Chan, Liam Keenan, and Maxmilien P\'eroux for letting be bother them about technical non-motivic questions.
 
 
 \section{Introduction}
@@ -3493,6 +3498,221 @@ is exact as well. Finally since $A_{-1}(U) \oplus A(U) \cong A(\mathbb{G}_m \tim
 \end{align*}
 are compatible with contraction.
 \end{corollary}
+
+
+\section{Homotopy modules}
+
+We now want to take these properties that $\KMW_n$, $\KM_n$, and $\mathbf{I}^n$ all satisfy and axiomatize them. First we establish further properties about homotopy sheaves.
+
+\subsection{Monoidal structure on $\HI(k)$}
+
+We claim that $\HI(k)$ admits a closed symmetric monoidal structure. The origin of this perhaps makes sense with reference to other objects --- it is the unique symmetric monoidal structure making the forgetful map from the category of ``sheaves with transfers'' symmetric monoidal \cite[Lemme~1.8]{Deglise-MH}, alternatively it is the unique symmetric monoidal structure induced from that on the $\A^1$-derived category c.f. \cite[1.5.1.20]{Feld-thesis}. We won't define it explicitly, but just comment that it exists, and explore some key properties:
+
+\begin{theorem} The category $\HI(k)$ admits a closed symmetric monoidal structure, which we denote by $\otimes_\HI$.
+\end{theorem}
+We'll come back and add a proof for this later. It is generally defined using a bit more machinery than we've developed so far, see e.g. \cite[4.2.1.20]{Feld-thesis}.
+
+Since the monoidal structure is closed, we have an internal hom object $\underline{\Hom}_{\HI(k)}(-,-)$. Since contraction was a loop space construction, we might expect it to be a right adjoint, and indeed this is true!
+
+\begin{proposition} We have for any $M \in \HI(k)$
+\begin{align*}
+    M_{-1} \cong \underline{\Hom}_{\HI(k)} \left( \KMW_1, M \right),
+\end{align*}
+natural in $M$.
+\end{proposition}
+
+\begin{corollary} There is an adjunction
+\begin{align*}
+    \KMW_1 \otimes_\HI - \colon \HI(k) \rightleftarrows \HI(k) \noloc (-)_{-1}.
+\end{align*}
+\end{corollary}
+
+Since contraction is exact, the identification above states that $\Hom(\KMW_1,-)$ is exact, implying that $\KMW_1$ is projective as an object in the abelian category $\HI(k)$. This implies it is flat, and it is moreover faithfully flat.
+
+\begin{proposition}\label{prop:K1MW-ff} 
+We have that $\KMW_1 \otimes_\HI -$ is fully faithful.
+\end{proposition}
+
+
+A key property of the tensor product is the following
+
+\begin{proposition} We have that
+\begin{align*}
+    \KMW_m \otimes_{\HI(k)} \KMW_n \cong \KMW_{m+n}.
+\end{align*}
+\end{proposition}
+
+\begin{corollary} We have that $\KMW_0 \in \CMon(\HI(k))$ is a monoid.
+\end{corollary}
+
+
+
+We had these isomorphisms $\mathbf{I}^{n-1} \xto{\sim} \mathbf{I}^n_{-1}$. So now under adjunction it seems natural to look at their mates
+\begin{align*}
+    \KMW_1 \otimes_{\HI} \mathbf{I}^{n-1} \to \mathbf{I}^n.
+\end{align*}
+%
+In particular we want to take this analogy kind of seriously:
+\begin{align*}
+    \KMW_1 &\leftrightsquigarrow \Sigma \\
+    (-)_{-1} &\leftrightsquigarrow \Omega \\
+    \text{a sequence of homotopy sheaves } \left\{ \KMW_n \otimes_\HI M \right\}_{n\ge 0} & \leftrightsquigarrow \text{a suspension spectrum } \left\{ \Sigma^n X \right\}_{n\ge 0} \\
+    \text{a sequence where the mates are equivalences} & \leftrightsquigarrow \text{a spectrum}
+\end{align*}
+
+In particular $\mathbf{I}^\ast$, $\KMW_\ast$ and $\KM_\ast$ would all be \textit{spectra} in the above analogy. This idea of spectra admits a name, called \textit{homotopy modules}. Let's make this definition precise.
+
+\subsection{The definition of homotopy modules}
+
+
+\begin{definition} (c.f. \cite[3.4.1.2]{Feld-thesis}) A \textit{homotopy module} is a pair $(M_\ast, \omega_\ast)$ where $M_\ast$ is a $\Z$-graded strictly invariant sheaf of graded abelian groups (i.e. $M_n \in \HI(k)$ for each $n$), and
+\begin{align*}
+    \omega_n \colon M_{n-1} \xto{\sim} (M_n)_{-1}
+\end{align*}
+is an isomorphism called a \textit{desuspension}. A morphism of homotopy sheaves is a levelwise homomorphism compatible with desuspensions. This gives a category $\HM(k)$, we call the category of \textit{homotopy modules}.
+\end{definition}
+
+\begin{remark} Alternatively, we can describe $\HM(k)$ as the localization $\HM(k) = \HI(k) \left[ \KMW_1 \otimes_\HI - \right]$. It is also abelian, and we will prove it is symmetric monoidal.
+\end{remark}
+
+Let's note some natural functors. We have 
+\begin{align*}
+    \omega^\infty \colon \HM(k) &\to \HI(k) \\
+    M_\ast &\mapsto M_0,
+\end{align*}
+which just picks out the zero space. Let's try to build a map back the other way --- in trying to do so, we bump into a puzzle: given $M$, how do we cook up an $N$ for which $M \cong N_{-1}$? With our new understanding of the monoidal structure on $\HI(k)$, this becomes easier to answer.
+
+
+\begin{corollary} For any $M,N \in \HI(k)$, if
+\begin{align*}
+    f\colon \KMW_1 \otimes_\HI M \xto{\sim} N
+\end{align*}
+is an equivalence, then the mate
+\begin{align*}
+    M \xto{\sim} \underline{\Hom}_\HI(\KMW_1,N) = N_{-1}
+\end{align*}
+is an isomorphism as well.
+\end{corollary}
+\begin{proof} It is not true in general that the mate of an isomorphism needs to be an isomorphism. It is however true in this case since $\KMW_1$ is fully faithful. The mate is defined by
+\begin{align*}
+    M \xto{\eta_M} \underline{\Hom}_\HI(\KMW_1, \KMW_1 \otimes_\HI M) \xto{\underline{\Hom}_\HI(\KMW_1,f)} \underline{\Hom}_\HI(\KMW_1,N) = N_{-1}.
+\end{align*}
+The latter map is an isomorphism by hypothesis, and the first is because a left adjoint is fully faithful if and only if the unit of the adjunction is a natural isomorphism.
+\end{proof}
+
+
+
+\begin{corollary} If $M \in \HI(k)$, then $M$ is a contraction of $M \otimes_\HI \KMW_1$.
+\end{corollary}
+
+\begin{proposition} There is a functor
+\begin{align*}
+    \sigma^\infty \colon \HI(k) &\to \HM(k),
+\end{align*}
+defined by the property that 
+\begin{align*}
+    (\sigma^\infty M)_n = \begin{cases} 
+    M \otimes_\HI \KMW_n & n\ge 0 \\
+    M_{-j} & n=-j < 0 \end{cases}
+\end{align*}
+\end{proposition}
+\begin{proof} The gluing maps
+\begin{align*}
+    (\sigma_\infty M)_n \to \left( (\sigma^\infty M)_n \right)_{-1}
+\end{align*}
+are defined to be mates to the natural equivalences
+\begin{align*}
+    \KMW_1 \otimes \KMW_n \otimes M \xto{\sim} \KMW_{n+1} \otimes M.
+\end{align*}
+\end{proof}
+
+
+
+\subsection{Monoidal structure on homotopy modules}
+
+
+
+\begin{definition} An object $X\in \mathscr{C}$ in a symmetric monoidal 1-category (resp. $\infty$-category) is called \textit{cyclic} if some permutation of $X^{\otimes n}$ is equal to (resp. homotopic to) the identity.
+\end{definition}
+
+We'll phrase this in two settings. The $\infty$-categorical one will come in use later.
+
+\begin{theorem}\label{thm:cyclic-objects-localization}  $\ $
+\begin{enumerate}
+    \item If $\mathscr{C}$ is a closed symmetric monoidal 1-category and $X \in \mathscr{C}$ is cyclic, then the localization $\mathscr{C}[X^{-1}]$ exists, defined as the colimit
+    \begin{align*}
+        \mathscr{C} \xto{X \otimes -} \mathscr{C} \xto{X \otimes-} \cdots 
+    \end{align*}
+    It is symmetric monoidal, and the localization $\mathscr{C} \to \mathscr{C}[X^{-1}]$ is strong monoidal.
+    \item If $\mathscr{C}$ is a presentably symmetric monoidal category, then if $X$ is cyclic, the localization $\mathscr{C}[X^{-1}]$ is still presentably symmetric monoidal, with monoidal localization functor \cite[\S2]{Robalo}.
+\end{enumerate}
+
+\end{theorem}
+
+
+\begin{proposition}\label{prop:KMW1-cyclic} 
+We have that $\KMW_1 \in \HI(k)$ is cyclic.
+\end{proposition}
+\begin{proof} We do this in a few steps. Recall we had this element $\epsilon = - \left\langle -1 \right\rangle = -(1 + \eta[-1])$ which measured the failure of symbols $[a][b]$ to commute with one another.
+
+\textbf{Step 1}: We have that $\epsilon[a] = [a]\epsilon$. This is a routine check:
+\begin{align*}
+    \epsilon[a] &= - \left( 1 + \eta[-1] \right)[a] = -[a] - \eta[-1][a] \\
+    &\overset{\text{MW2}}= -[a] + [-1] + [a] - [(-1)a] \\
+    &= -[a] + [a] + [-1] + [a(-1)] \\
+    &= -[a] + \eta[a][-1] \\
+    &= -[a](1 + \eta[-1]) \\
+    &= [a]\epsilon.
+\end{align*}
+%
+
+\textbf{Step 2}: We have that $\epsilon^2 = 1$.
+\begin{align*}
+    \epsilon^2 &= \left( - 1 - \eta[-1] \right)^2 = (1+\eta[-1])^2 \\
+    &= 1 + 2\eta[-1] + \eta^2[-1][-1] \\
+    &\overset{\text{MW2}}{=} 1 + 2\eta[-1] + \eta \left( [1] - [-1] -[-1] \right) \\
+    &\overset{\ref{exer:bracket-1-is-0-in-MW}}{=} 1 + 2\eta[-1] - 2\eta[-1] \\
+    &= 1.
+\end{align*}
+
+\textbf{Step 3}: We claim the permutation $(1\ 2\ 3)$ going from
+\begin{align*}
+    \KMW_3 \cong (\KMW_1)^{\otimes3} \to (\KMW_1)^{\otimes 3} \cong \KMW_3
+\end{align*}
+is equal to the identity, proving $\KMW_1$ is cyclic. Since $\KMW_n$ is generated by symbols $[u_1, \ldots, u_n]$ for $n\ge 1$, we are reduced to checking that $[c,a,b] = [a,b,c]$ for any $a,b,c \in F^\times$. This is now an immediate check by what we've done:
+\begin{align*}
+    [c,a,b] &:=[c][a][b] = \epsilon[a][c][b] = \epsilon[a]\epsilon[b][c] = \epsilon^2[a][b][c] = [a,b,c].
+\end{align*}
+\end{proof}
+
+Combining \autoref{prop:KMW1-cyclic} and \autoref{thm:cyclic-objects-localization}, we immediately obtain the following.
+
+\begin{corollary} The category of homotopy modules $\HM(k)$ is symmetric monoidal, and
+\begin{align*}
+    \sigma^\infty \colon \HI(k) \to \HM(k)
+\end{align*}
+is strong symmetric monoidal.
+\end{corollary}
+
+\begin{proposition} We have that $\sigma^\infty$ is fully faithful and $\omega^\infty$ is exact.
+\end{proposition}
+\begin{proof} It is clear $\sigma^\infty$ is fully faithful by construction, since the data of a map $\sigma^\infty M \to \sigma^\infty N$ is the data of a map $M \to N$ in $\HI(k)$. Meanwhile, exactness in $\HM(k)$ means exactness at each level, which implies exactness at level zero, hence $\omega^\infty$ is exact.
+\end{proof}
+
+
+Let's also remark something interesting --- if $M_\ast$ is a homotopy module, then the mates to the structure isomorphisms are all of the form
+\begin{align*}
+    \KMW_1 \otimes_\HI M_\ast \to M_{\ast+1},
+\end{align*}
+and by iterating this we get
+\begin{align*}
+    \KMW_n \otimes_\HI M_\ast \to M_{\ast+n}.
+\end{align*}
+%
+\begin{remark} Every homotopy module is a graded $\KMW_\ast$-module.
+\end{remark}
+
+
 
 
 \newpage
