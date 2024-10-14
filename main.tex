@@ -2438,7 +2438,8 @@ is a motivic equivalence.
 is a pushout.
 \end{exercise}
 
-\begin{proposition} There is a motivic equivalence
+\begin{proposition}\label{prop:punctured-affine-space-motivic-sphere}
+There is a motivic equivalence
 \begin{align*}
     \A^n \minus \{0\} \simeq (S^1)^{\smashprod (n-1)} \smashprod (\mathbb{G}_m)^{\smashprod  n} = S^{2n-1,n}.
 \end{align*}
@@ -3475,7 +3476,7 @@ Contraction yields a functor from homotopy sheaves to itself:
     (-)_{-1} \colon \HI(k) \to \HI(k).
 \end{align*}
 %
-\begin{proposition} For any $A \in \HI(k)$ and any $E \in \mathcal{E}_k$ we have that $H^1( \mathbb{G}_m \times \Spec(E);F) = 0$  (see \cite[4.10]{Deglise-finite-corr}).
+\begin{proposition} For any $A \in \HI(k)$ and any $E \in \mathcal{E}_k$ we have that $H^1( \mathbb{G}_m \times \Spec(E);A) = 0$  (see \cite[4.10]{Deglise-finite-corr}).
 \end{proposition}
 
 
@@ -3508,17 +3509,17 @@ We now want to take these properties that $\KMW_n$, $\KM_n$, and $\mathbf{I}^n$ 
 
 We claim that $\HI(k)$ admits a closed symmetric monoidal structure. The origin of this perhaps makes sense with reference to other objects --- it is the unique symmetric monoidal structure making the forgetful map from the category of ``sheaves with transfers'' symmetric monoidal \cite[Lemme~1.8]{Deglise-MH}, alternatively it is the unique symmetric monoidal structure induced from that on the $\A^1$-derived category c.f. \cite[1.5.1.20]{Feld-thesis}. We won't define it explicitly, but just comment that it exists, and explore some key properties:
 
-\begin{theorem} The category $\HI(k)$ admits a closed symmetric monoidal structure, which we denote by $\otimes_\HI$.
+\begin{theorem} The category $\HI(k)$ admits a closed symmetric monoidal structure, which we denote by $\otimes_\HI$. The unit for the monoidal structure is given by $\KMW_0 = \mathbf{GW}$. In particular every homotopy sheaf is a module over the Grothendieck--Witt sheaf.
 \end{theorem}
-We'll come back and add a proof for this later. It is generally defined using a bit more machinery than we've developed so far, see e.g. \cite[4.2.1.20]{Feld-thesis}.
+We'll come back and add a proof for this later. The slick proofs use a bit more machinery than we've developed so far, see e.g. \cite[4.2.1.20]{Feld-thesis}.
 
 Since the monoidal structure is closed, we have an internal hom object $\underline{\Hom}_{\HI(k)}(-,-)$. Since contraction was a loop space construction, we might expect it to be a right adjoint, and indeed this is true!
 
-\begin{proposition} We have for any $M \in \HI(k)$
+\begin{proposition} For any $M \in \HI(k)$, we have an isomorphism
 \begin{align*}
     M_{-1} \cong \underline{\Hom}_{\HI(k)} \left( \KMW_1, M \right),
 \end{align*}
-natural in $M$.
+which is natural in $M$.
 \end{proposition}
 
 \begin{corollary} There is an adjunction
@@ -3711,6 +3712,8 @@ and by iterating this we get
 %
 \begin{remark} Every homotopy module is a graded $\KMW_\ast$-module.
 \end{remark}
+
+This is a generalization of every homotopy sheaf being a $\KMW_0 = \mathbf{GW}$-module as we have seen.
 
 
 
