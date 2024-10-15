@@ -3522,6 +3522,19 @@ Since the monoidal structure is closed, we have an internal hom object $\underli
 which is natural in $M$.
 \end{proposition}
 
+The $\KMW_0$-module structure on any $M_{-1}$ comes from its action on $\KMW_1$:
+\begin{align*}
+    \KMW_0 \times \KMW_1 &\to \KMW_1 \\
+    (\left\langle a \right\rangle, \beta) &\mapsto \left\langle a \right\rangle\cdot \beta.
+\end{align*}
+So multiplication by $\left\langle a \right\rangle$ induces an endomorphism of $\KMW_1$, which therefore induces an endomorphism
+\begin{align*}
+    M_{-1} \cong \underline{\Hom}_\HI (\KMW_1,M) \xto{\left\langle a \right\rangle\cdot -} \underline{\Hom}_\HI(\KMW_1,M) \cong M_{-1}.
+\end{align*}
+%
+
+
+
 \begin{corollary} There is an adjunction
 \begin{align*}
     \KMW_1 \otimes_\HI - \colon \HI(k) \rightleftarrows \HI(k) \noloc (-)_{-1}.
@@ -3542,9 +3555,6 @@ A key property of the tensor product is the following
     \KMW_m \otimes_{\HI(k)} \KMW_n \cong \KMW_{m+n}.
 \end{align*}
 \end{proposition}
-
-\begin{corollary} We have that $\KMW_0 \in \CMon(\HI(k))$ is a monoid.
-\end{corollary}
 
 
 
