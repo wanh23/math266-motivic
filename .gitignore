@@ -17,6 +17,8 @@
 *.lof
 *.log
 *.lot
+*.maf
+*.mtc*
 *.out
 *.run.xml
 *.synctex(busy)
