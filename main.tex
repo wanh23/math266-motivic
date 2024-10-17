@@ -24,6 +24,7 @@
 
 \providecommand{\KM}{\mathbf{K}^\mathrm{M}}
 \providecommand{\KMW}{\mathbf{K}^\mathrm{MW}}
+\providecommand{\CHW}{\widetilde{\mathrm{CH}}}
 
 \newcommand{\Pfister}[1]{\left\langle\! \left\langle #1 \right\rangle\! \right\rangle}
 
@@ -49,7 +50,7 @@ These are notes for a topics class taught at Harvard in Fall 2024. Notes are bei
 \begin{center}
     \href{https://github.com/tbrazel/math266-motivic}{https://github.com/tbrazel/math266-motivic}
 \end{center}
-Thank you to Merrick Cai, Juan Fernando Valdes, Jake Levinson, Isabel Longbottom, Sof\'ia Marlasca Apararicio, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions.
+Thank you to Merrick Cai, Juan Fernando Valdes, Jake Levinson, Isabel Longbottom, Sof\'ia Marlasca Aparicio, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions.
 
 Thank you to Aravind Asok, Elden Elmanto, Niels Feld, and Matthias Wendt for answering random motivic questions.
 
@@ -3509,7 +3510,7 @@ We now want to take these properties that $\KMW_n$, $\KM_n$, and $\mathbf{I}^n$ 
 
 We claim that $\HI(k)$ admits a closed symmetric monoidal structure. The origin of this perhaps makes sense with reference to other objects --- it is the unique symmetric monoidal structure making the forgetful map from the category of ``sheaves with transfers'' symmetric monoidal \cite[Lemme~1.8]{Deglise-MH}, alternatively it is the unique symmetric monoidal structure induced from that on the $\A^1$-derived category c.f. \cite[1.5.1.20]{Feld-thesis}. We won't define it explicitly, but just comment that it exists, and explore some key properties:
 
-\begin{theorem} The category $\HI(k)$ admits a closed symmetric monoidal structure, which we denote by $\otimes_\HI$. The unit for the monoidal structure is given by $\KMW_0 = \mathbf{GW}$. In particular every homotopy sheaf is a module over the Grothendieck--Witt sheaf.
+\begin{theorem} The category $\HI(k)$ admits a closed symmetric monoidal structure, which we denote by $\otimes_\HI$. The unit for the monoidal structure is given by the constant sheaf $\Z$. 
 \end{theorem}
 We'll come back and add a proof for this later. The slick proofs use a bit more machinery than we've developed so far, see e.g. \cite[4.2.1.20]{Feld-thesis}.
 
@@ -3522,7 +3523,7 @@ Since the monoidal structure is closed, we have an internal hom object $\underli
 which is natural in $M$.
 \end{proposition}
 
-The $\KMW_0$-module structure on any $M_{-1}$ comes from its action on $\KMW_1$:
+There is a $\KMW_0$-module structure on any $M_{-1}$ coming from its action on $\KMW_1$:
 \begin{align*}
     \KMW_0 \times \KMW_1 &\to \KMW_1 \\
     (\left\langle a \right\rangle, \beta) &\mapsto \left\langle a \right\rangle\cdot \beta.
@@ -3541,9 +3542,9 @@ So multiplication by $\left\langle a \right\rangle$ induces an endomorphism of $
 \end{align*}
 \end{corollary}
 
-Since contraction is exact, the identification above states that $\Hom(\KMW_1,-)$ is exact, implying that $\KMW_1$ is projective as an object in the abelian category $\HI(k)$. This implies it is flat, and it is moreover faithfully flat.
+Since contraction is exact, the identification above states that $\Hom(\KMW_1,-)$ is exact, implying that $\KMW_1$ is projective as an object in the abelian category $\HI(k)$. This implies it is flat (since $\HI(k)$ is a module category), and it is moreover faithfully flat.
 
-\begin{proposition}\label{prop:K1MW-ff} 
+\begin{proposition}\label{prop:K1MW-ff} \cite[1.15]{Deglise-MH}
 We have that $\KMW_1 \otimes_\HI -$ is fully faithful.
 \end{proposition}
 
@@ -3723,9 +3724,313 @@ and by iterating this we get
 \begin{remark} Every homotopy module is a graded $\KMW_\ast$-module.
 \end{remark}
 
-This is a generalization of every homotopy sheaf being a $\KMW_0 = \mathbf{GW}$-module as we have seen.
+\section{Gersten complexes}
+
+If $F$ is a homotopy sheaf and $X\in \Sm_k$, we want to \textit{resolve} $F(X) = H^0(X,F)$ by its values on codimension one, two, three, points. By this we mean its values on the function fields of those points.
+
+The goal is to write down a complex that looks like
+\begin{align*}
+    \bigoplus_{x\in X^{(0)}} F(\kappa(x)) \to \bigoplus_{x\in X^{(1)}} F_{-1}(\kappa(x)) \to \bigoplus_{x\in X^{(2)}} F_{-2}(\kappa(x)) \to \cdots 
+\end{align*}
+The primary difficulty is defining the differentials and showing that they actually yield a complex. This is one of the main complicating factors in the literature. Following the slogan that homotopy sheaves are easier once they are contractions, we might approach this when a homotopy sheaf is a 1-fold or 2-fold contraction and leverage the nice properties it inherits to try to construct this complex. This is the focus of a large chunk of Morel's book -- building these complexes for $M_{-1}$ and for $M_{-2}$ when $M$ is a homotopy sheaf.
+
+For the purposes of this notes, we will work with a smaller class of homotopy sheaves, namely those which are infinite contractions --- i.e. homotopy modules!
+
+\begin{theorem} If $M_\ast$ is a homotopy module, then for any $n$, we can define well-defined differentials so that
+\begin{align*}
+    C^\ast(X,M_n) := \left( \bigoplus_{x\in X^{(0)}} M_n(\kappa(x)) \to \bigoplus_{x\in X^{(1)}} M_{n-1}(\kappa(x)) \to \cdots \right)
+\end{align*}
+is a complex, natural in $X$, called the \textit{Rost-Schmid complex} \cite[5.31]{Morel}. This is an acyclic resolution, so the $j$th cohomology group of this complex is \textit{precisely} the sheaf cohomology
+\begin{align*}
+    H^j C^\ast(X,M_n) &= H^j_\Nis(X, M_n).
+\end{align*}
+\end{theorem}
+% \begin{proof}[Proof idea] It suffices to cook up differentials for Milnor--Witt $K$-theory, then we can directly leverage the graded module structure to induce them for $M_\ast$.
+% \end{proof}
 
 
+\begin{remark} $\ $
+\begin{enumerate}
+    \item We are being vague about differentials and twists --- these need to be carefully considered although for the sake of time we are omitting them.
+    \item A Rost-Schmid complex exists for a strongly invariant sheaf of abelian groups, and its construction is a key input in proving the strongly=strictly theorem. See \cite[\S6]{bachmannstrongly} for details.
+\end{enumerate}
+\end{remark}
+
+\begin{definition} The full subcategory
+\begin{align*}
+    \Mod_{\KM_\ast} \subseteq \HM(k)
+\end{align*}
+of modules over Milnor $K$-theory (or modules over $\KMW_\ast$ on which $\eta$ acts trivially) is called the category of \textit{homotopy modules with (Voevodsky) transfers}. There is an equivalence of categories between these and so-called \textit{Rost cycle modules}.
+\end{definition}
+
+\begin{remark} $\ $
+\begin{enumerate}
+    \item It is easier to define differentials for homotopy modules with transfers since we don't have to stress about twists.
+    \item Rost cycle modules were used famously in the proof of the Milnor conjecture. Moreover over a perfect field, the category of Rost cycle modules is equivalent to the heart of the category of Voevodsky motives in the homotopy $t$-structure (see Deglise modules de cycles et motifes mixtes)
+\end{enumerate}
+\end{remark}
+
+\begin{theorem} \textit{(Properties of the Rost--Schmid complex)}
+\begin{enumerate}
+    \item For $X$ smooth, the Rost--Schmid complex provides an acyclic resolution in the Zariski or Nisnevich sites
+    \item The projection $X \times \A^1 \to X$ induces a quasi-isomorphism
+    \begin{align*}
+        C^\ast(X,M_n) \to C^\ast(X \times \A^1,M_n).
+    \end{align*}
+    This is \cite[5.38]{Morel}, and it is a bit out of order here -- one proves this first for a strongly invariant sheaf of abelian groups, and leverages this to conclude that strongly implies strictly.
+\end{enumerate}
+
+\end{theorem}
+
+
+
+
+\begin{theorem} (Rost ?) For any smooth $X$, we have that $H^n(X,\KM_n) = \CH^n(X)$.
+\end{theorem}
+\begin{proof} At the tail end of the Rost--Schmid complex. we have
+\begin{align*}
+    \cdots \to \bigoplus_{x\in X^{(n-1)}} K_1^M (\kappa(x)) \to \bigoplus_{x\in X^{(n)}} K_0^M(\kappa(x)) \to 0,
+\end{align*}
+since a contraction of $K_0^M$ is trivial. Note that $K_1^M(\kappa(x)) = \kappa(x)^\times$ and $K_0^M(\kappa(x)) = \Z$. This differential can precisely be identified with the divisor function in the definition of Chow groups. The result follows immediately.
+\end{proof}
+
+\begin{corollary} We have that
+\begin{align*}
+    H^n(X,\KM_n) = H^n(X, \mathbf{K}^Q_n) = \CH^n(X).
+\end{align*}
+This is the so-called \textit{Gersten conjecture}.
+\end{corollary}
+
+
+\begin{definition} The sheaf cohomology groups
+\begin{align*}
+    H^n(X, \KMW_n) = \CHW^n(X)
+\end{align*}
+are called \textit{Chow--Witt groups}. Note that negative Milnor--Witt $K$-theory sheaves are not identically zero like Milnor $K$-theory, so the Rost--Schmid complex doesn't truncate. Nevertheless, the differential going from $\KMW_1$ to $\KMW_0$ is still an analogue of a divisor of a rational function, however equipped with some orientation data.
+\end{definition}
+
+\begin{remark} The multiplicative structure on cycle modules induce a multiplicative structure on the Rost--Schmid complexes, and therefore a multiplicative structure on the total cohomology.
+\end{remark}
+
+
+
+
+\subsection{Vanishing of $I^j$-cohomology}
+
+\begin{proposition} If $\mathbf{I}^n \ne 0$ for some $n$, then $\mathbf{I}^n \ne \mathbf{I}^{n+1}$.
+\end{proposition}
+\begin{proof} It suffices to check on fields, from which it was originally proven by Arason and Pfister \cite[Korollar~2]{ArasonPfister}.
+\end{proof}
+
+\begin{corollary}\label{cor:vanishing-In-associated-graded} 
+If $\mathbf{I}^n / \mathbf{I}^{n+1} = 0$ then $\mathbf{I}^n = 0$.
+\end{corollary}
+
+
+
+
+\begin{theorem} Let $X$ be a smooth scheme of dimension $d$ over an algebraically closed field $k$. Then $\mathbf{I}^{n}$ is identically zero over $X$ for $n>d$.
+\end{theorem}
+\begin{proof} It suffices to check on the residue field of $X$, and suffices to check that $\mathbf{I}^n/\mathbf{I}^{n+1} = 0$ by \autoref{cor:vanishing-In-associated-graded}. By the Milnor conjecture, we have an isomorphism
+\begin{align*}
+    \mathbf{I}^n/\mathbf{I}^{n+1} \cong \KM_n/2,
+\end{align*}
+so we have that $I^n(k(X))/I^{n+1}(k(X)) = H^n_\Gal(k(X), \mu_2^{\otimes n})$, which vanishes above the dimension of $X$. 
+\end{proof}
+
+\begin{remark} \textit{(Vanishing of $I^j$-cohomology)}
+\begin{enumerate}
+    \item Over an arbitrary field $k$, the same vanishing result will hold for $n \ge d+r+1$, where $r = \cd_2(k)$ is the 2-cohomological dimension of the field $k$ \cite[5.1]{AF3}.
+    \item An even strongly vanishing statement is proven in \cite[5.2]{AF3}, using a Bloch--Ogus spectral sequence argument.
+\end{enumerate}
+\end{remark}
+
+\subsection{Contraction yoga}
+
+\begin{proposition} If $M\to N$ is a map of homotopy sheaves, which is an isomorphism after $k$fold contraction, then
+\begin{align*}
+    H^n(X,M) \cong H^n(X,N)
+\end{align*}
+for $n >k$.
+\end{proposition}
+\begin{proof} The map induces a map of Rost complexes and see that they are identical starting at the $k$th slot.
+\end{proof}
+%
+We can look at some maps of sheaves we currently have and see how far we have to contract them to get an isomorphism. Recall we have a short exact sequence
+\begin{align*}
+    0 \to \mathbf{I}^{j+1} \to \KMW_j \to \KM_j \to 0.
+\end{align*}
+Since $(\KM_j)_{-k} = 0$ if $k>j$, we have that $\mathbf{I}^{j+1} \to \KMW_j$ is an isomorphism after $j+1$ contractions. This gives us
+
+\begin{proposition} We have that
+\begin{align*}
+    H^n(X, \mathbf{I}^{j+1}) \cong H^n(X, \KMW_j)
+\end{align*}
+for $n > j+1$.
+\end{proposition}
+
+\begin{proposition} We have that
+\begin{align*}
+    H^n(X, \KM_j) = 0
+\end{align*}
+for $j<n$.
+\end{proposition}
+
+What happens to $\mathbf{I}^j$ and $\KMW_j$ when they are contracted below zero?
+
+\begin{proposition} We have that
+\begin{align*}
+    \KMW_{-n} \cong \mathbf{W}
+\end{align*}
+is the Witt for each $n \ge 1$.
+\end{proposition}
+\begin{proof} We first make the claim that $\KMW_{-1}$ is generated by elements of the form $\eta \left\langle a \right\rangle$. In other words, the map
+\begin{align*}
+    \KMW_0 &\to \KMW_{-1} \\
+    \left\langle a \right\rangle &\mapsto \eta \left\langle a \right\rangle
+\end{align*}
+is onto. This is analogous to the argument we did before (now we remove an $\eta^{-1}$, and get everything else in $\GW(k)$).
+
+
+We first show the claim for $n=1$. We claim that the map factors
+\[ \begin{tikzcd}
+    \KMW_0\rar["\cong"]\dar["\eta" left] & \mathbf{GW}\dar["\text{mod }h" right]\\
+    \KMW_{-1}\rar[dashed] & \mathbf{W},
+\end{tikzcd} \]
+where the bottom map sends $\eta \left\langle a \right\rangle$ to $\left\langle a \right\rangle$.
+We have to check this is well-defined, i.e. that if we have $\alpha,\beta\in \GW(k)$, and $\eta \alpha = \eta\beta$ is it true that $\alpha \equiv \beta \pmod{h}$. This is clear since $\eta$ will kill any hyerbolic elements. From this it is also clear it is bijective. To see it for $n > 1$, we observe that multiplication by $\eta$ induces an isomorphism $\KMW_{-n}\xto{\sim} \KMW_{-n-1}$.
+\end{proof}
+
+\begin{corollary} We have that $\mathbf{I}_{-1} = \mathbf{W}$.
+\end{corollary}
+
+
+\begin{corollary} For $j<n$ we have that
+\begin{align*}
+    H^n(X, \mathbf{I}^{j+1}) \cong H^n(X, \KMW_j).
+\end{align*}
+\end{corollary}
+
+
+
+\section{The fundamental group of $\P^1$}
+
+Our goal is to compute $\pi_1^{\A^1}(\P^1)$. Recall we have
+\begin{align*}
+    \HI(k) \subseteq \Shv_\Nis(\Sm_k;\Set_\ast).
+\end{align*}
+I makes sense for any $F$ to ask for some \textit{universal} approximation to it, lying in the category $\HI(k)$.
+
+Let $G$ be a strongly invariant sheaf of groups, and $S$ a sheaf of pointed sets. Then there is a bijection
+\begin{align*}
+    \left[ \Sigma S, BG \right]_{\Spc(k)_\ast} \cong \left[ S, G \right]_{\Shv(\Sm_k;\Set_\ast)},
+\end{align*}
+given by taking $\pi_1^{\A^1}$. In particular this gives the following definition.
+
+\begin{definition} \cite[7.23]{Morel} If $S$ is a Nisnevich sheaf of pointed sets, we denote by
+\begin{align*}
+    F_{\A^1}(S) := \pi_1^{\A^1}(\Sigma S)
+\end{align*}
+the \textit{free strongly invariant sheaf} of groups on $S$. This has the universal property that for any strongly invariant sheaf of groups $G$, we have
+\[\begin{tikzcd}
+    S\rar\dar & G\\
+    F_{\A^1}(S)\ar[ur,dashed] & 
+\end{tikzcd} \]
+\end{definition}
+
+\begin{definition} If $S$ is a sheaf of pointed sets, we can alternatively consider the free strongly invariant sheaf of \textit{abelian groups} on $S$. We denote this by\footnote{%
+The notation here is nonstandard.}
+\begin{align*}
+    F_{\A^1}^\ab(S),
+\end{align*}
+and it is the universal element in $\HI(k)$ receiving a morphism of sheaves of pointed sets from $S$. We don't have an obvious way to compute this yet, unless $F_{\A^1}(S)$ already happens to be abelian.
+\end{definition}
+
+\begin{remark} There is a natural map
+\begin{align*}
+    F_{\A^1}(S) \to F_{\A^1}^\ab(S),
+\end{align*}
+which is not necessarily an isomorphism.
+\end{remark}
+
+
+\begin{example} We can consider $\mathbb{G}_m$ as a sheaf of pointed sets. Then by definition, we have that
+\begin{align*}
+    F_{\A^1}(\mathbb{G}_m) = \pi_1^{\A^1}(\P^1).
+\end{align*}
+This is the sheaf of groups we want to compute.
+\end{example}
+
+\begin{notation} For $n\ge 1$, we denote by
+\begin{align*}
+    F_{\A^1}(n) := F_{\A^1} \left( \mathbb{G}_m^{\smashprod n} \right)
+\end{align*}
+the free strongly invariant sheaf of groups on the smash product $\mathbb{G}_m^{\smashprod n}$.
+\end{notation}
+
+We have that $\mathbb{G}_m$, as a motivic space, represents units of global sections. Since smash products are computed sectionwise, we have that $\mathbb{G}_m^{\smashprod n}$ represents the $n$-fold smash product of $\O_X(X)^\times$ for any $X$. This is a sheaf of pointed sets, with no higher homotopy. Hence it gives rise to a map
+\begin{align*}
+    \left( \O_X(X)^\times \right)^{\smashprod n} &\to (k(X)^\times)^{\smashprod n} \to K_n^\MW(k(X)) \\
+    (a_1, \ldots, a_n) &\mapsto \left[ a_1, \ldots, a_n \right].
+\end{align*}
+By the yoga of $\mathcal{F}_k$-data, this bootstraps up to a \textit{symbol map}, which we denote by
+\begin{align*}
+    \sigma_n \colon \mathbb{G}_m^{\smashprod n} \to \KMW_n.
+\end{align*}
+%
+This factors through the universal strongly invariant presheaf of \textit{abelian} groups:
+\[ \begin{tikzcd}
+    \mathbb{G}_m^{\smashprod n}\rar["\sigma_n"]\dar & \KMW_n\\
+    F_{\A^1}^\ab(n)\ar[ur,dashed] &
+\end{tikzcd} \]
+
+\begin{theorem} \cite[3.37]{Morel} For $n\ge 1$, the induced symbol map
+\begin{align*}
+    F_{\A^1}^\ab(n) \to \KMW_n
+\end{align*}
+is an equivalence. In other words, $\KMW_n$ is the free strongly invariant sheaf of \textit{abelian} groups on $\mathbb{G}_m^{\smashprod  n}$.
+\end{theorem}
+\begin{proof}[Proof sketch] Let $M \in \HI(k)$. Then any map of pointed sheaves of sets $\Sigma (\mathbb{G}_m^{\smashprod n}) \to M$ can be viewed as a map of pointed motivic spaces, and we see by adjunction:
+\begin{align*}
+    \Hom_{\Spc(k)_\ast} \left( S^{n+1,n}, M \right) &= \Hom_{\Spc(k)_\ast} \left( S^0, \Omega^{n,n} M \right) \\
+    &= \Hom_{\Spc(k)_\ast} \left( S^0, M_{-n} \right) \\
+    &= M_{-n}(k).
+\end{align*}
+Since $M_{-n} = \underline{\Hom}_{\HI}(\KMW_n, M)$, we might expect that this gives rise to a unique map $\KMW_n \to M$. This ends up being true, and the difficulty is just in verifying that this is indeed a morphism of homotopy sheaves. In particular one must construct it from the symbol map and verify it is well-defined with respect to the relations for Milnor--Witt $K$-theory.
+\end{proof}
+
+
+
+\begin{proposition} We have that 
+\begin{align*}
+    F_{\A^1}(2) \cong F_{\A^1}^\ab(2) \cong \KMW_2.
+\end{align*}
+\end{proposition}
+\begin{proof} Recall by \autoref{prop:punctured-affine-space-motivic-sphere} we have
+\begin{align*}
+    \SL_2 \simeq \A^2 \minus 0 \simeq S^{3,2} \simeq \Sigma \left( \mathbb{G}_m \smashprod \mathbb{G}_m \right).
+\end{align*}
+Since $\SL_2$ is a group object, its $\pi_1$ is abelian by an Eckmann--Hilton argument, hence the result follows.
+\end{proof}
+
+
+\subsection{The fundamental group of $\P^1$}
+
+Since $\A^2\minus 0 \to \P^1$ is the total space of a $\mathbb{G}_m$-torsor, we get an $\A^1$-fiber sequence
+\begin{align*}
+    \mathbb{G}_m \to \A^2\minus 0 \to \P^1,
+\end{align*}
+which deloops to
+\begin{align*}
+    \A^2 \minus 0 \to \P^1 \to B \mathbb{G}_m.
+\end{align*}
+%
+Since both $B \mathbb{G}_m$ and $\A^2\minus 0$ are connected, the long exact sequence on homotopy becomes a short exact sequence of the form \cite[(7.4)]{Morel}
+\begin{align*}
+    0 \to \KMW_2 \to F_{\A^1}(1) \to \mathbb{G}_m \to 0.    
+\end{align*}
+%
+This turns out to be a central extension, but $F_{\A^1}(1)$ is not commutative \cite[7.29]{Morel}.
 
 
 \newpage
