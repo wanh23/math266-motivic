@@ -29,12 +29,15 @@
 
 \newcommand{\Pfister}[1]{\left\langle\! \left\langle #1 \right\rangle\! \right\rangle}
 
+\fancyfoot[C]{\thepage}
 \begin{document}
 \dominitoc
 %\begin{abstract} Notes from MATH266: Motivic homotopy theory, taught at Harvard in Fall 2024. Last compiled: \today
 %\end{abstract}
 
 \maketitle
+
+
 
 \setcounter{tocdepth}{1}
 \tableofcontents{}
@@ -3025,6 +3028,8 @@ We will develop some basic properties, starting in lower degrees and going to hi
     $1 = \left\langle 1 \right\rangle$ is the multiplicative unit.
     \item\label{KMW:bracket-1}
     $\eta[1] = 0$.
+    \item\label{KMW:epsilon-squared}
+    $\epsilon^2 = 1$
 \end{enumerate}
 \end{proposition}
 \begin{proof} $\ $
@@ -3043,18 +3048,31 @@ We will develop some basic properties, starting in lower degrees and going to hi
 Hence $1 = \left\langle 1 \right\rangle$.
 
     \item Since $\eta[1] = \left\langle 1 \right\rangle - 1$, we get that $\eta[1] = 0$ by the previous result.
+
+    \item By \ref{KMW:angle-brackets-multiplicative}, it is clear that $\epsilon^2 = \left\langle 1 \right\rangle$, which is equal to $1$ by \ref{KMW:multiplicative-unit}.
 \end{enumerate}
 \end{proof}
 
 In degree one, we have that $[1] = 0$, completely analogous to Milnor $K$-theory, and various other properties:
 
-\begin{proposition}\label{prop:properties-KMW1} \textit{(Properties in $K_1^\MW$)}
+\begin{proposition}\label{prop:properties-KMW1} \textit{(Properties in $K_1^\MW$)} Some basic properties to record are that $[1]$ vanishes, analogous to Milnor $K$-theory, as well as the following commutativity relations:
 \begin{enumerate}
-    \item We have that $[1] = 0$.
+    \item $[1] = 0$.
+    \item\label{KMW:square-brackets-commute-eta}
+    $\eta[a][b] = \eta[b][a]$
+    
+    \item\label{KMW:square-angle-brackets-commute}
+    $[a] \left\langle b \right\rangle = \left\langle b \right\rangle[a]$.
+\end{enumerate}
+Some further relations let us expand various degree one elements, and are useful in further computation:
+\begin{enumerate}
+\setcounter{enumi}{3}
     \item\label{KMW:bracket-of-square}
     $[a^2] = (1+ \left\langle a \right\rangle )[a]$
-    \item\label{KMW:minus-square-bracket} $-[a] = \left\langle a \right\rangle[a^{-1}]$
-    \item $[ab] = [a] +\left\langle a \right\rangle[b]$
+    
+    \item\label{KMW:minus-square-bracket} $[a] = -\left\langle a \right\rangle[a^{-1}]$
+    \item\label{KMW:bracket-of-product}
+    $[ab] = [a] +\left\langle a \right\rangle[b]$
     \item\label{KMW:bracket-of-fraction}
     $[a/b] = [a] - \left\langle a/b \right\rangle[b]$
     % \item $[a]\left\langle -a \right\rangle = \left\langle -a \right\rangle[a]$
@@ -3069,6 +3087,14 @@ In degree one, we have that $[1] = 0$, completely analogous to Milnor $K$-theory
         [1\cdot 1] &= [1] + [1] + \eta[1][1].
     \end{align*}
     Since $\eta[1] = 0$ by \autoref{prop:properties-KMW0}, we conclude that $[1] = [1] + [1]$, from which the result follows.
+    
+    \item Since $ab=ba$ in $F$, we have that $[ab] = [ba]$. Expanding each of these using MW2 gives the desired result.
+
+    \item By applying \autoref{KMW:square-brackets-commute-eta}, we see that
+    \begin{align*}
+        [a] \left\langle b \right\rangle &= [a] \left( 1 + \eta[b] \right) = [a] + \eta[a][b] = [a] + \eta[b][a] = \left\langle b \right\rangle[a].
+    \end{align*}
+    
 
     \item Applying MW2 we get
     \begin{align*}
@@ -3098,64 +3124,65 @@ In degree two, we see the value of $\epsilon$, that it measures the failure of c
 
 \begin{proposition}\label{prop:properties-KMW2}  \textit{(Properties in $K_2^\MW$)}
 \begin{enumerate}
-    \item $[a][-a] = 0$
+    \item\label{KMW:bracket-times-bracket-negative}
+    $[a][-a] = 0$
     \item\label{KMW:square-bracket-times-itself}
-    $[a][a] = [-1][a]$
-    \item We have that $[a][b] = \epsilon[b][a]$.
+    $[a][a] = \epsilon[a][-1] = \epsilon[-1][a]$
+    \item\label{KMW:bracket-a-bracket-minus-one}
+    $[a][-1] = [-1][a]$.
+    \item $[a][b] = \epsilon[b][a]$.
     % \item $[a][a] = [a][-1]$ ??
 \end{enumerate}
 \end{proposition}
-% \begin{proof} $\ $
-% \begin{enumerate}
-%     \item We do the same trick as in \autoref{prop:KM2-relations}, and write $-a = \frac{1-a}{1-a^{-1}}$. By \autoref{KMW:bracket-of-fraction}, we get
-%     \begin{align*}
-%         [-a] &= [\frac{1-a}{1-a^{-1}}] = [1-a] - \left\langle -a \right\rangle[1-a^{-1}].
-%     \end{align*}
-%     Scaling through by $[a]$ we get
-%     \begin{align*}
-%         [a][-a] &= - [a] \left\langle -a \right\rangle[1-a^{-1}].
-%     \end{align*}
-%     So this reduces to showing that
-%     \begin{align*}
-%         [a]\left\langle -a \right\rangle[1-a^{-1}] = 0.
-%     \end{align*}
-%     Expanding, we get
-%     \begin{align*}
-%         [a] (1 + \eta[-a])[1-a^{-1}] &= [a][1-a^{-1}] + [a]\eta[-a][1-a^{-1}] \\
-%         &= [a][1-a^{-1}] + [a] \left( [-a \cdot (1-a^{-1})] - [-a] - [1-a^{-1}] \right) \\
-%         &= [a][1-a^{-1}] + [a] \left( [1-a] - [-a] - [1-a^{-1}] \right) \\
-%         &= [a][1-a^{-1}] - [a][-a] - [a][1-a^{-1}] \\
-%         &= 
-%     \end{align*}
-%     The latter term is equal 
+\begin{proof} $\ $
+\begin{enumerate}
+    \item We do the same trick as in \autoref{prop:KM2-relations}, and write $-a = \frac{1-a}{1-a^{-1}}$. By \autoref{KMW:bracket-of-fraction}, we get
+    \begin{align*}
+        [-a] &= [\frac{1-a}{1-a^{-1}}] = [1-a] - \left\langle -a \right\rangle[1-a^{-1}].
+    \end{align*}
+    Scaling through by $[a]$ we get
+    \begin{align*}
+        [a][-a] &= - [a] \left\langle -a \right\rangle[1-a^{-1}].
+    \end{align*}
+    So this reduces to showing that
+    \begin{align*}
+        [a]\left\langle -a \right\rangle[1-a^{-1}] = 0.
+    \end{align*}
+    We can commute $[a]$ and $\left\langle a \right\rangle$ by \autoref{prop:properties-KMW1}(\ref{KMW:square-angle-brackets-commute}), then expand $[a]$ using \autoref{prop:properties-KMW1}(\ref{KMW:minus-square-bracket}) to get
+    \begin{align*}
+        \left\langle -a \right\rangle[a][1-a^{-1}] &= -\left\langle -a \right\rangle \left\langle a \right\rangle [a^{-1}][1-a^{-1}].
+    \end{align*}
+    The latter two terms multiply to zero by MW1.
+    
+    \item By \autoref{prop:properties-KMW1}(\ref{KMW:bracket-of-product}), we have
+    \begin{equation}\label{eqn:bracket-minus-a}
+    \begin{aligned}
+        [-a] &= [-1] + \left\langle -1 \right\rangle[a].
+    \end{aligned}
+    \end{equation}
+    Multiplying \autoref{eqn:bracket-minus-a} by $[a]$ on the left and applying \ref{KMW:bracket-times-bracket-negative} we get
+    \begin{align*}
+        0 &= [a][-1] + [a]\left\langle -1 \right\rangle[a] = [a][-1] +\left\langle -1 \right\rangle[a][a].
+    \end{align*}
+    Rearranging, we get
+    \begin{align*}
+        \left\langle -1 \right\rangle[a][a] = -  [a][-1],
+    \end{align*}
+    and multiplying through by $\left\langle -1 \right\rangle$ gives the desired result.
+
+    Multiplying \autoref{eqn:bracket-minus-a} by $[a]$ on the right instead, we get
+    \begin{align*}
+        0 &= [-1][a] + \left\langle -1 \right\rangle[a][a],
+    \end{align*}
+    which gives us a similar equality.
     
 
-    
-%     By \autoref{KMW:minus-square-bracket}, we have that
-%     \begin{align*}
-%         [a]\left\langle -a \right\rangle
-%     \end{align*}
-    
-
-
-%     By \autoref{KMW:bracket-of-fraction}, we have that $[1/a] = [1] - \left\langle a^{-1} \right\rangle[a] = - \left\langle a^{-1} \right\rangle[a]$. Since $\left\langle a^{-1} \right\rangle = \left\langle a \right\rangle$, 
-
-%     This is proven directly analogously to the proof for Milnor $K$-theory.
-
-%     \item We have
-%     \begin{align*}
-%         [ab][-ab] = 0,
-%     \end{align*}
-%     so applying MW2 twice we get
-%     \begin{align*}
-%         0 &=\left( [a] + [b] + \eta[a][b] \right) \left( [-a] + [b] + \eta[-a][b] \right)
-%     \end{align*}
-%     ...
+    \item By \autoref{prop:properties-KMW2}(\ref{KMW:square-bracket-times-itself}) we have $\epsilon[a][-1] = \epsilon[-1][a]$. Multiplying both sides by $\epsilon$ and using that $\epsilon^2 = 1$ (\autoref{prop:properties-KMW0}(\ref{KMW:epsilon-squared})) gives the desired result. 
     
     
-% \end{enumerate}
+\end{enumerate}
 
-% \end{proof}
+\end{proof}
 
 
 
@@ -3219,9 +3246,7 @@ By MW2, and \autoref{prop:properties-KMW1}(\ref{KMW:bracket-of-square}) we have 
 \begin{align*}
     [b^2] &=  2[b] + \eta[b][b] = 2[b] + \eta[-1][b] = (2 + \eta[-1])[b].
 \end{align*}
-Multiplying by $\eta$ and applying MW4 gives zero.
-
-Finally we want to check \textbf{(GW2)}, and by multiplicativity we can assume that $b = 1-a$, from which we get
+Multiplying by $\eta$ and applying MW4 gives zero. Finally we want to check \textbf{(GW2)}, and by multiplicativity we can assume that $b = 1-a$, from which we get
 \begin{align*}
     \left\langle a \right\rangle + \left\langle 1-a \right\rangle &= 1 + \eta[a] + 1 + \eta[1-a] \\
     &= 2 + \eta \left( [a] + [1-a] \right) \\
@@ -3925,7 +3950,7 @@ We have that $\KMW_1 \in \HI(k)$ is cyclic.
     \epsilon^2 &= \left( - 1 - \eta[-1] \right)^2 = (1+\eta[-1])^2 \\
     &= 1 + 2\eta[-1] + \eta^2[-1][-1] \\
     &\overset{\text{MW2}}{=} 1 + 2\eta[-1] + \eta \left( [1] - [-1] -[-1] \right) \\
-    &\overset{\ref{exer:bracket-1-is-0-in-MW}}{=} 1 + 2\eta[-1] - 2\eta[-1] \\
+    &= 1 + 2\eta[-1] - 2\eta[-1] \\
     &= 1.
 \end{align*}
 
