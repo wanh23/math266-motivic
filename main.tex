@@ -3063,6 +3063,8 @@ In degree one, we have that $[1] = 0$, completely analogous to Milnor $K$-theory
     
     \item\label{KMW:square-angle-brackets-commute}
     $[a] \left\langle b \right\rangle = \left\langle b \right\rangle[a]$.
+    \item\label{KMW:square-and-epsilon-commute}
+    $\epsilon[a]=[a]\epsilon$
 \end{enumerate}
 Some further relations let us expand various degree one elements, and are useful in further computation:
 \begin{enumerate}
@@ -3094,6 +3096,8 @@ Some further relations let us expand various degree one elements, and are useful
     \begin{align*}
         [a] \left\langle b \right\rangle &= [a] \left( 1 + \eta[b] \right) = [a] + \eta[a][b] = [a] + \eta[b][a] = \left\langle b \right\rangle[a].
     \end{align*}
+
+    \item This follows from \autoref{prop:properties-KMW1}(\ref{KMW:square-angle-brackets-commute}) with $b=-1$ and a negative sign.
     
 
     \item Applying MW2 we get
@@ -3179,9 +3183,22 @@ In degree two, we see the value of $\epsilon$, that it measures the failure of c
 
     \item By \autoref{prop:properties-KMW2}(\ref{KMW:square-bracket-times-itself}) we have $\epsilon[a][-1] = \epsilon[-1][a]$. Multiplying both sides by $\epsilon$ and using that $\epsilon^2 = 1$ (\autoref{prop:properties-KMW0}(\ref{KMW:epsilon-squared})) gives the desired result. 
     
-    
+    \item We can write
+    \begin{align*}
+        0 = [ab][-ab] &= \left( [a] + \left\langle a \right\rangle[b] \right) \left( [-a] + \left\langle -a \right\rangle[b] \right) \\
+        &= \left\langle -a \right\rangle[a][b] + \left\langle a \right\rangle[b][-a] + \left\langle -1 \right\rangle[b][b].
+    \end{align*}
+    Scaling through by $\left\langle a \right\rangle$ we get
+    \begin{align*}
+        0 &= -\epsilon[a][b] + [b][-a] + \left\langle a \right\rangle\left\langle -1 \right\rangle[b][b]
+    \end{align*}
+    Since $[-a] =[a] + \left\langle a \right\rangle[-1]$ by \autoref{prop:properties-KMW1}(\ref{KMW:bracket-of-product}), and $\left\langle -1 \right\rangle[b][b]-[b][-1]$ by \autoref{prop:properties-KMW2}(\ref{KMW:square-bracket-times-itself}), we can plug these into the above equation to get
+    \begin{align*}
+        0 &= -\epsilon[a][b] + [b] \left( [a] + \left\langle a \right\rangle[-1] \right) - \left\langle a \right\rangle[b][-1] \\
+        &= -\epsilon[a][b] + [b][a] + \left\langle a \right\rangle[b][-1] - \left\langle a \right\rangle[b][-1] \\
+        &= -\epsilon[a][b] + [b][a].\hfill\qedhere
+    \end{align*} 
 \end{enumerate}
-
 \end{proof}
 
 
@@ -3744,9 +3761,9 @@ Contraction yields a functor from homotopy sheaves to itself:
     (-)_{-1} \colon \HI(k) \to \HI(k).
 \end{align*}
 %
-\begin{proposition} For any $A \in \HI(k)$ and any $E \in \mathcal{E}_k$ we have that $H^1( \mathbb{G}_m \times \Spec(E);A) = 0$  (see \cite[4.10]{Deglise-finite-corr}).
+\begin{proposition}\label{prop:H1Gm-function-fields} 
+For any $A \in \HI(k)$ and any function field $E \in \mathcal{E}_k$ we have that $H^1( \mathbb{G}_m \times \Spec(E);A) = 0$  (see \cite[4.10]{Deglise-finite-corr}).
 \end{proposition}
-
 
 \begin{proposition} As an endofunctor on $\HI(k)$, contraction is exact.
 \end{proposition}
@@ -3754,7 +3771,7 @@ Contraction yields a functor from homotopy sheaves to itself:
 \begin{align*}
     A \to B \to C
 \end{align*}
-is an exact sequence in $\HI(k)$. Since $H^1(\mathbb{G}_m \times -, A) = 0$, the sequence
+is an exact sequence in $\HI(k)$. Since $H^1(\mathbb{G}_m \times -, A) = 0$ by \autoref{prop:H1Gm-function-fields}, the sequence
 \begin{align*}
     0 \to A(\mathbb{G}_m \times -) \to B(\mathbb{G}_m \times -) \to C(\mathbb{G}_m \times -) \to 0
 \end{align*}
@@ -3932,33 +3949,11 @@ We'll phrase this in two settings. The $\infty$-categorical one will come in use
 \begin{proposition}\label{prop:KMW1-cyclic} 
 We have that $\KMW_1 \in \HI(k)$ is cyclic.
 \end{proposition}
-\begin{proof} We do this in a few steps. Recall we had this element $\epsilon = - \left\langle -1 \right\rangle = -(1 + \eta[-1])$ which measured the failure of symbols $[a][b]$ to commute with one another.
-
-\textbf{Step 1}: We have that $\epsilon[a] = [a]\epsilon$. This is a routine check:
-\begin{align*}
-    \epsilon[a] &= - \left( 1 + \eta[-1] \right)[a] = -[a] - \eta[-1][a] \\
-    &\overset{\text{MW2}}= -[a] + [-1] + [a] - [(-1)a] \\
-    &= -[a] + [a] + [-1] + [a(-1)] \\
-    &= -[a] + \eta[a][-1] \\
-    &= -[a](1 + \eta[-1]) \\
-    &= [a]\epsilon.
-\end{align*}
-%
-
-\textbf{Step 2}: We have that $\epsilon^2 = 1$.
-\begin{align*}
-    \epsilon^2 &= \left( - 1 - \eta[-1] \right)^2 = (1+\eta[-1])^2 \\
-    &= 1 + 2\eta[-1] + \eta^2[-1][-1] \\
-    &\overset{\text{MW2}}{=} 1 + 2\eta[-1] + \eta \left( [1] - [-1] -[-1] \right) \\
-    &= 1 + 2\eta[-1] - 2\eta[-1] \\
-    &= 1.
-\end{align*}
-
-\textbf{Step 3}: We claim the permutation $(1\ 2\ 3)$ going from
+\begin{proof} We claim the permutation $(1\ 2\ 3)$ going from
 \begin{align*}
     \KMW_3 \cong (\KMW_1)^{\otimes3} \to (\KMW_1)^{\otimes 3} \cong \KMW_3
 \end{align*}
-is equal to the identity, proving $\KMW_1$ is cyclic. Since $\KMW_n$ is generated by symbols $[u_1, \ldots, u_n]$ for $n\ge 1$, we are reduced to checking that $[c,a,b] = [a,b,c]$ for any $a,b,c \in F^\times$. This is now an immediate check by what we've done:
+is equal to the identity, proving $\KMW_1$ is cyclic. Since $\KMW_n$ is generated by symbols $[u_1, \ldots, u_n]$ for $n\ge 1$, we are reduced to checking that $[c,a,b] = [a,b,c]$ for any $a,b,c \in F^\times$. We use that $\epsilon$ commutes with $[u]$ for any $u$ by \autoref{prop:properties-KMW1}(\ref{KMW:square-and-epsilon-commute}), and that $\epsilon^2 = 1$ by \autoref{prop:properties-KMW0}(\ref{KMW:epsilon-squared}). This is now an immediate check by what we've done:
 \begin{align*}
     [c,a,b] &:=[c][a][b] = \epsilon[a][c][b] = \epsilon[a]\epsilon[b][c] = \epsilon^2[a][b][c] = [a,b,c].
 \end{align*}
