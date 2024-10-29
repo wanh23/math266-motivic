@@ -4252,7 +4252,7 @@ This factors through the universal strongly invariant presheaf of \textit{abelia
 \end{align*}
 is an equivalence. In other words, $\KMW_n$ is the free strongly invariant sheaf of \textit{abelian} groups on $\mathbb{G}_m^{\smashprod  n}$.
 \end{theorem}
-\begin{proof}[Proof sketch] Let $M \in \HI(k)$. Then any map of pointed sheaves of sets $\Sigma (\mathbb{G}_m^{\smashprod n}) \to M$ can be viewed as a map of pointed motivic spaces, and we see by adjunction:
+\begin{proof}[Proof intuition] Let $M \in \HI(k)$. Then any map of pointed sheaves of sets $\Sigma (\mathbb{G}_m^{\smashprod n}) \to M$ can be viewed as a map of pointed motivic spaces, and we see by adjunction:
 \begin{align*}
     \Hom_{\Spc(k)_\ast} \left( S^{n+1,n}, M \right) &= \Hom_{\Spc(k)_\ast} \left( S^0, \Omega^{n,n} M \right) \\
     &= \Hom_{\Spc(k)_\ast} \left( S^0, M_{-n} \right) \\
@@ -4382,7 +4382,7 @@ Since $F_{\A^1}(1)_{-1}(k) = \End(F_{\A^1}(1))$ is the group we want to compute,
 %
 Any endomorphism of $\End(F_{\A^1}(1))$ induces an endomorphism of the contraction $F_{\A^1}(1)_{-1}$ by functoriality, which restricts to an endomorphism of $\KMW_1$. All endomorphisms of $\KMW_1$ are given by multiplication by some element in $K^MW_0 = \GW(k)$. This gives a natural homomorphism called the \textit{$\A^1$-Brouwer degree}:
 \begin{align*}
-    \left[ \P^1,\P^1 \right]_\ast = \End(F_{\A^1}(1)) \to \End(\KMW_1) = \GW(k).
+    \left[ \P^1,\P^1 \right]_\ast = \End(F_{\A^1}(1)) \xto{\deg^{\A^1}} \End(\KMW_1) = \GW(k).
 \end{align*}
 %
 Some facts are true about this:
@@ -4426,9 +4426,12 @@ where $[u] \mapsto \left\langle u \right\rangle - \left\langle 1 \right\rangle$.
 
 \begin{proposition} The kernel of $K_1^\MW(k) \to I(k)$ is $(k^\times)^2$.
 \end{proposition}
-\begin{proof} Via the pullback diagram
-..
-we have that the kernel is $2K_1^M(k)$. Since addition on $K_1^M(k) = k^\times$ is multiplication of field units, the result follows.
+\begin{proof} Recall the pullback diagram from \autoref{cor:MW-pullback}:
+\[ \begin{tikzcd}
+    K^\MW_1\rar\dar\pb & K^M_1(k)\dar\\
+    I(k)\rar & K^M_1(k)/2.
+\end{tikzcd} \]
+The fiber of the left vertical map is isomorphic to the fiber of the rightmost vertical map, which is $2K_1^M(k)$. Since addition on $K_1^M(k) = k^\times$ is multiplication of field units, the result follows.
 \end{proof}
 
 Altogether we get the following result.
