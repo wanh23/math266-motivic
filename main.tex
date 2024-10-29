@@ -4295,6 +4295,212 @@ Since both $B \mathbb{G}_m$ and $\A^2\minus 0$ are connected, the long exact seq
 This turns out to be a central extension, but $F_{\A^1}(1)$ is not commutative \cite[7.29]{Morel}.
 
 
+\section{The Brouwer degree}
+
+We are interesting in leveraging our computation of $\pi_1^{\A^1}(\P^1)$ to say something about $\End_{\Spc(k)_\ast}(\P^1)$. By convention, $\P^1$ is pointed at $\infty$. Given any pointed endomorphism of motivic spaces $\P^1 \to \P^1$, we can look at the induced map on $\pi_1^{\A^1}$, and we get an assignment
+\begin{equation}\label{eqn:end-p1-end-fa1}
+\begin{aligned}
+    \left[ \P^1,\P^1 \right]_{\Spc(k)_\ast} \to \End(F_{\A^1}(1)).
+\end{aligned}
+\end{equation}
+%
+We are going to argue that this is a bijection.
+
+\begin{proposition} There is a bijection
+\begin{align*}
+    \left[ \P^1,\P^1 \right]_{\A^1} \cong \left[ \P^1, B\pi_1^{\A^1}(\P^1) \right]_\ast.
+\end{align*}
+\end{proposition}
+\begin{proof} We have that
+\begin{align*}
+     \left[ \P^1,\P^1 \right]_\ast &= \left[ S^1, \Omega^{1,1} \P^1 \right]_\ast = \pi_1(\Omega^{1,1}\P^1) = \left[ S^1, B\pi_1(\Omega^{1,1} \P^1) \right]_\ast.
+\end{align*}
+Since $\pi_1(\P^1)_{-1}$ is strongly invariant, the above is isomorphic to
+\begin{align*}
+    \left[ S^1, \Omega^{1,1} B\pi_1(\P^1) \right]_\ast \cong \left[ \P^1, B \pi_1(\P^1) \right]_\ast.
+\end{align*}
+\end{proof}
+
+
+\begin{corollary} The assignment \autoref{eqn:end-p1-end-fa1} is a bijection.
+\end{corollary}
+\begin{proof} Since $BF_{\A^1}(1)$ is 1-truncated, we have that any map $\P^1 \to BF_{\A^1}(1)$ factors through $L_\mot \tau_{\le 1} \P^1$. Since $\P^1$ is connected,\footnote{} we have that $\tau_{\le 1} \P^1$ is equal to $BF_{\A^1}(1)$, which is $\A^1$-local.
+\end{proof}
+
+\begin{proposition} The contraction of $\mathbb{G}_m$ is $\Z$.
+\end{proposition}
+\begin{proof} We first check that
+\begin{align*}
+    \Hom_{\Sm_k}(\mathbb{G}_m \times U, \mathbb{G}_m) &= \Hom_{\Sm_k}(U[t,t^{-1}],\mathbb{G}_m).
+\end{align*}
+If $U$ is reduced and irreducible, the units in $U[t,t^{-1}]$ are all of the form $u t^n$ for some $u \in U^\times$ and $n\in \Z$. Hence we get an isomorphism
+\begin{align*}
+    \mathbb{G}_m(\mathbb{G}_m \times U) \cong \mathbb{G}_m(U) \times \Z.
+\end{align*}
+In the short exact sequence defining contraction, this gives us that $(\mathbb{G}_m)_{-1}$ is the constant presheaf $\Z$.
+\end{proof}
+
+
+
+
+\begin{proposition} The short exact sequence, obtained from the contraction above
+\begin{align*}
+    0 \to \KMW_1 \to F_{\A^1}(1)_{-1} \to \Z \to 0
+\end{align*}
+is canonically split exact, giving an isomorphism
+\begin{align*}
+    F_{\A^1}(1)_{-1} \cong \KMW_1 \oplus \Z.
+\end{align*}
+\end{proposition}
+\begin{proof} It suffices to see that $\Ext(\Z, \KMW_1) = 0$, which is clear since $\Z$ is projective.
+\end{proof}
+
+\begin{proposition} We have that $\End(F_{\A^1}(1))$ is a group, and moreover is an associative commutative ring.
+\end{proposition}
+
+\begin{proposition}\label{prop:end-FA1-global-sections-contraction} 
+There is a canonical isomorphism
+\begin{align*}
+    \End(F_{\A^1}(1)) \cong F_{\A^1}(1)_{-1}(k).
+\end{align*}
+\end{proposition}
+\begin{proof} Since $F_{\A^1}(1)$ is by definition the free pointed sheaf of abelian groups on $\mathbb{G}_m$, there is a canonical isomorphism
+\begin{align*}
+    \Hom_{\Shv(\Grp)} \left( F_{\A^1}(1), F_{\A^1}(1) \right) &= \Hom_{\Shv_\ast} \left( \mathbb{G}_m, F_{\A^1}(1) \right).
+\end{align*}
+This is the contraction $F_{\A^1}(1)_{-1}$.
+\end{proof}
+
+
+
+Since $F_{\A^1}(1)_{-1}(k) = \End(F_{\A^1}(1))$ is the group we want to compute, we can take global sections $H^0_\Nis(\Spec(k),-)$ in the above SES to get
+\begin{equation}\label{eqn:global-sections-speck-fa1-contracted}
+\begin{aligned}
+    \left[ \P^1,\P^1 \right]_\ast = \End (F_{\A^1}(1)) \cong K_1^\MW(k) \oplus \Z.
+\end{aligned}
+\end{equation}
+%
+Any endomorphism of $\End(F_{\A^1}(1))$ induces an endomorphism of the contraction $F_{\A^1}(1)_{-1}$ by functoriality, which restricts to an endomorphism of $\KMW_1$. All endomorphisms of $\KMW_1$ are given by multiplication by some element in $K^MW_0 = \GW(k)$. This gives a natural homomorphism called the \textit{$\A^1$-Brouwer degree}:
+\begin{align*}
+    \left[ \P^1,\P^1 \right]_\ast = \End(F_{\A^1}(1)) \to \End(\KMW_1) = \GW(k).
+\end{align*}
+%
+Some facts are true about this:
+
+\begin{proposition} $\ $
+\begin{enumerate}
+    \item The $\A^1$-Brouwer degree is an epimorphism
+    \item The following diagram commutes
+    \[ \begin{tikzcd}
+     & & & \GW(k)\dar["\text{rank}" right]\\
+   0\rar &  K^\MW_1(k)\rar & { \left[ \P^1,\P^1 \right]_\ast}\rar\ar[ur,two heads,"\deg^{\A^1}" above left] & \Z\rar & 0.
+\end{tikzcd} \]
+\end{enumerate}
+\end{proposition}
+\begin{proof} todo
+\end{proof}
+
+Hence we think about $\Z$ as recording \textit{rank}.
+
+\begin{question} What is the kernel of the degree homomorphism
+\begin{align*}
+    \deg^{\A^1} \colon \left[ \P^1,\P^1 \right]_\ast \to \GW(k).
+\end{align*}
+\end{question}
+To answer this, we can consider the following commutative diagram, which is just rewriting the one before:
+
+\[ \begin{tikzcd}
+    0\rar & ?\rar\dar & { \left[ \P^1,\P^1 \right]_\ast}\rar\dar[equal] & \GW(k)\rar\dar & 0\\
+    0\rar & K^\MW_1\rar & { \left[ \P^1,\P^1 \right]_\ast}\rar & \Z\rar & 0.
+\end{tikzcd} \]
+By the snake lemma, the cokernel of the map $? \to K_1^\MW(k)$ is the kernel of $\GW(k) \to \Z$, which is $I(k)$.
+
+\begin{proposition} The connecting homomorphism $K_1^\MW(k) \to I(k)$ is given by the right exact sequence
+\begin{align*}
+    K_1^\MW(k) \xto{h} K_1^\MW(k) \tto I(k) \to 0,
+\end{align*}
+where $[u] \mapsto \left\langle u \right\rangle - \left\langle 1 \right\rangle$.
+\end{proposition}
+\begin{proof} todo
+\end{proof}
+
+\begin{proposition} The kernel of $K_1^\MW(k) \to I(k)$ is $(k^\times)^2$.
+\end{proposition}
+\begin{proof} Via the pullback diagram
+..
+we have that the kernel is $2K_1^M(k)$. Since addition on $K_1^M(k) = k^\times$ is multiplication of field units, the result follows.
+\end{proof}
+
+Altogether we get the following result.
+
+\begin{theorem}\label{thm:unstable-deg-p1} 
+\cite[7.36]{Morel} We have a short exact sequence of abelian groups
+\begin{equation}\label{eqn:unstable-deg-p1}
+\begin{aligned}
+    0 \to (k^\times)^2 \to \left[ \P^1,\P^1 \right]_\ast \xto{\deg^{\A^1}} \GW(k) \to 0.
+\end{aligned}
+\end{equation}
+\end{theorem}
+
+\begin{remark} \textit{(On \autoref{thm:unstable-deg-p1})}
+\begin{enumerate}
+    \item Morel writes $(k^\times)/\pm1$ instead of $(k^\times)^2$ in his book, which I believe is an error?
+    \item The short exact sequence above can alternatively be repackaged as a pullback diagram (the sequence is obtained by taking horizontal fibers):
+    \[ \begin{tikzcd}
+    {\left[ \P^1,\P^1 \right]_\ast}\rar\dar\pb & \GW(k)\dar\\
+    k^\times\rar & k^\times / \left( k^\times \right)^2.
+\end{tikzcd} \]
+    This is the form that \autoref{thm:unstable-deg-p1} takes in various forms in the literature, where people write
+    \begin{align*}
+        \left[ \P^1,\P^1 \right]_\ast \cong \GW(k) \times_{k^\times / \left( k^\times \right)^2} k^\times.
+    \end{align*}
+    %
+    \item The ring structure on $\GW(k) \times_{k^\times / \left( k^\times \right)^2} k^\times$ is spelled out explicitly in \cite{Cazanave-thesis}.
+
+    \item The units will go away after stabilizing, and we will see that $\GW(k)$ is the home for the \textit{stable} $\A^1$-Brouwer degree, in other words it is the $(0,0)$th stable stem motivically.
+\end{enumerate}
+\end{remark}
+
+\subsection{Explicit computations}
+Given an endomorphism $f/g \colon \P^1\to \P^1$, explicit formulas exist for computing the associated symmetric bilinear form in $\GW(k)$ \cite{Cazanave}. We spell these out now.
+
+By convention $\P^1$ is pointed at $\infty$ as a motivic space, however we could pick any basepoint and get analogous formulas.
+
+\begin{note} We say a morphism of schemes $f/g \colon \P^1 \to \P^1$ is \textit{pointed} if it sends $\infty$ to $\infty$. Explicitly this implies that $\deg(g) < \deg(f)$. Without loss of generality we may assume $f$ is monic, and we must also assume that $\Res(f,g) \ne 0$ so that the map is well-defined.
+\end{note}
+
+
+\begin{definition} Let $f/g \colon \P_k^1 \to \P_k^1$ be a pointed morphism of degree $\deg(f) = n$. We introduce auxiliary variables $X$ and $Y$, and consider the quantity
+\begin{align*}
+    \frac{f(X)g(Y) - f(Y)g(X)}{X-Y} = \sum_{1\le i,j\le n} c_{ij} X^{i-1}Y^{j-1}.
+\end{align*}
+This is called the \textit{B\'ezoutian}, and we denote by $\Bez(f/g)$ the $n \times n$ matrix $(c_{ij})_{i,j}$ over $k$.
+\end{definition}
+
+\begin{theorem} (Cazanave) The B\'{e}zoutian is a symmetric bilinear matrix, equal to the $\A^1$-degree of $f/g$. Moreover the assignment
+\begin{align*}
+    \left[ \P^1,\P^1 \right]_\ast &\to \GW(k) \times_{k^\times / \left( k^\times \right)^2} k^\times \\
+    (f/g) &\mapsto \left( \Bez(f/g), (-1)^{\frac{n(n-1)}{2}} \det \Bez(f/g) \right)
+\end{align*}
+is an isomorphism of abelian groups.
+\end{theorem}
+
+\begin{example} Consider $f(x) = x^2$ and $g(x) = 1$. Then we have that
+\begin{align*}
+    \frac{f(X)g(Y) -f(Y)g(X)}{X-Y} = \frac{X^2 - Y^2}{X-Y} = X + Y = \begin{pmatrix} X & Y \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} X \\ Y \end{pmatrix} 
+\end{align*}
+Hence
+\begin{align*}
+    \deg^{\A^1}(x^2/1) = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} = h.
+\end{align*}
+\end{example}
+
+\begin{corollary} An analogous argument shows that
+\begin{align*}
+    \deg^{\A^1} \left( \frac{x^n}{1} \right) &= \begin{cases} \frac{n}{2}h & n\text{ even} \\ \frac{n-1}{2}h + \left\langle 1 \right\rangle & n\text{ odd.} \end{cases}
+\end{align*}
+\end{corollary}
+
 
 
 \printbibliography
