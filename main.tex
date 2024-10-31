@@ -20,7 +20,8 @@
 \providecommand{\DK}{\mathrm{DK}}
 \providecommand{\Br}{\mathrm{Br}}
 \providecommand{\MW}{\mathrm{MW}}
-
+\providecommand{\Bez}{\mathrm{B\'{e}z}}
+\providecommand{\aff}{\mathrm{aff}}
 \let\smashprod\wedge
 
 \providecommand{\KM}{\mathbf{K}^\mathrm{M}}
@@ -2508,7 +2509,8 @@ Hence $\left[ X,\mathcal{Y} \right]_{\A^1} = \pi_0 \mathcal{Y}(X)$.
 for any $X\in \Sm_S$.
 \end{example}
 
-\begin{example} If $X$ and $Y$ are both varieties, then
+\begin{example}\label{exa:genuine-classes-of-maps-between-schemes}
+If $X$ and $Y$ are both varieties, then
 \begin{align*}
     \left[ X,Y \right]_{\A^1} = \pi_0 \left( L_\mot h_Y \right)(X).
 \end{align*}
@@ -4464,12 +4466,31 @@ Altogether we get the following result.
 \end{enumerate}
 \end{remark}
 
+The additive structure comes from the isomorphism $\P^1 \simeq S^1 \smashprod \mathbb{G}_m$. We have a pinch map of simplicial sets
+\begin{align*}
+    S^1 \to S^1\vee S^1.
+\end{align*}
+Smashing with $\mathbb{G}_m$, we use that smash products distribute over wedge products to get a comultiplication
+\begin{align*}
+    \P^1 \to \P^1 \vee \P^1.
+\end{align*}
+This cogroup structure induces an addition on $\left[ \P^1,\P^1 \right]_{\A^1}$ which corresponds to addition in $\GW(k)$.
+
 \subsection{Explicit computations}
 Given an endomorphism $f/g \colon \P^1\to \P^1$, explicit formulas exist for computing the associated symmetric bilinear form in $\GW(k)$ \cite{Cazanave}. We spell these out now.
 
 By convention $\P^1$ is pointed at $\infty$ as a motivic space, however we could pick any basepoint and get analogous formulas.
 
-\begin{note} We say a morphism of schemes $f/g \colon \P^1 \to \P^1$ is \textit{pointed} if it sends $\infty$ to $\infty$. Explicitly this implies that $\deg(g) < \deg(f)$. Without loss of generality we may assume $f$ is monic, and we must also assume that $\Res(f,g) \ne 0$ so that the map is well-defined.
+\begin{note} We say a morphism of schemes $f/g \colon \P^1 \to \P^1$ is \textit{pointed} if it sends $\infty$ to $\infty$. Explicitly this implies that $\deg(g) < \deg(f)$. WLOG we can assume $f$ is monic, and we can dehomogenize and write
+\begin{align*}
+    f(x) &= x^n + a_{n-1} x^{n-1} + \ldots + a_0 \\
+    g(x) &= b_{n-1}x^{n-1} + b_{n-2}x^{n-2} + \ldots + b_0.
+\end{align*}
+Then we require $f$ and $g$ to not be simultaneously zero in order to give a well-defined morphism. Taking affine space in the coefficients
+\begin{align*}
+    \A_k^{2n} = \Spec k[a_0, \ldots, a_{n-1},b_0, \ldots, b_{n-1}],
+\end{align*}
+the resultant is a hypersurface in here. So the data of $f/g$ of leading degree $n$ is the same as a rational point in the hypersurface complement.
 \end{note}
 
 
@@ -4480,7 +4501,7 @@ By convention $\P^1$ is pointed at $\infty$ as a motivic space, however we could
 This is called the \textit{B\'ezoutian}, and we denote by $\Bez(f/g)$ the $n \times n$ matrix $(c_{ij})_{i,j}$ over $k$.
 \end{definition}
 
-\begin{theorem} (Cazanave) The B\'{e}zoutian is a symmetric bilinear matrix, equal to the $\A^1$-degree of $f/g$. Moreover the assignment
+\begin{theorem} (Cazanave) The B\'{e}zoutian is a symmetric bilinear matrix, equal to the $\A^1$-degree of $f/g$, and the bijection
 \begin{align*}
     \left[ \P^1,\P^1 \right]_\ast &\to \GW(k) \times_{k^\times / \left( k^\times \right)^2} k^\times \\
     (f/g) &\mapsto \left( \Bez(f/g), (-1)^{\frac{n(n-1)}{2}} \det \Bez(f/g) \right)
@@ -4503,6 +4524,240 @@ Hence
     \deg^{\A^1} \left( \frac{x^n}{1} \right) &= \begin{cases} \frac{n}{2}h & n\text{ even} \\ \frac{n-1}{2}h + \left\langle 1 \right\rangle & n\text{ odd.} \end{cases}
 \end{align*}
 \end{corollary}
+
+\section{Naive homotopies}
+
+We localized at $\A^1$ in order to build the category of motivic spaces, but we can talk briefly about a more naive way to go about this.
+
+\begin{definition} Let $X,Y \in \Sm_k$, and take two maps $f,g \colon X \to Y$ between them in the category of schemes. A \textit{naive $\A^1$-homotopy} is a morphism $H \colon X \times \A^1 \to Y$ so that the diagram commutes
+\[\begin{tikzcd}
+    X\ar[drr,"f" above right, bend left=10]\ar[dr,"0" below left] &  & \\
+     & X \times \A^1\rar["H"] & Y\\
+    X\ar[urr,"g" below right,bend right=10]\ar[ur,"1"] &  & 
+\end{tikzcd} \]
+%
+
+\begin{example} If $X = \Spec(B)$ and $Y = \Spec(A)$ are affine $k$-algebras, then a map
+\begin{align*}
+    X \times_k \A^1_k \to Y
+\end{align*}
+is the same data as a $k$-algebra homomorphism $B[t] \from A$. A homotopy between $f,g \colon A \to B$ is a map that restricts to $f$ and $g$ by setting $t=0$ and $t=1$, respectively.
+\end{example}
+
+We define a relation $\sim_N$ on $\Hom_{\Sm_k}(X,Y)$, where we identify two maps if there exists a naive homotopy between them.
+
+
+\begin{note} $\sim_N$ is not an equivalence relation (it isn't transitive). However it admits a transitive closure, giving rise to an equivalence relation, which we also denote by $\sim_N$ by abuse of notation. We use the notation
+\begin{align*}
+    \left[ X,Y \right]_N := \Hom_{\Sm_k}(X,Y)/\sim_N.
+\end{align*}
+We call this \textit{naive $\A^1$-homotopy classes of maps}.
+\end{note}
+
+
+\begin{proposition}\label{prop:naive-htpy-as-pi0} 
+If $X,Y\in \Sm_k$ we have that
+\begin{align*}
+    \left[ X,Y \right]_N = \pi_0 \left( L_{\A^1} h_Y \right)(X).
+\end{align*}
+\end{proposition}
+\begin{proof} We recall $L_{\A^1} h_Y$ was the sifted colimit
+\begin{align*}
+    L_{\A^1} h_Y = \colim_{[n]\in \DDelta^\op} h_Y(\A^n \times -).
+\end{align*}
+Since $h_Y$ is a discrete sheaf, it is equivalent to its own $\pi_0$, so we can pass $\pi_0$ through the colimit. Using that we are now valued in a 1-category we can use the cofinality of $\DDelta_{\le 1}^{\op,\inj} \subseteq \DDelta^\op$ \autoref{exa:1-cofinal-parallel-arrows-ddelta} to rewrite the diagram as
+\begin{align*}
+    \pi_0 \left( L_{\A^1}h_Y \right)(X) &= \colim \left( \pi_0 \left( L_{\A^1}h_Y \right)(X \times \A^1) \rightrightarrows \pi_0 \left( L_{\A^1}h_Y \right)(X)  \right) \\
+    &= \colim \left( \Hom_{\Sm_k}(X \times \A^1,Y) \rightrightarrows \Hom_{\Sm_k}(X,Y) \right),
+\end{align*}
+so it is the coequalizer of evaluation at $0$ and $1$, which is precisely the quotient of $\Hom_{\Sm_k}(X,Y)$ by the equivalence relation generated by naive homotopy.
+\end{proof}
+
+\begin{remark} There is an analogous notion of a pointed naive homotopy which is the definition one would expect, and a pointed version of \autoref{prop:naive-htpy-as-pi0} can be formulated. See e.g. \cite[Appendix~A]{BHQW}.
+\end{remark}
+
+There is a natural map
+\begin{align*}
+    L_{\A^1} h_Y \to L_\mot h_Y,
+\end{align*}
+which induces a map
+\begin{align*}
+    \left[ X,Y \right]_N = \pi_0 \left( L_{\A^1}h_Y \right)(X) \to \pi_0 \left( L_\mot h_Y \right)(X) = \left[ X,Y \right]_{\A^1}.
+\end{align*}
+Here the latter equality is by \autoref{exa:genuine-classes-of-maps-between-schemes}.
+
+We remark that if $L_{\A^1}h_Y$ is already a Nisnevich sheaf, then we get that these two classes agree, however this rarely happens.
+
+\begin{definition} \cite[\S3.2.4]{MV}
+We say that $Y \in \Sm_k$ is \textit{$\A^1$-rigid} if $h_Y$ is $\A^1$-invariant.
+\end{definition}
+
+\begin{example} $\mathbb{G}_m$ is $\A^1$-rigid, as is any smooth curve of genus $g\ge 1$ \cite[\S3.2.4]{MV}.
+\end{example}
+
+\begin{proposition} If $Y$ is $\A^1$-rigid, then for any $X \in \Sm_k$, we get that
+\begin{align*}
+    \left[ X,Y \right]_N \cong \left[ X,Y \right]_{\A^1}.
+\end{align*}
+\end{proposition}
+
+In general this is rare. Recently, it has been observed that it is much more common for representable presheaves (and motivic spaces) to be $\A^1$-invariant on affines.
+
+\begin{definition} We say that a simplicial presheaf $F \in \PSh(\Sm_k)$ is \textit{$\A^1$-naive} if the induced map
+\begin{align*}
+    (L_{\A^1}F)(U) \to (L_\mot F)(U)
+\end{align*}
+is an equivalence for every affine $U \in \Sm_k^\aff$.
+\end{definition}
+
+\begin{proposition} If $h_Y$ is $\A^1$-naive, then
+\begin{align*}
+    \left[ U,Y \right]_N \cong \left[ U,Y \right]_{\A^1}
+\end{align*}
+for every affine $U \in \Sm_k^\aff$.
+\end{proposition}
+
+
+
+
+\begin{proposition} \cite[2.1.3]{AHW2}
+A simplicial presheaf $F$ is $\A^1$-naive if and only if $L_{\A^1} F$ is a Nisnevich sheaf on $\Sm_k^\aff$.
+\end{proposition}
+
+\begin{example} The following schemes are $\A^1$-naive over $k$:
+\begin{enumerate}
+    \item The smooth quadric \cite[4.2.1]{AHW2}
+    \begin{align*}
+        Q_{2n-1} = \left\{ \sum_{i=1}^n x_i y_i =1 \right\} \subseteq \A_k^{2n}.
+    \end{align*}
+    
+    \item The projective line $\P^1$. \cite[127]{BHQW}.
+
+    \item Any $\A^1$-rigid scheme.
+
+    \item $\A^n \minus 0$ \cite[4.2.6]{AHW2}
+
+    \item Any isotropic reductive group scheme, assuming $k$ is infinite \cite[4.3.1]{AHW2}
+\end{enumerate}
+\end{example}
+
+
+
+\subsection{Cazanave's theorem}
+
+In general naive and genuine $\A^1$-homotopy classes of maps are quite different, but making statements relating the two has been a topic of interest throughout the history of motivic homotopy theory.
+
+As a particular example, we have seen that $\left[ \P^1,\P^1 \right]_\ast$ is an abelian group. 
+
+\begin{theorem} (Cazanave) The set $\left[ \P^1,\P^1 \right]_N$ of pointed naive homotopy classes of maps admits a monoid structure, and the natural map
+\begin{align*}
+    \left[ \P^1,\P^1 \right]_N \to \left[ \P^1,\P^1 \right]_{\A^1}
+\end{align*}
+is a group completion.
+\end{theorem}
+
+Cazanave's monoidal structure is defined explicitly in terms of rational maps.
+
+
+\section{Unstable connectivity}
+
+We'll take the following theorem without proof.
+
+\begin{theorem} \cite[\S.3.22]{MV} (c.f. \cite[2.7]{AD-excision})
+For any $F\in \Shv_\Nis(\Sm_k)$, the map to its singularization $F \to \Sing(F)$ induces a surjection on $\pi_0$.
+\end{theorem}
+
+This has an immediate corollary, which is that connectivity is preserved in passing from the sheaf topos to motivic spaces.
+
+\begin{corollary}\label{cor:unstable-connectivity-0} 
+(c.f. \cite[1.2]{bachmannstrongly}) If $F\in \Shv_\Nis(\Sm_k)$ is connected, then so is $L_\mot F$.
+\end{corollary}
+\begin{proof} Homotopy sheaves commute with filtered colimits, so we have that
+\begin{align*}
+    \pi_0 L_\mot F = \colim \left( \pi_0 F \to \pi_0 L_\Nis L_{\A^1} L_\Nis F \to \cdots  \right).
+\end{align*}
+Since the colimit will be a quotient of the sheaf $\pi_0 F$, which is trivial, the result follows
+\end{proof}
+
+
+This is the $n=0$ of the \textit{unstable connectivity theorem}.
+
+
+\begin{theorem}\label{thm:unstable-connectivity}
+(Unstable connectivity theorem, Morel) If $F$ is a simplicial sheaf which is $n$-connected, then $L_\mot F$ is $n$-connected.
+\end{theorem}
+
+The goal of this section is to prove this.
+
+\begin{lemma}\label{lem:fiber-seq-a1-local} \cite[1.9]{bachmannstrongly}
+Let $F \to E \to B$ be a fiber sequence in $\Shv_\Nis(\Sm_k)$, and let $B$ be connected and $\A^1$-local. Then $F$ is $\A^1$-local if and only if $E$ is $\A^1$-local. In particular if these conditions are satisfied, it is also a fiber sequence in $\Spc(k)$.
+\end{lemma}
+
+\begin{proposition}\label{prop:truncation-is-motivic-space} 
+\cite[1.8(2)]{bachmannstrongly}
+If $X \in \Spc(k)_\ast$ is a connected pointed motivic space, then for each $n\ge 1$, the truncation $\tau_{\le n}X \in \Shv_\Nis(\Sm_k)$ is $\A^1$-local, and hence a motivic space.
+\end{proposition}
+\begin{proof} We have fiber sequences
+\begin{align*}
+    K(\pi_{n+1}X, n+1) \to X_{\le n+1} \to X_{\le n}.
+\end{align*}
+Since $X$ is a motivic space, its homotopy sheaves are strongly invariant, hence $K(\pi_{n+1} X)$ is $\A^1$-local. So $X_{\le n}$ being $\A^1$-local will imply that $X_{\le n+1}$ is $\A^1$-local. This is the inductive step.
+
+For the base case it suffices to check that $X_{\le 0}$ is $\A^1$-local. However we note that $X_{\le 0} = \pi_0 X$, which is trivial since $X$ is connected, and hence $\A^1$-local.
+\end{proof}
+
+
+
+We can now prove the connectivity theorem, following \cite[1.10]{bachmannstrongly}.
+
+\begin{proof}[Proof of \autoref{thm:unstable-connectivity}] The base case is $n=0$, which we already proved (\autoref{cor:unstable-connectivity-0}), so now we can induct. Consider the fiber sequence in the sheaf topos
+\begin{align*}
+    0 \to (L_\mot F)_{>n} \to L_\mot F \to (L_\mot F)_{\le n} \to 0.
+\end{align*}
+The middle space is $\A^1$-local, and $L_\mot F$ has $\A^1$-local truncation by \autoref{prop:truncation-is-motivic-space}. Now by \autoref{lem:fiber-seq-a1-local} the fiber $(L_\mot F)_{>n}$ is $\A^1$-local as well. Consider the diagram
+\[ \begin{tikzcd}
+     & X\dar\ar[dr]\ar[dl,dashed]\\
+    (L_\mot F)_{>n}\rar & L_\mot F \rar & (L_\mot F)_{\le n}\\
+\end{tikzcd} \]
+By null homotopy of the composite map of the map to the bottom right we get a lift $X \to (L_\mot F)_{>n}$. Since the target is local, the lift factors through $L_\mot F$, giving a section $s$. Hence we have a retract:
+\[ \begin{tikzcd}
+    L_\mot F\rar["s" above]\ar[dr,equal] & (L_\mot F)_{>n}\dar\\
+     & L_\mot F.
+\end{tikzcd} \]
+The property of being $n$-connected is closed under retracts,\footnote{Apply $\pi_i$ to the diagram and see that the identity on $\pi_i L_\mot F$ factors through zero.} so the result follows.
+\end{proof}
+
+
+\begin{corollary}\cite[1.11]{bachmannstrongly}
+Let $F \in \Shv_\Nis(\Sm_k)$ be a connected sheaf. Then $F$ is a motivic space if and only if $\pi_i F$ is strongly $\A^1$-invariant for all $i\ge 1$.
+\end{corollary}
+\begin{proof} The forward direction is clear. For the reverse, we can inductively prove that $X_{\le n}$ is local. Since $\Shv_\Nis(\Sm_k)$ is Postnikov complete, we have that
+\begin{align*}
+    X = \lim_n X_{\le n},
+\end{align*}
+and the result follows from observing limits of $\A^1$-invariant sheaves are still $\A^1$-invariant.
+\end{proof}
+
+
+\begin{proposition} Suppose that $X\in \Shv_\Nis(\Sm_k)$ has $\pi_i X = 0$ for $i<n$. Then the map
+\begin{align*}
+    \pi_n X \to \pi_n L_\mot X
+\end{align*}
+is the initial map to a strongly invariant sheaf of groups.
+\end{proposition}
+\begin{proof} If $n=1$, let $M$ be any strongly invariant sheaf of groups, and for $n\ge2$, suppose it is a sheaf of abelian groups. Then take any map $\pi_n X \to M$. This is equivalent to the data of a map
+\begin{align*}
+    K(\pi_n X,n) \to K(M,n).
+\end{align*}
+By our assumptions on $X$, we have that $\tau_{\le n}X = K(\pi_n X, n)$, and by adjunction, we get equivalences
+\begin{align*}
+    \left[ \pi_n(X),M \right] \cong \left[ \tau_{\le n}X, K(M,n) \right] = \left[ X, K(M,n) \right].
+\end{align*}
+By our hypotheses on $M$, the EM space $K(M,n)$ is $\A^1$-local, hence any map $X \to K(M,n)$ factors through $L_\mot X$. Applying $\pi_n(-)$ to the factorization gives the universal property.
+\end{proof}
+
+\begin{remark} This result can be improved, via induction on the Postnikov tower, to assume that $\pi_0 X = 0$ and that $\pi_i X$ is strongly invariant for $0 < i < n$, see \cite[6.60]{Morel}.
+\end{remark}
 
 
 
