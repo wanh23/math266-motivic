@@ -2042,7 +2042,8 @@ We denote by $\Pre_{\A^1}(\Sm_S)$ and $\Pre_{\htp}(\Sm_S)$ the full subcategorie
 but neither of the reverse inclusions hold.
 \end{remark}
 
-\begin{proposition} Both of $\Pre_{\A^1}(\Sm_S)$ and $\Pre_{\htp}(\Sm_S)$ are accessible subcategories of $\Pre(\Sm_S)$, and therefore their inclusions admit left adjoints.
+\begin{proposition}\label{prop:shv-and-a1-invariant-presheaves-are-accessible-subcats} 
+Both of $\Pre_{\A^1}(\Sm_S)$ and $\Pre_{\htp}(\Sm_S)$ are accessible subcategories of $\Pre(\Sm_S)$, and therefore their inclusions admit left adjoints.
 \end{proposition}
 \begin{proof} By \autoref{prop:localization-at-set-of-morphisms} it suffices to check they are defined by being local with respect to a \textit{set} of maps. Note that $\Sm_S$ has a small skeleton, hence we may pick a form a set $S$ containing a projection $X \times \A^1 \to X$ for each isomorphism class of smooth schemes $X$. Now note that
 a presheaf $F$ is $\A^1$-invariant if and only if it is $S$-local, meaning that
@@ -2203,10 +2204,19 @@ We call this adjoint \textit{motivic localization}, and we can describe it expli
 
 \begin{definition} We define $L_\mot \colon \Pre(\Sm_S) \to \Spc(S)$ by the formula
 \begin{align*}
-    L_\mot := \colim_{n\to \infty}(L_{\A^1}\circ L_\Nis)^{\circ n},
+    L_\mot := \colim \left( L_\Nis \to L_{\A^1} L_\Nis \to L_\Nis L_{\A^1}L_\Nis \to \cdots \right)
 \end{align*}
 where this colimit is computed in the presheaf category.
 \end{definition}
+
+\begin{remark} By cofinality (\autoref{exa:even-odd-cofinal}), this is canonically equivalent to the following two colimits:
+\begin{align*}
+    &\colim \left( L_\Nis \circ L_{\A^1} \to (L_\Nis \circ L_{\A^1})^{\circ 2} \to \cdots  \right) \\
+    &\colim \left( L_{\A^1}\circ L_\Nis \to ( L_{\A^1} \circ L_\Nis)^{\circ 2} \to \cdots  \right).
+\end{align*}
+The former is a colimit computed in $\Shv_\Nis(\Sm_k)$, which is closed under filtered colimits by \autoref{prop:shv-and-a1-invariant-presheaves-are-accessible-subcats}, hence the resulting object is a sheaf. The latter is a colimit computed in $\Pre_{\A^1}(\Sm_k)$, which is also closed under filtered colimits (again by \autoref{prop:shv-and-a1-invariant-presheaves-are-accessible-subcats}), hence it is $\A^1$-invariant.
+\end{remark}
+
 
 \subsection{Properties of motivic localization}
 
@@ -2405,6 +2415,8 @@ for any motivic space $X$.
 \end{align*}
 \end{proposition}
 \begin{proof} Since $L_\mot$ preserves coproducts and $\PSh(\Sm_S)$ is cocomplete, it suffices to compute the pushout at the level of simplicial presheaves. In this setting, the coproduct is computed levelwise, in which case it is clear that $\Sigma X(U) = S^1 \smashprod X(U)$ for any $U \in \Sm_S$. Hence as pointed presheaves, we have that $\Sigma X \simeq S^1 \smashprod  X$. Finally, $L_\mot$ preserves the smash product construction since it preserves finite products, as well as coproducts and cofibers.
+\end{proof}
+\begin{proof}[Proof 2] We can first show it for $X = S^0$, then leverage universality of colimits and \cite[2.26]{PeterSanath} to argue in general.
 \end{proof}
 %
 
@@ -4674,7 +4686,7 @@ This has an immediate corollary, which is that connectivity is preserved in pass
 \end{corollary}
 \begin{proof} Homotopy sheaves commute with filtered colimits, so we have that
 \begin{align*}
-    \pi_0 L_\mot F = \colim \left( \pi_0 F \to \pi_0 L_\Nis L_{\A^1} L_\Nis F \to \cdots  \right).
+    \pi_0 L_\mot F = \colim \left( \pi_0 F \to \pi_0 L_\Nis L_{\A^1} F \to \cdots  \right).
 \end{align*}
 Since the colimit will be a quotient of the sheaf $\pi_0 F$, which is trivial, the result follows
 \end{proof}
