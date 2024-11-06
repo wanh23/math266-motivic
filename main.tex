@@ -4928,6 +4928,45 @@ Suppose now that $G \in \Spc_\ast$ is a group object. Then $\left[ X,G \right]_\
 %
 If $G$ is a group object, this does \textit{not} imply that $\Sigma G$ is a group object, and in general this won't be true. So what happens to the equation $f = f_1 + f_2$ when we suspend? In other words can we express $\Sigma f$ in terms of $\Sigma f_1$ and $\Sigma f_2$ in $\left[ \Sigma X, \Sigma G \right]_\ast$?
 
+\subsection{Splitting cofiber sequences}
+
+The following we learned from \cite[Appendix~A]{DI-Hopf}.
+
+Suppose we have a cofiber sequence in $\Spc(k)_\ast$
+\begin{align*}
+    A \xto{j} B \xto{p} B/A,
+\end{align*}
+and suppose that $j$ is split after suspension -- in other words there exists some map $f \colon \Sigma B \to \Sigma A$ so that the following diagram commutes up to homotopy
+\[ \begin{tikzcd}
+    \Sigma A\ar[dr,"\id" below left] & \Sigma B\dar["f" right]\\
+     & \Sigma A.
+\end{tikzcd} \]
+Applying $\left[ -,X \right]_\ast$, we get a sequence of groups, which turns out to be short exact
+\begin{align*}
+    1 \to \left[ \Sigma(B/A),X \right]_\ast \to \left[ \Sigma B, X \right]_\ast \to \left[ \Sigma A, X \right]_\ast.
+\end{align*}
+This is not necessarily split exact -- if $f$ were a suspension of a map, then it would be a map of $H$-spaces and induce a splitting, but the best we can say here is that the sequence is exact.
+
+\textbf{Case}: Let's take $X = \Sigma B$. Then we get a short exact sequence
+\begin{align*}
+    0 \to \left[ \Sigma(B/A), \Sigma B \right] \to \left[ \Sigma B, \Sigma B \right] \to \left[ \Sigma A, \Sigma B \right].
+\end{align*}
+Note that since $\id_{\Sigma B} = (\Sigma j) f$, the map $\id_{\Sigma B} - (\Sigma j)f$ is in the kernel of the rightmost map, hence is uniquely in the image of $\left[ \Sigma(B/A), \Sigma B \right]$.
+
+Let $\chi \colon \Sigma (B/A) \to \Sigma B$ be the unique map sent to $\id_{\Sigma B} - (\Sigma j)f$.
+
+\begin{lemma} \cite[A.3]{DI-Hopf} We have that
+\[ \begin{tikzcd}
+    \Sigma B/A\rar["\chi" above]\ar[dr,equal] & \Sigma B\dar["\Sigma p" right]\\
+     & \Sigma B/A,
+\end{tikzcd} \]
+and the composite
+\begin{align*}
+    \Sigma B/A \xto{\chi} \Sigma B \xto{f} \Sigma A
+\end{align*}
+is null-homotopic.
+\end{lemma}
+
 
 
 \begin{proposition} 
