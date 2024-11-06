@@ -2209,7 +2209,8 @@ We call this adjoint \textit{motivic localization}, and we can describe it expli
 where this colimit is computed in the presheaf category.
 \end{definition}
 
-\begin{remark} By cofinality (\autoref{exa:even-odd-cofinal}), this is canonically equivalent to the following two colimits:
+\begin{remark}\label{rmk:Lmot-cofinality} 
+By cofinality (\autoref{exa:even-odd-cofinal}), this is canonically equivalent to the following two colimits:
 \begin{align*}
     &\colim \left( L_\Nis \circ L_{\A^1} \to (L_\Nis \circ L_{\A^1})^{\circ 2} \to \cdots  \right) \\
     &\colim \left( L_{\A^1}\circ L_\Nis \to ( L_{\A^1} \circ L_\Nis)^{\circ 2} \to \cdots  \right).
@@ -4675,7 +4676,8 @@ Cazanave's monoidal structure is defined explicitly in terms of rational maps.
 
 We'll take the following theorem without proof.
 
-\begin{theorem} \cite[\S.3.22]{MV} (c.f. \cite[2.7]{AD-excision})
+\begin{theorem}\label{thm:pi0-surjective-on-Sing} 
+\cite[\S.3.22~(p.94)]{MV} (c.f. \cite[2.7]{AD-excision})
 For any $F\in \Shv_\Nis(\Sm_k)$, the map to its singularization $F \to \Sing(F)$ induces a surjection on $\pi_0$.
 \end{theorem}
 
@@ -4684,13 +4686,8 @@ This has an immediate corollary, which is that connectivity is preserved in pass
 \begin{corollary}\label{cor:unstable-connectivity-0} 
 (c.f. \cite[1.2]{bachmannstrongly}) If $F\in \Shv_\Nis(\Sm_k)$ is connected, then so is $L_\mot F$.
 \end{corollary}
-\begin{proof} Homotopy sheaves commute with filtered colimits, so we have that
-\begin{align*}
-    \pi_0 L_\mot F = \colim \left( \pi_0 F \to \pi_0 L_\Nis L_{\A^1} F \to \cdots  \right).
-\end{align*}
-Since the colimit will be a quotient of the sheaf $\pi_0 F$, which is trivial, the result follows
+\begin{proof} Homotopy sheaves commute with filtered colimits, hence connected objects are closed under filtered colimits. By cofinality (\autoref{rmk:Lmot-cofinality}) it suffices to argue that $\pi_0 L_\Nis L_{\A^1}F$ is trivial for every connected $F \in \Shv_\Nis(\Sm_k)$. Since $\pi_0(F) \to \pi_0(L_\Nis L_{\A^1} F)$ is surjective by \autoref{thm:pi0-surjective-on-Sing}, the result follows.
 \end{proof}
-
 
 This is the $n=0$ of the \textit{unstable connectivity theorem}.
 
@@ -4722,7 +4719,7 @@ For the base case it suffices to check that $X_{\le 0}$ is $\A^1$-local. However
 
 We can now prove the connectivity theorem, following \cite[1.10]{bachmannstrongly}.
 
-\begin{proof}[Proof of \autoref{thm:unstable-connectivity}] The base case is $n=0$, which we already proved (\autoref{cor:unstable-connectivity-0}), so now we can induct. Consider the fiber sequence in the sheaf topos
+\begin{proof}[Proof of \autoref{thm:unstable-connectivity}] We already proved this when $n=0$ (\autoref{cor:unstable-connectivity-0}), so we may assume $n>0$. Consider the fiber sequence in the sheaf topos
 \begin{align*}
     0 \to (L_\mot F)_{>n} \to L_\mot F \to (L_\mot F)_{\le n} \to 0.
 \end{align*}
@@ -4731,7 +4728,10 @@ The middle space is $\A^1$-local, and $L_\mot F$ has $\A^1$-local truncation by 
      & F\dar\ar[dr]\ar[dl,dashed]\\
     (L_\mot F)_{>n}\rar & L_\mot F \rar & (L_\mot F)_{\le n}\\
 \end{tikzcd} \]
-By null homotopy of the composite map of the map to the bottom right we get a lift $F \to (L_\mot F)_{>n}$. Since the target is local, the lift factors through $L_\mot F$, giving a section $s$. Hence we have a retract:
+By null homotopy of the composite map of the map to the bottom right we get a lift $F \to (L_\mot F)_{>n}$. Since the target is local, the lift factors through $L_\mot F$, giving a section $s$. Hence we have a retract:\footnote{%
+Letting $r$ denote the map $(L_\mot F)_{>n} \to L_\mot F$, it is perhaps not obviously immediate why $rs = \id$. It is true after precomposing with $F \to L_\mot F$, then applying $L_\mot$ we have that $L_\mot(rs) = \id$. Since $r$ and $s$ are already maps between motivic spaces, the result follows.%
+}
+%
 \[ \begin{tikzcd}
     L_\mot F\rar["s" above]\ar[dr,equal] & (L_\mot F)_{>n}\dar\\
      & L_\mot F.
@@ -4755,7 +4755,7 @@ and the result follows from observing limits of $\A^1$-invariant sheaves are sti
 \begin{align*}
     \pi_n X \to \pi_n L_\mot X
 \end{align*}
-is the initial map to a strongly invariant sheaf of groups.
+is the initial map to a strongly invariant sheaf of groups (if $n=1$) and of abelian groups (if $n\ge2$).
 \end{proposition}
 \begin{proof} If $n=1$, let $M$ be any strongly invariant sheaf of groups, and for $n\ge2$, suppose it is a sheaf of abelian groups. Then take any map $\pi_n X \to M$. This is equivalent to the data of a map
 \begin{align*}
@@ -4770,6 +4770,230 @@ By our hypotheses on $M$, the EM space $K(M,n)$ is $\A^1$-local, hence any map $
 
 \begin{remark} This result can be improved, via induction on the Postnikov tower, to assume that $\pi_0 X = 0$ and that $\pi_i X$ is strongly invariant for $0 < i < n$, see \cite[6.60]{Morel}.
 \end{remark}
+
+\section{Simplicial Freudenthal}
+
+
+\textbf{Recall}: A map $f\colon X \to Y$ is said to be $n$\textit{-connective} if its homotopy fiber is $n$-connective, i.e. $\pi_i(\fib(f)) = 0$ for $i<n$.
+\begin{itemize}
+    \item $n$-\textit{connective} means $\pi_i=0$ for $i<n$
+    \item $n$-\textit{connected} means $\pi_i =0 $ for $i\le n$.
+\end{itemize}
+
+
+\begin{theorem} \cite[6.61]{Morel}, \cite[3.7]{ABH-nilpotent} Let $n\ge 0$ and $X\in \Spc(k)_\ast$, and suppose that $X$ is $\A^1$-$n$-connected. Then for any $i \ge 1$ the map
+\begin{align*}
+    X \to \Omega^{i,0}\Sigma^{i,0}X
+\end{align*}
+has $2n$-connected fibers.\footnote{Note that Morel initially assumed $n \ge 2$, but this hypothesis is removed in \cite{ABH-nilpotent}.}
+\end{theorem}
+\begin{proof} Let $F$ be the fiber, computed in the sheaf topos
+\begin{align*}
+    F \to X \to \Omega \Sigma X.
+\end{align*}
+Since $L_\mot$ preserves this fiber sequence, and the middle and rightmost spaces were already local, then $F$ is local as well. Since $F$ is already $2n$-connected in the sheaf topos by classical connectivity results, we have by unstable connectivity (\autoref{thm:unstable-connectivity}) that $L_\mot F$ is as well.
+\end{proof}
+
+\begin{corollary} If $X$ is $\A^1$-$n$-connected, then the suspension morphisms
+\begin{align*}
+    \pi_i^{\A^1}(X) \to \pi_{i+1}^{\A^1}(\Sigma^{1,0}X)
+\end{align*}
+are isomorphisms for $i\le 2n$ and an epimorphism for $i=2n+1$.
+\end{corollary}
+
+\section{Motivic homotopy groups of spheres}
+
+In classical homotopy theory, the Freudenthal suspension theorem, together with the Hurewicz theorem, implies that the first nonzero homotopy group o f $S^n$ is the ``free discrete abelian group'' generated by $S^0$ \cite[p.~7]{Morel}. The analogue in motivic homotopy theory is the following theorem:
+
+\begin{theorem} \cite[1.23]{Morel} The first nonvanishing homotopy sheaf of $\Sigma^{n-1} \mathbb{G}_m^{\smashprod n}$ is the free strongly invariant sheaf of groups on the sheaf of pointed sets $\mathbb{G}_m^{\smashprod n}$, i.e. $F_{\A^1}^\ab(n) = \KMW_n$.
+\end{theorem}
+
+Since $\Sigma^{n-1} \mathbb{G}_m^{\smashprod n} = S^{2n-1,n}$ is $(n-2)$-connected, its first nonvanishing homotopy sheaf is
+\begin{align*}
+    \pi_{n-1} \left( S^{2n-1,n} \right) = \KMW_n.
+\end{align*}
+%
+\begin{corollary} We have a canonical isomorphism
+\begin{align*}
+    \pi_n \left( S^{n+i,i} \right) \cong \KMW_i,
+\end{align*}
+for $n\ge 2$ and $i\ge 1$ \cite[p.~167]{Morel}.
+\end{corollary}
+
+The proof of the theorem follows a development of $\A^1$-homology and a Hurewicz theorem, which we are omitting in this class. Instead we'll look at the generators in $\KMW_\ast$ as maps of motivic spheres and verify all the relations hold.
+
+Recall the universal symbol map
+\begin{align*}
+    \sigma_n \colon \mathbb{G}_m^{\smashprod n} \to \KMW_n.
+\end{align*}
+In degree $1$ it send an element $u \in k^\times$ to $[u]\in \KMW_1$. Explicitly, by taking global sections $H^0(\Spec(k)_+,-)$ of the symbol map, we see that $[u]\in \KMW_1$ is represented by the map
+\begin{align*}
+    S^0 \xto{[u]} \mathbb{G}_m,
+\end{align*}
+sending the basepoint to the basepoint $1\in \mathbb{G}_m$, and the other point to $u \in \mathbb{G}_m$. The element $\eta$ is the \textit{Hopf map}
+\begin{align*}
+    \eta \colon \A^2\minus 0 &\to \P^1 \\
+    (x,y) &\mapsto \left[ x:y \right].
+\end{align*}
+%
+This is a map $S^{3,2} \to S^{2,1}$, so it occurs in bidegree $\pi_{-1,-1} \mathbbm{1}$.
+
+\begin{proposition} The following diagram commutes in $\Sm_k$:
+\[\begin{tikzcd}
+    \mathbb{G}_m \times \mathbb{G}_m\ar[dr,"\mu"]\ar[rr,"{(\id,\id)}"]\ar[dd,"{(\invs,\invs)}" left] &  & \mathbb{G}_m \times \A^1\ar[dr,"\mu"]\ar[dd] & \\
+     & \mathbb{G}_m\ar[dd,"\invs" left]\ar[rr,"\id"] &  & \A^1\ar[dd]\\
+    \mathbb{G}_m \times \A^1\ar[dr]\ar[rr] &  & \A^2\minus 0\ar[dr,dashed,"\eta"] & \\
+     & \A^1\ar[rr] &  & \P^1\\
+\end{tikzcd} \]
+\end{proposition}
+
+\begin{corollary} Rearranging the diagram, we have that the Hopf map factors in $\Spc(k)_\ast$ as
+\begin{equation}\label{eqn:hopf-factors}
+\begin{aligned}
+    \A^2 \minus 0 \to \Sigma \left( \mathbb{G}_m \times \mathbb{G}_m \right) \xto{\Sigma \mu} \Sigma \mathbb{G}_m.
+\end{aligned}
+\end{equation}
+\end{corollary}
+
+We'll see a slightly different perspective on this soon.
+
+\subsection{The Steinberg relation}
+
+Recall the first relation \textbf{MW1} was $[u][1-u] = 0$. This is often called the \textit{Steinberg relation}. The statement that it holds at the level of maps of motivic spheres was first claimed by Hu and Kriz, however their paper contained an error. It was proven by Druzhinin in the stable setting, and reproven in the unstable setting by Hoyois (see \cite{Hoyois-Steinberg} for details).
+
+Consider the pushout diagram
+\[ \begin{tikzcd}
+    \A^1 - \left\{ 0,1 \right\}\rar\dar & \A^1-1\dar\\
+    \A^1-0\rar & \A^1.\po
+\end{tikzcd} \]
+By taking the pullback of the bottom right cospan, we obtain a natural map of unpointed spaces, where each $\mathbb{G}_m$ here is now $\A^1-0$:
+\begin{align*}
+    \A^1 - \left\{ 0,1 \right\} &\to \mathbb{G}_m \times \mathbb{G}_m \\
+    a &\mapsto (a,1-a).
+\end{align*}
+%
+Given any unit $u \in k^\times$, the map $\Spec(k) \xto{(u,1-u)} \mathbb{G}_m \smashprod \mathbb{G}_m$ factors through the unpointed map above
+\[ \begin{tikzcd}
+    \Spec(k)\ar[rr]\ar[dr] & & \mathbb{G}_m \smashprod \mathbb{G}_m\\
+     & \A^1-\left\{ 0,1 \right\}\ar[ur]
+\end{tikzcd} \]
+Note that $\mathbb{G}_m \times \mathbb{G}_m$ is naturally pointed, but $\A^1 - \left\{ 0,1 \right\}$ isn't, so we add a disjoint basepoint to get a diagram of pointed spaces
+\[ \begin{tikzcd}
+    S^0\ar[rr]\ar[dr] & & \mathbb{G}_m \smashprod \mathbb{G}_m\\
+     & (\A^1-\left\{ 0,1 \right\})_+\ar[ur,"\mathfrak{st}" below right]
+\end{tikzcd} \]
+Hence it suffices to show that the \textit{pointed map} $\left( \A^1 - \left\{ 0,1 \right\} \right)_+ \to \mathbb{G}_m \smashprod \mathbb{G}_m$ is null-homotopic after suspension. The mistake in Hu-Kriz was not considering the image of the additional basepoint one must add.
+
+\begin{theorem} \cite{Hoyois-Steinberg} The $S^1$-suspension of the Steinberg map
+\begin{align*}
+    \mathfrak{st} \colon \left( \A^1-\left\{ 0,1 \right\} \right)_+ \to \mathbb{G}_m \smashprod \mathbb{G}_m
+\end{align*}
+is null-homotopic.
+\end{theorem}
+\begin{proof}[Sketch] The main idea is to blow up $\A^2$ at $(1,0)$ and $(0,1)$, and show that the map above factors after 1-fold suspension through an induced map from the union of three lines, one connecting $(0,1)$ and $(1,1)$, one connecting $(0,1)$ and $(1,0)$, and the exceptional divisor over $(0,1)$.
+\end{proof}
+
+
+
+\subsection{Digression: mapping through co-$H$-spaces}
+
+Let $X$ be a pointed space (motivic or topological). If $X$ has a comultiplication $X \to X \vee X$, then $\Hom(X,Y)$ has a monoid structure, induced by precomposition with the monoidal structure
+\begin{align*}
+    \Hom(X,Y) \times \Hom(X,Y) \cong \Hom(X \vee X,Y) \to \Hom(X,Y).
+\end{align*}
+%
+We say that the comultiplication is \textit{cocommutative} if the diagram commutes (up to homotopy)
+\[ \begin{tikzcd}
+    X\rar\ar[dr] & X \vee X\dar["\text{swap}" right]\\
+     & X\vee X.
+\end{tikzcd} \]
+%
+\begin{example} The pinch maps
+\begin{align*}
+    S^n \to S^n \vee S^n,
+\end{align*}
+defined by collapsing a great circle containing the basepoint, define a coassociative comultiplication co-$H$-space structure on the $n$-sphere. For $n\ge2$ this operation is cocommutative.
+\end{example}
+
+The comultiplication on $S^n$ defines a group structure on $\left[ S^n,X \right]_\ast$, and the cocommutative property is exactly the statement that $\pi_n(X)$ is abelian for $n\ge 2$.
+
+\begin{example} We have that $\Sigma X$ admits a comultiplication for any $X \in \Spc_\ast$, induced by the pinch map $S^1 \to S^1 \vee S^1$.
+\end{example}
+
+Suppose now that $G \in \Spc_\ast$ is a group object. Then $\left[ X,G \right]_\ast$ admits a group structure, and an equation of the form $f = f_1 + f_2$ in $\left[ X,G \right]_\ast$ means exactly that $f$ factors as
+\[ \begin{tikzcd}
+    X\rar["{f_1,f_2}" above]\ar[dr,"f" below left] & G \times G\dar["\mu" right]\\
+     & G.
+\end{tikzcd} \]
+%
+If $G$ is a group object, this does \textit{not} imply that $\Sigma G$ is a group object, and in general this won't be true. So what happens to the equation $f = f_1 + f_2$ when we suspend? In other words can we express $\Sigma f$ in terms of $\Sigma f_1$ and $\Sigma f_2$ in $\left[ \Sigma X, \Sigma G \right]_\ast$?
+
+
+
+\begin{proposition} 
+For any pointed spaces $X,Y \in \Spc(k)_\ast$, the cofiber sequence
+\begin{align*}
+    X \vee Y \to X \times Y \to X \smashprod Y
+\end{align*}
+admits a canonical splitting after suspension:
+\begin{align*}
+    \Sigma X \vee \Sigma Y \vee \Sigma(X \smashprod Y) \cong \Sigma(X \times Y).
+\end{align*}
+We claim further that this is an equivalence of co-$H$-spaces, hence the identity on $\Sigma (X \times Y)$ is a sum of the projection maps.
+\end{proposition}
+\begin{proof} Suspension is a left adjoint and hence preserves the above coproduct. Since the suspension of anything is a co-group object (by the pinch map), we have an induced map
+\begin{align*}
+    \Sigma(X \times Y) \to \Sigma(X \times Y) \vee \Sigma (X \times Y).
+\end{align*}
+Post-composing with the suspensions of the two projections $X \times Y \to X$ and $X \times Y \to Y$ yields a map $\Sigma (X \times Y) \to \Sigma(X) \vee \Sigma(Y) = \Sigma(X \vee Y)$ which we claim is left inverse to the map in the suspended cofiber sequence.
+\end{proof}
+
+\begin{corollary} If $G$ is a group object, we can suspend the multiplication $G \times G \to G$, and use the splitting above to get three maps
+\begin{align*}
+    \Sigma G \vee \Sigma G \vee \Sigma (G^{\smashprod 2}) \to \Sigma G.
+\end{align*}
+The first two component functions are the identity, and the latter is a \textit{preferred} map $\Sigma (G \smashprod G) \to \Sigma G$. (\todo what do we call this?)
+\end{corollary}
+
+\begin{example} The preferred map $\Sigma (S^1 \smashprod  S^1) \to \Sigma S^1$ can be identified with the Hopf map $\eta \colon S^3 \to S^2$ classically.
+\end{example}
+
+
+\begin{proposition} The preferred map $\Sigma \mathbb{G}_m \smashprod \mathbb{G}_m \to \Sigma\mathbb{G}_m$ from the multiplication on $\mathbb{G}_m$ can be identified with the Hopf map $\eta$ \cite[p.~71]{Morel}. In particular since $\Sigma( \mathbb{G}_m \smashprod \mathbb{G}_m) = \A^2\minus 0$, we have that the suspension of the natural map $\mathbb{G}_m \times \mathbb{G}_m \to \mathbb{G}_m \smashprod  \mathbb{G}_m$ admits a splitting $s$, hence we obtain a composite
+\begin{align*}
+    \Sigma (\mathbb{G}_m \smashprod \mathbb{G}_m) \xto{s} \Sigma (\mathbb{G}_m \times \mathbb{G}_m) \xto{\Sigma \mu} \Sigma \mathbb{G}_m,
+\end{align*}
+which is precisely the factorization of the Hopf map we found in \autoref{eqn:hopf-factors}.
+\end{proposition}
+
+\begin{proposition} The splitting
+\begin{align*}
+    \Sigma( \mathbb{G}_m \times \mathbb{G}_m) \xto{\pi_1 \vee \pi_2} \Sigma( \mathbb{G}_m \vee \mathbb{G}_m) \vee \Sigma(\mathbb{G}_m \smashprod \mathbb{G}_m)
+\end{align*}
+has the property that the two projections sum to the identity on $\Sigma (\mathbb{G}_m \times \mathbb{G}_m)$.
+\end{proposition}
+
+
+
+We can now prove \textbf{MW2}:
+
+\begin{proposition} The following relation holds in $\pi_{\ast,\ast}\mathbb{S}$: $[ab] = [a]+ [b] + \eta[a][b]$.
+\end{proposition}
+\begin{proof} The map
+\begin{align*}
+    S^0 \xto{[ab]} \mathbb{G}_m
+\end{align*}
+factors as
+\begin{align*}
+    S^0 \xto{[a],[b]} \mathbb{G}_m \times \mathbb{G}_m \xto{\mu} \mathbb{G}_m.
+\end{align*}
+Suspending, and leveraging the splitting above, we get a commutative diagram
+\[ \begin{tikzcd}
+    S^1\rar["{\Sigma([a],[b])}"]\ar[rr,bend left=30,"{\Sigma[ab]}" above]\ar[dr] & \Sigma(\mathbb{G}_m \times \mathbb{G}_m)\rar["\Sigma \mu"]\dar["\cong"] & \Sigma \mathbb{G}_m\\
+     & \Sigma(\mathbb{G}_m \smashprod \mathbb{G}_m) \vee \Sigma \mathbb{G}_m\vee \Sigma \mathbb{G}_m\ar[ur,"{\Sigma[a]\vee\Sigma[b]\vee\eta[a][b]}" below right] & 
+\end{tikzcd} \]
+\end{proof}
+
 
 
 
