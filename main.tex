@@ -5026,8 +5026,7 @@ The first two component functions are the identity, and the latter is the \texti
 \begin{example} The Hopf construction $\Sigma (S^1 \smashprod  S^1) \to \Sigma S^1$ can be identified with the Hopf map $\eta \colon S^3 \to S^2$ classically.
 \end{example}
 
-
-\begin{proposition} The preferred map $\Sigma \mathbb{G}_m \smashprod \mathbb{G}_m \to \Sigma\mathbb{G}_m$ from the multiplication on $\mathbb{G}_m$ can be identified with the Hopf map $\eta$ \cite[p.~71]{Morel}. In particular since $\Sigma( \mathbb{G}_m \smashprod \mathbb{G}_m) = \A^2\minus 0$, we have that the suspension of the natural map $\mathbb{G}_m \times \mathbb{G}_m \to \mathbb{G}_m \smashprod  \mathbb{G}_m$ admits a splitting $s$, hence we obtain a composite
+\begin{proposition} The Hopf construction $\Sigma \mathbb{G}_m \smashprod \mathbb{G}_m \to \Sigma\mathbb{G}_m$ from the multiplication on $\mathbb{G}_m$ can be identified with (or be defined as) the Hopf map $\eta$ \cite[p.~71]{Morel}. In particular since $\Sigma( \mathbb{G}_m \smashprod \mathbb{G}_m) = \A^2\minus 0$, we have that the suspension of the natural map $\mathbb{G}_m \times \mathbb{G}_m \to \mathbb{G}_m \smashprod  \mathbb{G}_m$ admits a splitting $s$, hence we obtain a composite
 \begin{align*}
     \Sigma (\mathbb{G}_m \smashprod \mathbb{G}_m) \xto{s} \Sigma (\mathbb{G}_m \times \mathbb{G}_m) \xto{\Sigma \mu} \Sigma \mathbb{G}_m,
 \end{align*}
@@ -5061,6 +5060,150 @@ Suspending, and leveraging the splitting above, we get a commutative diagram
      & \Sigma(\mathbb{G}_m \smashprod \mathbb{G}_m) \vee \Sigma \mathbb{G}_m\vee \Sigma \mathbb{G}_m\ar[ur,"{\Sigma[a]\vee\Sigma[b]\vee\eta[a][b]}" below right] & 
 \end{tikzcd} \]
 \end{proof}
+
+
+
+
+\subsection{The remaining relations}
+
+For any $a\in k^\times$, we can consider the map
+\begin{align*}
+    \mathbb{G}_m &\to \mathbb{G}_m \\
+    x &\mapsto ax.
+\end{align*}
+Since $\mathbb{G}_m$ is pointed at 1, we note that this map is \textit{not a pointed map}. Nevertheless, we can take its unreduced suspension, explicitly, coming from the diagram
+\[\begin{tikzcd}
+    \mathbb{G}_m\ar[dr,"a"]\ar[rr,"\id"]\ar[dd,"\invs" left] &  & \A^1\ar[dr,"a" above right]\ar[dd] & \\
+     & \mathbb{G}_m\ar[dd,"\invs" left]\ar[rr,"\id"] &  & \A^1\ar[dd]\\
+    \A^1\ar[dr,"a^{-1}" below left]\ar[rr] &  & \P^1\ar[dr,dashed] & \\
+     & \A^1\ar[rr] &  & \P^1.
+\end{tikzcd} \]
+This induced map
+\begin{align*}
+    \P^1 &\to \P^1 \\
+    [x:y] &\mapsto [ax:y]
+\end{align*}
+\textit{is pointed} at $\infty$. We call this resulting map $\left\langle a \right\rangle$ (\cite[6.3.4]{Trieste}, \cite[p.~74]{Morel}).
+
+
+
+
+\begin{lemma}\label{lem:bracket-a-stable-htpy}
+We have that $\left\langle a \right\rangle = 1 + \eta[a]$ \cite[3.43(1)]{Morel}.
+\end{lemma}
+\begin{proof} We can factor the endomorphism of $\mathbb{G}_m$ to get
+\begin{align*}
+    \mathbb{G}_m \xto{\id \times a} \mathbb{G}_m \times \mathbb{G}_m \xto{\mu} \mathbb{G}_m.
+\end{align*}
+Suspending, we get our map $[x:y] \mapsto [ax:y]$. Applying our factorization, we see that this decomposes as
+\begin{align*}
+    1 + \eta[a].
+\end{align*}
+\end{proof}
+
+\begin{remark} Any map $\mathbb{G}_m \to \mathbb{G}_m$ is of the form $t \mapsto ut^n$ for $u\in k^\times$ and $n\in \Z$. Its $S^1$-suspension we can verify is given by
+\begin{align*}
+    \P^1 &\to \P^1 \\
+    [x:y] &\mapsto [ux^n : y^n].
+\end{align*}
+\end{remark}
+
+\begin{proposition} The map
+\begin{align*}
+    \mathbb{G}_m &\to \mathbb{G}_m \\
+    t &\mapsto t^2
+\end{align*}
+corresponds to $h$.
+\end{proposition}
+\begin{proof} We can conclude this by reference to Cazanave's theorem although this is super ahistorical. There's a more direct way to argue that it decomposes to $1 + \left\langle -1 \right\rangle$ that we should add to the notes.
+\end{proof}
+
+
+
+
+
+
+\begin{proposition} The swap map
+\begin{align*}
+    S^1 \smashprod S^1 \xto{\text{swap}} S^1 \smashprod S^1
+\end{align*}
+corresponds to the class $-1$.
+\end{proposition}
+
+
+
+\begin{proposition} The swap map
+\begin{align*}
+    \mathbb{G}_m \smashprod \mathbb{G}_m \xto{\text{swap}} \mathbb{G}_m \smashprod \mathbb{G}_m
+\end{align*}
+corresponds stably to $\epsilon$ \cite[3.43]{Morel}, \cite[6.1.1(2)]{Trieste}.
+\end{proposition}
+\begin{proof} After suspending, we recall that $\Sigma \mathbb{G}_m \smashprod \mathbb{G}_m \simeq \A^2\minus 0$, and the map is of the form $(x,y) \mapsto (y,x)$. This is induced by the matrix
+\begin{align*}
+    \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}.
+\end{align*}
+Up to $\SL_2$-equivalence, this agrees with $\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$, so we see that this is the $S^1$-suspension of
+\begin{align*}
+    \P^1 &\to \P^1 \\
+    [x:y] &\mapsto [-x:y].
+\end{align*}
+This is $\left\langle -1 \right\rangle$ by \autoref{lem:bracket-a-stable-htpy}, and the swap map on the $S^1$-suspension picks up a negative sign.
+\end{proof}
+
+
+
+\begin{proposition} Property \textbf{MW4} that $\epsilon\eta = \eta$ holds.
+\end{proposition}
+\begin{proof} Consider multiplication on the first two factors of $\mathbb{G}_m^{\smashprod 3}$, followed by the swap map
+\begin{align*}
+    \mathbb{G}_m^{\smashprod 3} \xto{\eta \smashprod \id} \mathbb{G}_m^{\smashprod 2} \xto{\epsilon} \mathbb{G}_m^{\smashprod 2} \\
+    x \smashprod y \smashprod z \mapsto xy\smashprod z \mapsto z \smashprod xy.
+\end{align*}
+This models $\epsilon\eta$. We could alternatively cycle the third factor to the first slot (corresponding to $\epsilon^2 = 1$, and then multiply:
+\begin{align*}
+    \mathbb{G}_m^{\smashprod 3} \xto{\epsilon^2} \mathbb{G}_m^{\smashprod 3} \xto{\id \smashprod \eta} \mathbb{G}_m^{\smashprod 2} \\
+    x \smashprod y \smashprod z \mapsto z \smashprod x \smashprod y \mapsto z \smashprod xy.
+\end{align*}
+Hence $\epsilon\eta = \epsilon^2 \eta = \eta$.
+\end{proof}
+
+
+\begin{proposition} Property \textbf{MW3} that $\eta[a] = [a]\eta$ holds.
+\end{proposition}
+\begin{proof} We can write $a[\eta]$ as the smash product
+\begin{align*}
+    \mathbb{G}_m^{\smashprod 3} \xto{[a]\cdot \eta} \mathbb{G}_m^{\smashprod 2}.
+\end{align*}
+This is the same as smashing them in the other order and then swapping
+\begin{align*}
+    \mathbb{G}_m^{\smashprod 3} \xto{\eta [a]} \mathbb{G}_m^{\smashprod 2} \xto{\epsilon} \mathbb{G}_m^{\smashprod 2}.
+\end{align*}
+This is $\epsilon\eta[a]$, which by \textbf{MW4} is equal to $\eta[a]$.
+\end{proof}
+
+We should technically be a lot more careful about composition versus smash product, multiplication versus $\eta$, etc. For very concrete detail of the verification of the axioms, see \cite[\S3]{Druzhinin}.
+
+
+\subsection{On nilpotence}
+
+\begin{notation} We denote by
+\begin{align*}
+    \pi_{a,b} \mathbbm{1} := \colim_{k\to \infty} \pi_{a + 2k, b + k} (S^{2k,k}).
+\end{align*}
+\end{notation}
+
+
+We've now argued that there is an isomorphism of graded algebras 
+\begin{align*}
+    \oplus_{n\in \Z}\pi_{n,n} \mathbbm{1} = \oplus_{n\in \Z} K^\MW_n(k).
+\end{align*}
+%
+Recall the Nishida nilpotence theorem in classical homotopy theory.
+
+\begin{theorem} (Nilpotence) Any element in $\pi_k \mathbb{S}$ for $k>0$ is nilpotent.
+\end{theorem}
+
+Note that $\eta \in \pi_{1,1} \mathbbm{1}$ in motivic homotopy. This is \textbf{not} nilpotent! Multiplication by $\eta$ induces an isomorphism $\KMW_{-n} \to \KMW_{-n-1}$ for any $n>0$. Moreover, $\eta$ is not the only non-nilpotent element -- see \cite{GuillouIsaksen} for more details.
 
 
 
