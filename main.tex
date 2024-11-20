@@ -5332,12 +5332,7 @@ Cohomology is representable in the sense that for any $X \in \Sm_k$ and any shea
     H^n_\Nis(X,A) = \left[ \Sigma^\infty \Sigma^n X_+, \HA \right]_{\Sp(k)}.
 \end{align*}
 \end{proposition}
-\begin{proof} This is by adjunctions
-\begin{align*}
-    \left[ \Sigma^\infty \Sigma^n X_+, \HA \right]_{\Sp(k)} &= \left[ \Sigma^n X_+, \Omega^\infty \HA \right]_{\Shv_\Nis(\Sm_k)_\ast} \\
-    &= \left[ X_+, K(A,n) \right]_{\Shv_\Nis(\Sm_k)_\ast}.
-\end{align*}
-\end{proof}
+
 
 We can define $\pi_n$ of a spectrum $E$ to be the sheafification of the presheaf of abelian groups
 \begin{align*}
@@ -5421,6 +5416,255 @@ Similarly we can define stable homotopy groups which are bigraded via the follow
     U &\mapsto \left[ \Sigma^\infty \Sigma^{a,b} U_+, E \right]_{\SH(k)}.
 \end{align*}
 \end{definition}
+
+\section{Representability of algebraic $K$-theory}
+
+\begin{goal} We want to show that algebraic $K$-theory is represented by a motivic spectrum $\KGL$.
+\end{goal}
+
+\subsection{What is group completion?}
+
+Recall if $(M,\amalg)$ is a commutative monoid, its \textit{group completion} is the universal group receiving a monoid map from $M$. This is often denoted $M^\gp$ or classically $K(M)$.
+
+\begin{definition} If $\mathscr{C}$ is any $\infty$-category with finite limits, then a \textit{commutative monoid} is precisely a product preserving functor
+\begin{align*}
+    \CMon(\mathscr{C}) = \Fun^\times(\Span(\Fin), \mathscr{C}).
+\end{align*}
+\end{definition}
+We recover the monoid structure by considering certain spans. Let $\underline{n}$ denote a finite set with $n$ elements, then the span $\underline{2} = \underline{2} \to \underline{1}$ induces $M \times M \to M$, while $\emptyset \from \emptyset \to \underline{1}$ yields the unit $\ast \to M$. Larger spans encode various combinations of multiplications and identities, and the data of an $\infty$-functor $\Span(\Fin) \to \mathscr{C}$ imposes all the associativity and unitality conditions.
+
+Consider a distinguished span $\underline{2} \from \underline{3} \to \underline{2}$ of the form
+\[ \begin{tikzcd}
+     & {\{x,y,z\}}\ar[dl,"f" above left]\ar[dr,"g" above right]  & \\
+    {\left\{ m_1,m_2 \right\}} &  & {\left\{ a,b \right\}\}},
+\end{tikzcd} \]
+where $f(x)=m_1$ and $f(y)=f(z)=m_2$, and $g(x)=g(y)=a$ and $g(z)=b$. As a monoid map, this is of the shape
+\begin{align*}
+    M \times M &\to M \times M \\
+    (m_1,m_2) &\mapsto \left( m_1 + m_2, m_2 \right).
+\end{align*}
+The preimage of $(0,m)$ will be $(-m,m)$, so we see that the above is an abelian group if and only if this map is an equivalence
+
+
+\begin{definition} We define the subcategory of \textit{abelian group objects}
+\begin{align*}
+    \Ab(\mathscr{C}) \subseteq \CMon(\mathscr{C})
+\end{align*}
+to be the full subcategory on which the distinguished span $\underline{2} \from \underline{3} \to \underline{2}$ is an equivalence.
+\end{definition}
+
+Group completion is about exhibiting an inverse to this.
+
+\begin{proposition} Suppose $\mathscr{C}$ is presentable.
+\begin{enumerate}
+    \item Both $\CMon(\mathscr{C})$ and $\Ab(\mathscr{C})$ are presentable
+    \item The inclusion $\Ab(\mathscr{C}) \subseteq \CMon(\mathscr{C})$ preserves all limits and filtered colimits, and hence admits a left adjoint.
+\end{enumerate}
+\end{proposition}
+
+We denote by
+\begin{align*}
+    (-)^\gp \colon \CMon(\mathscr{C}) \to \Ab(\mathscr{C})
+\end{align*}
+the group completion which is left adjoint to the inclusion.
+
+\begin{proposition} If $F \colon \mathscr{C} \to \mathscr{D}$ preserves finite products, then it preserves commutative monoids and abelian group objects, inducing a commutative diagram
+\[\begin{tikzcd}
+    \CMon(\mathscr{C})\rar\dar["{(-)^\gp}" left] & \CMon(\mathscr{D})\dar["{(-)^\gp}" right]\\
+    \Ab(\mathscr{C})\rar & \Ab(\mathscr{D}).
+\end{tikzcd} \]
+\end{proposition}
+
+
+\begin{example} If $\mathscr{C} = \Set$, then this is classical group completion.
+\end{example}
+
+A primary case of interest is when $\mathscr{C} = \mathcal{S}$ is the category of spaces. In this case if $M$ is a commutative monoid, it will be a commutative group if and only if it is a loop space. There is a natural candidate for the delooping of $M$, namely $BM$. There is a natural map
+\begin{align*}
+    M \to \Omega BM,
+\end{align*}
+which can be studied at the level of homology \cite{McDuffSegal,Nikolaus-gp}.
+
+\begin{definition} Take a collection of generators for $\pi_0 M$, and denote by
+\begin{align*}
+    M_\infty
+\end{align*}
+the colimit of multiplying by finite subsets of the generators infinitely many times. In nice settings, this is precisely $M \left[ \pi_0(M)^{-1} \right]$.
+\end{definition}
+
+Since every element in $\pi_0(M)$ is invertible in $B\Omega M$, the universal map factors as
+\[ \begin{tikzcd}
+    M\ar[rr]\ar[dr] &  & \Omega B M\\
+     & M_\infty\ar[ur] & 
+\end{tikzcd} \]
+
+\begin{theorem} The map
+\begin{align*}
+    M_\infty \to \Omega BM = M^\gp
+\end{align*}
+is a plus construction (see \cite[Theorem~9]{Nikolaus-gp}, also Randal-Williams).
+\end{theorem}
+
+There is a natural map
+\begin{align*}
+    B\Sigma_n \to (M^{\times n})_{h\Sigma_n} \to M,
+\end{align*}
+inducing a homomorphisms $\Sigma_n \to \pi_1(M)$.
+
+\begin{theorem} \cite[Prop.~6]{Nikolaus-gp}
+The following are equivalent:
+\begin{enumerate}
+    \item The natural map $M_\infty \to M^\gp$ is an equivalence (i.e. $M_\infty$ \textit{is} the group completion of $M$)
+    \item The cyclic permutation $(1\ 2\ 3)$ lies in the kernel
+    \begin{align*}
+        \Sigma_3 \to \pi_1(M) \to \pi_1(M_\infty).
+    \end{align*} 
+\end{enumerate}
+\end{theorem}
+
+\subsection{Algebraic $K$-theory}
+
+The nerve provides an inclusion
+\begin{align*}
+    \Grpd \to \mathcal{S},
+\end{align*}
+which preserves commutative monoid objects.
+
+\begin{definition} For a ring $R$, we define $K(R) \in \Ab(\mathcal{S})$ to be the group completion of the monoid of finitely generated projective $R$-modules $\Vect(R)$ under direct sum.
+\end{definition}
+
+Note that $\Vect(-)$ satisfies Nisnevich descent, hence it gives a sheaf of groupoids (a stack):
+\begin{align*}
+    \Vect(-) \colon \Sm_k^\op \to \Grpd \subseteq \mathcal{S}.
+\end{align*}
+%
+Recall that finitely generated projective $R$-modules of rank $n$ are classified by homotopy classes of maps into $\BGL_n$ in the sheaf topos, hence there is an equivalence of stacks
+\begin{align*}
+    \amalg_{n=0}^\infty \BGL_n \to \Vect.
+\end{align*}
+%
+Since each of $\BGL_n$ is connected, we have that $\pi_0 \left( \amalg_{n\ge0} \BGL_n \right) = \mathbb{N}$. So to create $\Vect_\infty$, we have to take the colimit of ``multiplication by 1.'' This is exactly given by the shift map
+\begin{align*}
+    \amalg_{n\ge0} \BGL_n\xto{\text{+1}} \amalg_{n\ge 1} \BGL_n \subseteq \amalg_{n\ge 0}\BGL_n,
+\end{align*}
+induced by adding a free vector bundle of rank one: $\BGL_n \to \BGL_{n+1}$.
+
+\begin{proposition} We have that
+\begin{align*}
+    \Vect_\infty = \Z \times \BGL.
+\end{align*}
+\end{proposition}
+\begin{proof} We can pull the disjoint union out of the colimit, and we get
+\begin{align*}
+    &\colim \left( \amalg_{n\ge0} \BGL_n\xto{\text{+1}} \amalg_{n\ge0} \BGL_n\xto{\text{+1}}\cdots \right) \\
+    &= \amalg_{n\in \Z} \colim \left( \BGL_n \to \BGL_{n+1} \to \cdots \right) \\
+    &= \Z \times \BGL.
+\end{align*}
+\end{proof}
+
+Since $K = \Vect^\gp$, the factorization $\Vect \to \Vect_\infty \to \Vect^\gp$ is of the form
+\[ \begin{tikzcd}
+    \Vect\ar[rr]\ar[dr] &  & K\\
+     & \Z \times \BGL\ar[ur] &
+\end{tikzcd} \]
+
+\begin{theorem} We have that $\Z \times \BGL \to K$ is a motivic equivalence.
+\end{theorem}
+\begin{proof} Since $L_\mot$ preserves finite products, it clearly preserves commutative monoids, and will preserve group objects since it preserves equivalences. It also preserves colimits, so we can commute $L_\mot$ with both $(-)_\infty$ and $(-)^\gp$. We are trying to show $\Vect_\infty \to \Vect^\gp$ is a motivic equivalence, and commuting past $L_\mot$, we see this is equivalent to showing that $L_\mot \Vect$ satisfies the properties of the theorem above.
+
+The cyclic condition reduces to checking that $\begin{pmatrix} 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix}$ acts trivially on $\O^{\oplus3}$ after motivic localization, which is immediate.
+\end{proof}
+
+
+We have seen above that $\Vect^\gp$ is represented by a motivic space $\Z \times \BGL$. This corresponds to what we were calling $K$-theory, but should really be called \textit{connective} $K$-theory.
+
+\begin{notation} We denote by $K^\cn = \tau_{\ge 0} K$ the connective cover of $K$-theory.
+\end{notation}
+
+\subsection{Algebraic $K$-theory as a Nisnevich sheaf}
+
+We'd like to argue that (non-connective) algebraic $K$-theory is a Nisnevich sheaf of spectra. For this, a more general perspective is helpful.
+
+\begin{theorem} (Thomason--Trobaugh) Algebraic $K$-theory is a Nisnevich sheaf of spectra.
+\end{theorem}
+
+Given a distinguished Nisnevich square of the form
+\[ \begin{tikzcd}
+    W\rar\dar\pb & V\dar\\
+    U\rar & X,
+\end{tikzcd} \]
+we want to argue that $K$ maps it to a homotopy pullback square of spectra.
+
+Given a scheme $X$, we can form its $\infty$-category of perfect complexes of $\O_X$-modules $\Perf(X)$. This is a stable $\infty$-category, giving a functor
+\begin{align*}
+    \Sm_k^\op \to \Cat_\infty^\st.
+\end{align*}
+%
+This is an fppf sheaf (reference needed). In particular we get a pullback square
+\[ \begin{tikzcd}
+    \Perf(X)\rar\dar\pb & \Perf(U)\dar\\
+    \Perf(V)\rar & \Perf(W).
+\end{tikzcd} \]
+We want to say that $K(-)$ preserves this pullback square. To make this more clear, we look at the cofibers of the induced maps.
+
+\begin{notation} If $U \hookto X$ is an open immersion with closed complement $Z$, we denote by $\Perf(Z\text{ on }X)$ the cofiber
+\begin{align*}
+    \Perf(Z\text{ on }X) \to \Perf(X) \to \Perf(U),
+\end{align*}
+which is precisely the perfect complexes on $X$ which are supported on $Z$.
+\end{notation}
+
+\begin{example} If $U = D(f) \subseteq X = \Spec(R)$, then there is an exact sequence
+\begin{align*}
+    \Perf(\Spec(R) \text{ on } V(f)) \to \Perf(R) \to \Perf(R_f),
+\end{align*}
+where the former is $f$-torsion modules on $R$.
+\end{example}
+
+So altogether we get a diagram
+\[ \begin{tikzcd}
+    \Perf(X\text{ on }Z)\rar\dar["\cong" left] & \Perf(X)\rar\dar\pb & \Perf(U)\dar\\
+    \Perf(W\text{ on Z})\rar & \Perf(V)\rar & \Perf(W).
+\end{tikzcd} \]
+To show $K$ preserves the pullback square, it suffices to show that it preserves cofiber sequences (modulo some subtlety about what precisely that is). This follows from algebraic $K$-theory, viewed as a functor
+\begin{align*}
+    K \colon \Cat_\infty^\st \to \Sp
+\end{align*}
+being \textit{localizing}.
+
+\begin{corollary} Any localizing invariant is a Nisnevich sheaf.
+\end{corollary}
+
+\subsection{Algebraic $K$-theory as $\A^1$-invariant}
+
+\begin{theorem} \cite[p.~38]{Quillen} (Quillen) If $R$ is a regular Noetherian ring, the map $R \to R[t]$ induces an equivalence
+\begin{align*}
+    K(R) \xto{\sim} K(R[t]).
+\end{align*}
+\end{theorem}
+
+\begin{theorem} \cite[6.8]{TT} If $X$ is a regular Noetherian scheme, then the projection map $X \times \A^1 \to X$ induces an equivalence
+\begin{align*}
+    K(X) \xto{\sim} K(X \times \A^1).
+\end{align*}
+\end{theorem}
+
+Since every smooth finite scheme over a regular Noetherian scheme is itself regular and Noetherian, we get that $K$ is $\A^1$-invariant over $\Sm_S$ for any $S$ regular and Noetherian.
+
+\subsection{Algebraic $K$-theory spectrum}
+
+
+We have that $K \in \Sp_{\A^1}(k)$ is $\A^1$-invariant by the fundamental theorem of algebraic $K$-theory. Thus to produce a spectrum, we just have to give bonding maps for the projective line. This is an immediate consequence of the projective bundle formula. From this we obtain $\KGL \in \SH(k)$ given by $\left\{ \BGL \times \Z, \BGL \times \Z, \ldots \right\}$.
+
+
+\begin{corollary} \cite[6.15]{AE}
+We have that
+\begin{align*}
+    \pi_i \BGL_n = K_i
+\end{align*}
+for $2\le i\le n-1$.
+\end{corollary}
+
 
 
 
