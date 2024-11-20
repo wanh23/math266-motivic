@@ -22,6 +22,8 @@
 \providecommand{\MW}{\mathrm{MW}}
 \providecommand{\Bez}{\mathrm{B\acute{e}z}}
 \providecommand{\aff}{\mathrm{aff}}
+\providecommand{\HA}{\mathrm{HA}}
+
 \let\smashprod\wedge
 
 \providecommand{\KM}{\mathbf{K}^\mathrm{M}}
@@ -5203,6 +5205,223 @@ Recall the Nishida nilpotence theorem in classical homotopy theory.
 \end{theorem}
 
 Note that $\eta \in \pi_{1,1} \mathbbm{1}$ in motivic homotopy. This is \textbf{not} nilpotent! Multiplication by $\eta$ induces an isomorphism $\KMW_{-n} \to \KMW_{-n-1}$ for any $n>0$. Moreover, $\eta$ is not the only non-nilpotent element -- see \cite{GuillouIsaksen} for more details.
+
+\section{Stable motivic homotopy theory}
+
+(This section was very directly inspired by Tom Bachmann and Viktor Burghardt's lectures at IWOAT 2024).
+
+Recall we've seen that $\Spc(k)_\ast$ is a symmetric monoidal presentable $\infty$-category. Thinking about this as analogous to pointed spaces, we want to develop a notion of \textit{spectra}, where $\A^1$-invariant cohomology theories of schemes will be representable.
+
+\subsection{Motivation: from spaces to spectra}
+
+Suppose we are starting with the $\infty$-category of spaces, and we're wanting to build spectra, which will be some home for things like stable homotopy groups, $\Z$-graded cohomology theories, etc. How do we do it?
+
+The naive way was to consider what are called \textit{sequential spectra}, being sequences of spaces $\left\{ X_n \right\}_{n \ge 0}$ and bonding maps $\Sigma X_n \to X_{n+1}$. We might want a few things to be preserved under this construction:
+\begin{enumerate}
+    \item $\mathcal{S}$ was \textit{presentable}, and we would like spectra to have the same property
+    \item $\mathcal{S}$ has a symmetric monoidal structure, and we'd like spectra to have one as well.
+\end{enumerate}
+
+Historically, this latter point was the hardest to achieve. Endowing spectra with a model structure dates back to work of Bousfield and Friedlander, however inducing a well-behaved smash product is difficult. This is the main reason for the development of models of spectra like symmetric and orthogonal spectra. While these model structures are important to know for explicit computations, we will be content here with endowing spectra with a presentably symmetric monoidal structure.
+
+Recall $\Pr^L$ is the category of presentable $\infty$-categories and left adjoints between them. It admits a symmetric monoidal structure, due to Lurie, so that $\CAlg(\Pr^L)$ consists of \textit{presentably symmetric monoidal} $\infty$-categories. Informally these are categories which are both presentable and symmetric monoidal, and these structures behave well with each other. Explicitly, it means the tensor product preserves colimits in each variable.
+
+We might define spectra naively to be the colimit
+\begin{align*}
+    \Sp^\mathbb{N}(\mathscr{C},f) := \colim \left( \mathcal{S}_\ast \xto{\Sigma} \mathcal{S}_\ast \xto{\Sigma} \cdots \right).
+\end{align*}
+We could try to compute this colimit in $\Pr^L$, however we note that $\Pr^L \subseteq \Cat_\infty$ isn't necessarily closed under colimits. There is an infamous trick to get around this.
+
+\begin{proposition} Suppose $\mathscr{C} \in\Pr^L$ and $f \colon \mathscr{C} \to \mathscr{C}$ is an endomorphism of $\mathscr{C}$ in $\Pr^L$. Then the colimit
+\begin{align*}
+    \colim \left( \mathscr{C} \xto{f} \mathscr{C} \xto{f} \cdots \right)
+\end{align*}
+is canonically equivalent to the limit
+\begin{align*}
+    \lim \left( \cdots \xto{g} \mathscr{C} \xto{g} \mathscr{C} \right)
+\end{align*}
+where $f \dashv g$.
+\end{proposition}
+\begin{proof}[Sketch] The equivalence between $\Pr^L$ and $\Pr^R$ is in \cite[5.5.3.4]{HTT}, and we use the crucial fact that $\Pr^R \subseteq \Cat_\infty$ preserves limits \cite[5.5.3.18]{HTT}.
+\end{proof}
+
+\begin{definition} If $\mathscr{C}$ is presentable, then the $\infty$-category of \textit{spectrum objects} is the limit
+\begin{align*}
+    \Sp(\mathscr{C}) = \lim \left( \cdots \mathscr{C} \xto{\Omega} \mathscr{C} \xto{\Omega} \mathscr{C} \right).
+\end{align*}
+\end{definition}
+
+A special case comes when $\Sigma$ is given by smashing with a particular object. We've seen this statement earlier, when we cooked up a symmetric monoidal structure on homotopy modules.
+
+\begin{theorem} (Robalo) For $\mathscr{C}$ a presentably symmetric monoidal category, and $X \in \mathscr{C}$, there is a functor
+\begin{align*}
+    \Sp^\mathbb{N}(\mathscr{C}, X \otimes -) \to \mathscr{C}[X^{-1}]
+\end{align*}
+which is an equivalence if $X$ is symmetric.
+\end{theorem}
+
+\begin{example} The 1-sphere $S^1 \in \mathcal{S}$ is symmetric, since the cyclic permutation
+\begin{align*}
+    (1\ 2\ 3) \colon S^3 \to S^3
+\end{align*}
+is homotopic to the identity.
+\end{example}
+
+\begin{corollary} We have that the category of spectra is a presentably symmetric monoidal category, equivalently presented in any of the three ways:
+\begin{align*}
+    \Sp &= \mathcal{S}_\ast[(S^1)^{-1}] \\
+    &= \colim_{\Pr^L} \left( \mathcal{S}_\ast \xto{\Sigma} \mathcal{S}_\ast \xto{\Sigma} \cdots \right) \\
+    &= \text{lim}_{\Cat_\infty} \left( \cdots \xto{\Omega} \mathcal{S}_\ast \xto{\Omega} \mathcal{S}_\ast \right).
+\end{align*}
+\end{corollary}
+
+
+
+\subsection{Spectrum objects}
+
+Let $\mathscr{C}$ be a pointed $\infty$-category with finite limits (in particular it has pullbacks and a terminal object). Then the $\infty$-category of \textit{spectrum objects} in $\mathscr{C}$, denoted $\Sp(\mathscr{C})$, is the limit
+\begin{align*}
+    \Sp(\mathscr{C}) = \lim \left( \cdots \mathscr{C} \xto{\Omega} \mathscr{C} \xto{\Omega} \mathscr{C} \right).
+\end{align*}
+%
+Objects in $\Sp(\mathscr{C})$ are given by sequences $(X_n)_{n\ge0}$ where we have structure maps which are equivalences
+\begin{align*}
+    X_n \xto{\sim} \Omega X_{n+1}.
+\end{align*}
+%
+There is an obvious functor $\Omega^\infty \colon\Sp(\mathscr{C}) \to \mathscr{C}$ given by sending $(X_n)_{n\ge0}$ to $X_0$. If $\mathscr{C}$ is presentable, then $\Stab(\mathscr{C})$ will be as well by construction. Hence since $\Omega^\infty$ is limit-preserving, it admits a left adjoint
+\begin{align*}
+    \Sigma^\infty \colon \mathscr{C} \rightleftarrows \Sp(\mathscr{C}) \noloc \Omega^\infty.
+\end{align*}
+%
+
+The mapping spaces $\Map_{\Stab(\mathscr{C})}(E_\bullet, F_\bullet)$ are by definition the limit
+\begin{align*}
+    \Map_{\Stab(\mathscr{C})}(E_\bullet,F_\bullet) = \lim \Hom_\mathscr{C}(E_n, F_n),
+\end{align*}
+where the maps in the limit are given by looping and using the structure maps
+\begin{align*}
+    \Map_\mathscr{C}(E_{n+1}, F_{n+1}) \xto{\Omega} \Map_{\mathscr{C}}(\Omega E_{n+1}, \Omega F_{n+1}) \cong \Map_{\mathscr{C}}(E_n, F_n).
+\end{align*}
+%
+
+\begin{remark} This category $\Sp(\mathscr{C})$ has a universal property, in that it is the \textit{stabilization} of $\mathscr{C}$. In particular a category $\mathscr{C}$ is stable if and only if $\Omega^\infty \colon \Sp(\mathscr{C}) \to \mathscr{C}$ is an equivalence of categories \cite[1.4.2.21]{HA}. See \cite[\S1.4.2]{HA} for more details on this construction.
+\end{remark}
+
+
+
+\begin{example} The classical category of spectra $\Sp$ is the category of spectrum objects in $\mathcal{S}$.
+\end{example}
+
+Given our category of presheaves $\PSh(\Sm_k)$, we can stabilize it and we obtain $\Fun(\Sm_k^\op, \Sp)$, i.e. presheaves of spectra. It turns out the descent properties descent through stabilization, in other words the stabilization of $\PSh(\Sm_k)$ is exactly Nisnevich sheaves of spectra. We denote this by
+%
+\begin{align*}
+    \Sp(k) := \Sp \left( \Shv_\Nis(\Sm_k) \right) = \Shv_\Nis(\Sm_k; \Sp).
+\end{align*}
+%
+\subsection{Sheaves of spectra}
+
+A sequence of objects in the sheaf category give rise to a spectrum if they deloop to one another.
+
+\begin{example} For any Nisnevich sheaf of abelian groups $A$, we have an object $HA \in \Sp(k)$ given by the Eilenberg--MacLane spaces $\left\{ K(A,n) \right\}_{n\ge0}$. 
+\end{example}
+
+\begin{proposition}\label{prop:cohom-representable-in-sheaves-of-spectra} 
+Cohomology is representable in the sense that for any $X \in \Sm_k$ and any sheaf of abelian groups $A$ we have that
+\begin{align*}
+    H^n_\Nis(X,A) = \left[ \Sigma^\infty \Sigma^n X_+, \HA \right]_{\Sp(k)}.
+\end{align*}
+\end{proposition}
+\begin{proof} This is by adjunctions
+\begin{align*}
+    \left[ \Sigma^\infty \Sigma^n X_+, \HA \right]_{\Sp(k)} &= \left[ \Sigma^n X_+, \Omega^\infty \HA \right]_{\Shv_\Nis(\Sm_k)_\ast} \\
+    &= \left[ X_+, K(A,n) \right]_{\Shv_\Nis(\Sm_k)_\ast}.
+\end{align*}
+\end{proof}
+
+We can define $\pi_n$ of a spectrum $E$ to be the sheafification of the presheaf of abelian groups
+\begin{align*}
+    U \mapsto \left[ \Sigma^\infty \Sigma^n U_+, E \right]_{\Sp(k)}.
+\end{align*}
+%
+
+\begin{example} We have that $\pi_n \HA$ is zero except in $n=0$ when it is $A$.
+\end{example}
+
+\begin{remark} This category admits a $t$-structure, whose heart is precisely equivalent to $\Ab(\Shv_\Nis(\Sm_k)_{\le 0})$, the sheaves of abelian groups.
+\end{remark}
+
+
+\subsection{$\A^1$-invariant sheaves of spectra}
+
+\begin{definition} We say that $E \in \Sp(k)$ is $\A^1$\textit{-invariant} if for every $X \in \Sm_k$ the projection $X \times \A^1 \to X$ induces an equivalence
+\begin{align*}
+    E(X \times \A^1) \xto{\sim} E(X).
+\end{align*}
+\end{definition}
+
+\begin{proposition} We denote by $\SH_{S^1}(k) \subseteq \Sp(k)$ the category of $\A^1$-invariant sheaves of spectra. This is an accessible subcategory, hence the inclusion admits a left adjoint.
+\end{proposition}
+
+\begin{remark} This is poor notation --- technically $\SH_{S^1}(k)$ should denote the \textit{homotopy category}, rather than the $\infty$-category itself. This is a pervasive notational inconsistency in the literature. This is denoted by $\SH^{S^1}(k)$ in \cite[3.2.1]{Morel-pi0}.
+\end{remark}
+
+The category $\SH^{S^1}(k)$ admits a \textit{homotopy $t$-structure} with heart given by strictly invariant sheaves of abelian groups.
+
+\subsection{Motivic spectra}
+
+The category of motivic spectra is defined to be
+\begin{align*}
+    \SH(k) := \Spc(k)_\ast \left[ (\P^1)^{-1} \right].
+\end{align*}
+By the result of Robalo, it suffices to argue that $\P^1$ is symmetric in order to deduce formal properties about this category.
+
+\begin{proposition} We have that $\P^1$ is symmetric, therefore $\SH(k)$ is presentably symmetric monoidal.
+\end{proposition}
+\begin{proof} By identifying $\P^1 = \A^1/(\A^1-0)$, we can identify
+\begin{align*}
+    (\P^1)^{\otimes3} \simeq \A^3 / (\A^3-0),
+\end{align*}
+and the cyclic permutation $(1\ 2\ 3)$ corresponds to the matrix
+\begin{align*}
+    \begin{pmatrix} 0 & 0 & 1 \\
+    1 & 0 & 0  \\
+    0 & 1 & 0\end{pmatrix}.
+\end{align*}
+This is the product of elementary matrices, each of which is $\A^1$-homotopic to the identity.
+\end{proof}
+
+Say $A$ is a sheaf of abelian groups. How would we build $HA$ as a spectrum here? We begin with $K(A,0) = A$. To be the zeroth space of a spectrum, we need some $K(A',1)$ so that $K(A,0) \to \Omega^{2,1}K(A',1)$ is an equivalence. The $S^1$-loop space decreases the topological index, while the $\mathbb{G}_m$-loop space contracts the sheaf, so we get that $(A')_{-1} = A$. We see that $A$ will yield an Eilenberg--MacLane spectrum if:
+\begin{enumerate}
+    \item $A$ admits infinitely many deloopings
+    \item all the deloopings are strongly invariant.
+\end{enumerate}
+In other words we need $A$ to be a \textit{homotopy module}. We collect this discussion into a proposition for convenience.
+
+\begin{proposition} Any \textit{homotopy module} $A_\ast$ gives rise to an Eilenberg--MacLane spectrum $HA_\ast \in \SH(k)$.
+\end{proposition}
+
+This correspondence identifies the heart of the homotopy $t$-structure on motivic spectra with homotopy modules
+\begin{align*}
+    \SH(k)^\heart \simeq \HM(k).
+\end{align*}
+%
+
+\subsection{Cohomology and stable homotopy groups}
+
+By a completely analogous argument to \autoref{prop:cohom-representable-in-sheaves-of-spectra}, we have for any $X\in \Sm_k$ and $A \in \HM(k)$:
+\begin{align*}
+    H^n_\Nis(X, A_{-k}) &= \left[ \Sigma^\infty \Sigma^{n+k,k}X_+, \HA \right]_{\SH(k)}.
+\end{align*}
+%
+Similarly we can define stable homotopy groups which are bigraded via the following definition.
+
+\begin{definition} For $a,b\in \Z$ and $E \in \SH(k)$, we define $\pi_{a,b}(E)$ to be the sheaf attached to the presheaf
+\begin{align*}
+    U &\mapsto \left[ \Sigma^\infty \Sigma^{a,b} U_+, E \right]_{\SH(k)}.
+\end{align*}
+\end{definition}
+
 
 
 \chapter{Appendices}
