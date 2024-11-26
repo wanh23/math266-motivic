@@ -23,6 +23,7 @@
 \providecommand{\Bez}{\mathrm{B\acute{e}z}}
 \providecommand{\aff}{\mathrm{aff}}
 \providecommand{\HA}{\mathrm{HA}}
+\providecommand{\cn}{\mathrm{cn}}
 
 \let\smashprod\wedge
 
@@ -40,8 +41,13 @@
 
 \maketitle
 
-
+% TOC at the top just shows sections
 \setcounter{tocdepth}{1}
+
+% Minitocs for each chapter show subsections as well
+\setcounter{minitocdepth}{2}
+
+
 \tableofcontents{}
  
 
@@ -1817,9 +1823,12 @@ A way to say this is that ``$\infty$-connective morphisms are homotopy equivalen
 \end{theorem}
 
 Truncation and connectivity fit into fiber sequences
-\begin{align*}
-    \tau_{>n} \to \id \to \tau_{\le n},
-\end{align*}
+\begin{equation}\label{eqn:truncation-connectivity-fiber-seq}
+\begin{aligned}
+    \tau_{>n} \to \id \to \tau_{\le n}
+\end{aligned}
+\end{equation}
+%
 which allow us to form Postnikov towers out of objects of $\infty$-topoi:
 \[ \begin{tikzcd}
     & \tau_{\le n X}\dar \\
@@ -2011,10 +2020,10 @@ We have a strengthening of conditions here, but we notice that in the context of
 A \textit{vector bundle torsor} is an affine map $Y \to X$ which is a torsor for an algebraic vector bundle $E \to X$. Explicitly, $Y \to X$ is a Zariski locally trivial affine morphism with fibers isomorphic to affine space.
 \end{definition}
 
-\begin{example} If $X = \Spec(A)$ is an affine scheme, then algebraic vector bundle torsors over $X$ are the same as vector bundles over $X$.
+\begin{example} If $X = \Spec(A)$ is an affine scheme, then algebraic vector bundle torsors over $X$ are the same as vector bundles over $X$.\footnote{%
+Question - can we find an illuminating example of a non-affine $X$ for which vector bundle torsors and vector bundles don't agree?}
 \end{example}
 
-todo - find an example of a non-affine $X$ for which vector bundle torsors and vector bundles don't agree
 
 \begin{notation} Let $\Sm_S$ denote the category of smooth $S$-schemes of finite type over $S$. The finite type assumption is needed in order to guarantee that $\Sm_S$ is essentially small (see \autoref{thm:finite-type-schemes-essentially-small}).
 \end{notation}
@@ -3382,9 +3391,6 @@ This extends to a pullback of unramified sheaves of groups.
     is the 2-torsion in the Brauer group.
 \end{enumerate}
 \end{example}
-
-
-
 
 
 
@@ -5526,9 +5532,9 @@ The following are equivalent:
 
 The nerve provides an inclusion
 \begin{align*}
-    \Grpd \to \mathcal{S},
+    \Grpd \hookto \mathcal{S},
 \end{align*}
-which preserves commutative monoid objects.
+which preserves finite products, and hence preserves commutative monoid objects.
 
 \begin{definition} For a ring $R$, we define $K(R) \in \Ab(\mathcal{S})$ to be the group completion of the monoid of finitely generated projective $R$-modules $\Vect(R)$ under direct sum.
 \end{definition}
@@ -5580,6 +5586,12 @@ We have seen above that $\Vect^\gp$ is represented by a motivic space $\Z \times
 
 \begin{notation} We denote by $K^\cn = \tau_{\ge 0} K$ the connective cover of $K$-theory.
 \end{notation}
+
+We'll show algebraic $K$-theory is a Nisnevich sheaf, but first we provide a more general description of algebraic $K$-theory of a scheme $X$.
+
+\subsection{Interlude: perfect complexes}
+
+
 
 \subsection{Algebraic $K$-theory as a Nisnevich sheaf}
 
