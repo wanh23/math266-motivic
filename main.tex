@@ -5714,13 +5714,22 @@ If $G$ is a sheaf of groups and $M$ is a sheaf of $G$-modules, we define the \te
 \end{align*}
 \end{definition}
 
-This has the property that it represents twisted cohomology
-\begin{align*}
-    \left[ X, K^G(M,n) \right] = H^n(X,M(G)).
-\end{align*}
-%
+\begin{proposition} Twisted Eilenberg MacLane spaces have the following properties
+\begin{enumerate}
+    \item If $M$ and $G$ are strongly $\A^1$-invariant and $n\ge 2$, we have a fiber sequence \cite[4.17]{ABH-nilpotent}
+    \begin{align*}
+        K(M,n) \to K^G(M,n) \to BG.
+    \end{align*}
+    
+    \item Twisted Eilenberg--MacLane spaces represent cohomology with twisted coefficients
+    \begin{align*}
+        \left[ X, K^G(M,n) \right] = H^n(X,M(G)).
+    \end{align*}
+\end{enumerate}
+\end{proposition}
 
-\begin{proposition} (see \cite[6.1]{AF3fold}) If $X$ is a pointed connected motivic space, then $f_n \colon \tau_{\le n+1} X \to \tau_{\le n} X$ is a twisted $\A^1$-principal fibration, classified by a map
+
+\begin{proposition} (see \cite[6.1]{AF3}) If $X$ is a pointed connected motivic space, then $f_n \colon \tau_{\le n+1} X \to \tau_{\le n} X$ is a twisted $\A^1$-principal fibration, classified by a map
 \[\begin{tikzcd}
     \tau_{\le n+1}X\rar\dar["f_n" left]\pb & B\pi_1(X)\dar\\
     \tau_{\le n} X\rar["k_n" below] & {K^{\pi_1(X)}(\pi_{n+1}X, n+2)}.
