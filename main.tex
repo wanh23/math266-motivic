@@ -5678,6 +5678,272 @@ for $2\le i\le n-1$.
 \end{corollary}
 
 
+\section{Obstruction theory}
+
+We will carry out some basic obstruction theory computations with an eye towards classifying $\GL_n$-torsors. 
+
+\subsection{Postnikov towers, basic theory}
+
+Let $X \in \Shv_\Nis(\Sm_k)$ be a space in the sheaf topos. Then we recall its \textit{Postnikov tower} is of the form
+\begin{align*}
+    \tau_{\le n+1} X\to \tau_{\le n} X\to \cdots \to \tau_{\le 0}X,
+\end{align*}
+and as we are working over a field, the sheaf topos is hypercomplete, meaning
+\begin{align*}
+    X = \tau_{\le \infty} X = \lim_n \tau_{\le n}.
+\end{align*}
+%
+\begin{proposition} If $X$ is a pointed connected sheaf, we have fiber sequences of the form
+\begin{align*}
+    K(\pi_{n+1} X, n+1) \to \tau_{\le n+1} X \xto{f_n} \tau_{\le n} X.
+\end{align*}
+\end{proposition}
+\begin{proof} By \autoref{eqn:truncation-connectivity-fiber-seq}, we can apply the truncation fiber sequence to $\tau_{\le n+1} X$, and we get
+\begin{align*}
+    \tau_{\ge n+1} \tau_{\le n+1}X \to \tau_{\le n+1} X \to \tau_{\le n} \tau_{\le n+1} X,
+\end{align*}
+which is of the form above.
+\end{proof}
+
+We can ask whether $f_i$ is a \textit{principal} fibration, in that it is pulled back by a map into a classifying space. This turns out to almost be true, it is what is called a \textit{twisted principal fibration}.
+
+\begin{definition} \cite[B.2]{Morel}
+If $G$ is a sheaf of groups and $M$ is a sheaf of $G$-modules, we define the \textit{twisted Eilenberg--MacLane space} $K^G(M,n)$ to be the balanced product
+\begin{align*}
+    EG \times_G K(M,n).
+\end{align*}
+\end{definition}
+
+This has the property that it represents twisted cohomology
+\begin{align*}
+    \left[ X, K^G(M,n) \right] = H^n(X,M(G)).
+\end{align*}
+%
+
+\begin{proposition} (see \cite[6.1]{AF3fold}) If $X$ is a pointed connected motivic space, then $f_n \colon \tau_{\le n+1} X \to \tau_{\le n} X$ is a twisted $\A^1$-principal fibration, classified by a map
+\[\begin{tikzcd}
+    \tau_{\le n+1}X\rar\dar["f_n" left]\pb & B\pi_1(X)\dar\\
+    \tau_{\le n} X\rar["k_n" below] & {K^{\pi_1(X)}(\pi_{n+1}X, n+2)}.
+\end{tikzcd} \]
+\end{proposition}
+This latter map is called a $k$\textit{-invariant}.
+
+
+\begin{example} Suppose we're trying to cook up a map $X \to Y$. Then we can inductively define maps $X \to \tau_{\ge n}Y$, and show they lift along the $f_n$'s. In particular, we get a unique lift
+\[ \begin{tikzcd}
+     & \tau_{\le n+1}Y\dar["f_n" right]\\
+    X\rar\ar[ur,dashed] & \tau_{\le n}Y
+\end{tikzcd} \]
+if and only if the composite
+\begin{align*}
+    X \to \tau_{\le n}Y \xto{k_n} K^{\pi_1(Y)}\left( \pi_{n+1}Y, n+2 \right).
+\end{align*}
+vanishes. In other words, we get \textit{obstructions to lifting} lying in
+\begin{align*}
+    H^{n+2}(X, \pi_{n+1}(Y) \left( \pi_1(Y) \right)).
+\end{align*}
+\end{example}
+
+
+\begin{theorem} If $X$ has Krull dimension $d$, then any map $X \to Y$ is uniquely determined by $X \to \tau_{\le d-1}Y$.
+\end{theorem}
+\begin{proof} The Nisnevich cohomological dimension is bounded above by the Krull dimension, so $H^{k}(X,A) = 0$ for any $k>d$ and any sheaf of abelian groups $A$. In particular, $k_{d-1}$ and higher are trivial, so any map $X \to \tau_{\le d-1} Y$ lifts to $\tau_{\le d} Y$, and then all the way to $Y$.
+\end{proof}
+
+
+
+
+\begin{remark} Constructing a map $X \to Y$ by lifting up the Postnikov tower of $Y$ can be thought of as a \textit{relative} lift, by asking to lift along the map
+\[\begin{tikzcd}
+     & Y\dar\\
+    X\rar\ar[ur,dashed] & \ast.
+\end{tikzcd} \]
+More generally, given a map $Y \to Z$, we can break the lifting problem
+\[ \begin{tikzcd}
+     & Y\dar\\
+    X\rar\ar[ur,dashed] & Z
+\end{tikzcd} \]
+into a sequence of analogous stages. This relative situation is often called the \textit{Postnikov--Moore tower} attached to the map $Y \xto{f} Z$. Its theory is outlined in \cite[\S B]{Morel}.
+\end{remark}
+
+The key point is that if $f\colon Y \to Z$ is a fibration with fiber $F$, then the $k$-invariants for lifting $X \to Z$ along $f$ are valued in Eilenberg--MacLane spaces for the homotopy sheaves of $F$.
+
+
+
+A key application of this is the classification of torsors.
+
+
+
+\subsection{Grassmannians}
+
+Recall for any rank $r$ and number $n$, we have a scheme $\Gr(r,n) \in \Sm_\Z$. As a functor $\Sm_\Z^{\aff,\op} \to \Set$, it sends $R$ to the collection of epimorphisms of the form
+\begin{align*}
+    R^{\oplus n} \tto P,
+\end{align*}
+where $P$ is a projective module of rank $r$ over $R$. In other words, a map
+\begin{align*}
+    \Spec(R) \to \Gr_{r,n}
+\end{align*}
+classifies a finitely generated projective $R$-module $P$ of rank $r$, with $n$ generators.
+
+\begin{theorem} (Serre) If $R$ is a Noetherian ring, there is a bijection between algebraic vector bundles on $\Spec(R)$ and finitely generated projective $R$-modules.
+\end{theorem}
+
+From this perspective, we might ask for some algebraic version of a Pontryagin--Steenrod theorem, i.e. we might want some infinite Grassmannian for which homotopy classes of maps into it will classify algebraic vector bundles. The following result is a step in this direction.
+
+\begin{definition} Let $\Gr(r,\infty)$ denote the colimit $\colim_n \Gr(r,n)$, considered as a presheaf.
+\end{definition}
+
+\begin{proposition} (Morel--Voevodsky)
+There is an equivalence of motivic spaces $\Gr(r,\infty) \simeq \BGL_r$.
+\end{proposition}
+
+The following result is the strongest current version of an algebraic Pontryagin--Steenrod theorem.
+
+\begin{theorem} (Affine representability) If $X \in \Sm_k^\aff$ is any affine, then there is a bijection
+\begin{align*}
+    \left[ X, \BGL_r \right]_{\A^1} \cong \Vect_r^\alg(X)^{\simeq}
+\end{align*}
+between $\A^1$-homotopy classes of maps $X \to \BGL_r$ and rank $r$ algebraic vector bundles over $X$ up to isomorphism.
+\end{theorem}
+
+So if $R$ is a smooth affine $k$-algebra, \textit{every} finitely generated projective module over $R$ is classified by a map $\Spec(R) \to \BGL_r$. Moreover we have access to obstruction theory in order to study them.
+
+Implicit in this result (and indeed used in this result) is $\A^1$-invariance, which says that every finitely generated $R[t]$-module is extended from $R$. In the context of smooth affine algebras over a field, this result is originally due to Lindel.
+
+\subsection{Rank two oriented bundles}
+
+The short exact sequence of groups
+\begin{align*}
+    \SL_n \to \GL_n \xto{\det} \mathbb{G}_m
+\end{align*}
+gives rise to a fiber sequence
+\begin{align*}
+    \BSL_n \to \BGL_n \to B \mathbb{G}_m.
+\end{align*}
+In particular, if $X$ is affine, the composite
+\begin{align*}
+    X \to \BGL_n \xto{\det} B \mathbb{G}_m = \P^\infty
+\end{align*}
+is exactly the first Chern class $c_1 \in \Pic(X)$. Hence $\SL_n$-torsors are algebraic vector bundles with $c_1 = 0$.
+
+\begin{theorem} If $X = \Spec(R)$ is a smooth affine $k$-scheme of dimension 2, then a rank two finitely generated projective module over $X$ is completely determined by its $c_2$.
+\end{theorem}
+\begin{proof} We can analyze the Postnikov tower for $\BSL_2$. We have that $\pi_1(\BSL_2) = \ast$, so the first nontrivial stage occurs at degree 2, which is $\tau_{\le 2}\BSL_2 = K(\KMW_2,2)$. Since $X$ has Krull dimension two, we have that
+\begin{align*}
+    \left[ X,\BSL_2 \right] \cong \left[ X,\tau_{\le 2}\BSL_2 \right] = \left[ X, K(\KMW_2,2) \right] = \CHW^2(X).
+\end{align*}
+We can now ask to what extent this is determined by $c_2$. There is a universal $c_2$ map
+\begin{align*}
+    \BSL_2 \to K(\KM_2,2),
+\end{align*}
+which comes from the natural map $\KMW_2 \to \KM_2$ after 2-truncation. From the fiber sequence
+\begin{align*}
+    0 \to \mathbf{I}^3 \to \KMW_2 \to \KM_2 \to 0,
+\end{align*}
+we get part of a long exact sequence
+\begin{align*}
+    \cdots \to H^2(X,\mathbf{I}^3) \to H^2(X,\KMW_2) \to \CH^2(X) \to 0.
+\end{align*}
+So the number of algebraic vector bundles over $X$ with fixed $c_2$ is acted upon transitively by $H^2(X,\mathbf{I}^3)$. If $k = \bar{k}$, this set vanishes \cite[5.1]{AF3}. If $k$ is not algebraically closed, $H^2(X,\mathbf{I}^3)$ need not vanish, and it may in fact contain more data governing the structure of algebraic vector bundles. 
+\end{proof}
+
+\begin{example} (Fasel) Over the algebraic 2-sphere, there are infinitely many non-isomorphic rank two algebraic vector bundles with vanishing $c_1$ and $c_2$.
+\end{example}
+
+\subsection{The Swan--Forster theorem}
+
+This section is from soon-to-appear work of Asok, Opie, Shin and Syed.
+
+Suppose we're given a vector bundle of rank $r$ over a smooth affine $d$-fold $X$. This is classified by a map
+\begin{align*}
+    X \to \BGL_r = \Gr(r,\infty).
+\end{align*}
+%
+We can ask -- \textit{how many generators do we need to describe each module of rank $r$ over $X$}? In other words, where do the obstructions live to lifting
+\[ \begin{tikzcd}
+     & {\Gr(r,N)}\dar\\
+    X\rar\ar[ur,dashed] & {\Gr(r,\infty)}.
+\end{tikzcd} \]
+%
+Our intuition might be that once $N$ is large enough, we can obtain all rank $r$ finitely generated projective modules over $X$ via maps $X \to \Gr(r,N)$. We can make this precise with algebraic representability and motivic obstruction theory.
+
+\begin{proposition} The stabilization map
+\begin{align*}
+    \Gr(r,N) \to \Gr(r,N+1)
+\end{align*}
+is $N-r$-connective. That is, its fiber has homotopy sheaves vanishing in degrees below $N-r$.
+\end{proposition}
+
+\begin{theorem} If $A$ is a smooth $k$-algebra of dimension $d$, then every finitely generated projective $A$-module of rank $r$ needs at most $r+d$ generators.
+\end{theorem}
+\begin{proof} We want to study the lifting problem
+\[ \begin{tikzcd}
+     & {\Gr(r,N)}\dar\\
+    X\rar\ar[ur,dashed] & {\Gr(r,\infty).}
+\end{tikzcd} \]
+Let $F$ denote the fiber
+\begin{align*}
+    F \to \Gr(r,N) \to \Gr(r,\infty).
+\end{align*}
+Then the $k$-invariants are valued in
+\begin{align*}
+    H^{t+2}(X, \pi_{t+1}F).
+\end{align*}
+Hence $k_t$ vanishes for $t+2 \ge d+1$, i.e. $t\ge d-1$. Alternatively, we note that $\pi_t F = 0$ for $t \le N-r-1$. So we obtain vanishing in the range
+\begin{align*}
+    d-1 \le t \le N-r-1.
+\end{align*}
+If $N \ge r+d$, then all the $k$-invariants vanish, and there are no obstructions to lifting!
+\end{proof}
+
+
+
+\subsection{Fiber sequences involving $\BGL_r$}
+
+\begin{proposition} There is an $\A^1$-fiber sequence
+\begin{align*}
+    \GL_{r-1} \to \GL_r \to \A^r\minus 0,
+\end{align*}
+where the rightmost map sends an $r \times r$ matrix to its last column.
+\end{proposition}
+
+\begin{corollary} We obtain an $\A^1$-fiber sequence by delooping
+\begin{align*}
+    \A^r\minus 0 \to \BGL_{r-1} \to \BGL_r.
+\end{align*}
+\end{corollary}
+
+Now suppose we have some $X \in \Sm_k^\aff$, and we have a rank $r$ vector bundle over it. When does it split off a trivial summand? In other words when does it admit a lift of the form:
+\[ \begin{tikzcd}
+     & \BGL_{r-1}\dar\\
+    X\rar\ar[ur,dashed] & \BGL_r.
+\end{tikzcd} \]
+%
+
+\begin{theorem} (Murthy, 1994) If $X$ is a smooth affine $r$-fold over an algebraically closed field $k = \bar{k}$, then an algebraic vector bundle $E \to X$ of rank $r$ splits off a trivial rank one summand if and only if the top Chern class $c_r(E) \in \CH^r(X)$ is zero.
+\end{theorem}
+\begin{proof} The $k$-invariants are valued in
+\begin{align*}
+    k_t \in H^{t+2}(X, \pi_{t+1}(\A^r\minus 0)).
+\end{align*}
+This vanishes for $t\ge r-1$, and $\pi_{t+1}(\A^r\minus 0)$ is zero for $t \le r-3$, since the first nonvanishing homotopy sheaf of $\A^r\minus 0$ is $\pi_{r-1}(\A^2\minus 0)$. Hence there is only one nonvanishing $k$-invariant, which is
+\begin{align*}
+    k_{r-2} \in H^{r}(X, \pi_{r-1}(\A^r\minus 0)) = H^r(X,\KMW_r) = \CHW^r(X).
+\end{align*}
+%
+Again we have an exact sequence
+\begin{align*}
+    \cdots \to H^r(X,\mathbf{I}^{r+1}) \to \CHW^r(X) \to \CH^r(X) \to 0,
+\end{align*}
+and $H^r(X,\mathbf{I}^{r+1}) = 0$ over an algebraically closed field.
+\end{proof}
+
+\begin{remark} (Historical background) More generally given a rank $r$ algebraic vector bundle over a smooth $d$-dimensional affine variety, if $r>d$ then it splits off a trivial summand by Serre splitting and Bass cancellation. So $r=d$ is the first interesting case. For $r=d=2$, this was proven by Murthy and Swan \cite{MurthySwan}. Murthy and Mohan Kumar showed this for $r=d=3$ in \cite{KumarMurthy}, and finally Murthy proved the general result \cite{Murthy94}.
+\end{remark}
+
+
+
 
 
 \chapter{Appendices}
