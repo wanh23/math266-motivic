@@ -2605,8 +2605,14 @@ For the backwards direction, this condition on homotopy groups unwinds to tell u
 \end{terminology}
 
 
-\begin{example} We have that $S^{i+j,j}$ is $\A^1$-$(i-1)$-connected (see \cite[2.4.5]{AO-contractible}). In particular it depends only on the number of copies of $S^{1,0}$ and not on the number of copies of $\mathbb{G}_m$.
+\begin{example}\label{exa:connectivity-motivic-spheres} 
+We have that $S^{i+j,j}$ is $\A^1$-$(i-1)$-connected (see \cite[2.4.5]{AO-contractible}). In particular it depends only on the number of copies of $S^{1,0}$ and not on the number of copies of $\mathbb{G}_m$.
 \end{example}
+
+\begin{example}\label{exa:connectivity-punctured-affine-space}
+As a particular example, when $i=d-1$ and $j=d$, we obtain that punctured affine space $\A^d\minus\{0\} = S^{2d-1,d}$ is $\A^1$-$(d-2)$-connected. 
+\end{example}
+
 
 % \subsection{Testing $\A^1$-connectedness}
 
@@ -5906,6 +5912,9 @@ Hence $k_t$ vanishes for $t+2 \ge d+1$, i.e. $t\ge d-1$. Alternatively, we note 
 If $N \ge r+d$, then all the $k$-invariants vanish, and there are no obstructions to lifting!
 \end{proof}
 
+\begin{remark} The more general result can be found in \cite{Swan67}.
+\end{remark}
+
 
 
 \subsection{Fiber sequences involving $\BGL_r$}
@@ -5948,11 +5957,153 @@ Again we have an exact sequence
 and $H^r(X,\mathbf{I}^{r+1}) = 0$ over an algebraically closed field.
 \end{proof}
 
-\begin{remark} (Historical background) More generally given a rank $r$ algebraic vector bundle over a smooth $d$-dimensional affine variety, if $r>d$ then it splits off a trivial summand by Serre splitting and Bass cancellation. So $r=d$ is the first interesting case. For $r=d=2$, this was proven by Murthy and Swan \cite{MurthySwan}. Murthy and Mohan Kumar showed this for $r=d=3$ in \cite{KumarMurthy}, and finally Murthy proved the general result \cite{Murthy94}.
+Over algebraically closed field, the difficulty of these sorts of splitting problems is governed by the \textit{corank} of the associated bundle.
+
+\begin{definition} If $E \to X$ is an algebraic vector bundle of rank $r$ over a $d$-dimensional variety, we say its \textit{corank} is the quantity $d-r$.
+\end{definition}
+
+A famous result called \textit{Serre splitting} says that splitting problems are trivial in negative corank.
+
+\begin{theorem} \textit{(Serre splitting)} Let $R$ be a Noetherian ring of dimension $d$, and $M$ a projective $R$-module of rank $r > d$. Then $M$ decomposes as $M \cong M' \oplus R$ for some projective module $M'$ \cite[Theorem~1]{Serre-modulesprojectifs}.
+\end{theorem}
+
+Murthy's theorem can be rephrased as ``over an algebraically closed field, corank zero bundles split if and only if their top Chern class vanishes.''
+
+\begin{remark} (Historical background) For $r=d=2$, this was proven by Murthy and Swan \cite{MurthySwan}. Murthy and Mohan Kumar showed this for $r=d=3$ in \cite{KumarMurthy}, and finally Murthy proved the general result \cite{Murthy94}.
 \end{remark}
 
+The complexity of studying these sorts of splitting problems is governed by two factors:
+\begin{enumerate}
+    \item the 2-cohomological dimension of the base field
+    \item the \textit{corank} of the bundle.
+\end{enumerate}
+
+The next interesting case to study is corank one. Murthy conjectured essentially that an analogous result holds.
+
+\begin{conjecture} (Murthy, 1999) Over an algebraically closed field, if $X$ is a smooth affine variety of dimension $d$,\footnote{Note that this conjecture only makes sense when $d\ge 2$. If $d=1$, then a corank one bundle is rank zero and cannot split any further.} then a corank one bundle $E \to X$ splits if and only if its top Chern class $c_{d-1}(E)$ is zero.
+\end{conjecture}
+
+A quarter of a century later, this is now a theorem in characteristic zero.
+
+\begin{theorem} \cite[Theorem~3]{Freudenthal} (Asok--Bachmann--Hopkins) Murthy's splitting conjecture holds in characteristic zero.
+\end{theorem}
+
+The source of the assumption on the characteristic is essentially the same as in the work on the motivic Wilson space hypothesis we've been discussing in the Thursday seminar --- the existence of workable models for motivic Eilenberg--MacLane spaces due to Voevodsky.
+
+Our goal here is to give a rough explanation of how the characteristic zero Murthy's conjecture is resolved in this paper, and how it follows from the primary result of that paper, which is a $\P^1$-Freudenthal suspension theorem.
+
+\subsection{Murthy's splitting conjecture: the $k$-invariants}
+
+Recall by \autoref{} we have a fiber sequence
+\begin{align*}
+    S^{2d-1,d} \to \BGL_{d-1} \to \BGL_d.
+\end{align*}
+If $X$ has dimension $d+1$, then this is the lifting problem we're interested in studying:
+\[ \begin{tikzcd}
+     & \BGL_{d-1}\dar\\
+    X\rar["E" below]\ar[ur,dashed] & \BGL_d.
+\end{tikzcd} \]
+%
+The $k$-invariants as we have seen live in the (twisted) homology of the fiber, where the twist is by $\pi_1(\BGL_d)$, giving $\det E$. That is, our $k$-invariants are
+\begin{align*}
+    k_t \in H^{t+2}(X,\pi_{t+1}(S^{2d-1,d})(\det E)).
+\end{align*}
+%
+So we have that
+\begin{itemize}
+    \item $k_d$ and the higher $k$-invariants are all zero since $\dim(X) = d+1$
+    \item $k_{d-3}$ and the lower $k$-invariants are zero because of the connectivity of $S^{2d-1,d}$ (\todo check the numbers here)
+\end{itemize}
+So we have two interesting obstruction classes:
+\begin{enumerate}
+    \item the \textit{primary obstruction} $k_{d-2}$, which can be identified with the \textit{Euler class} of the bundle
+    \begin{align*}
+        k_{d-2}(E) = e(E) \in H^d(X,\pi_{d-1}(S^{2d-1,d})(\det E))
+    \end{align*}
+    \item the \textit{secondary obstruction} $k_{d-1}$, which is denoted by $o_2(E)$ in \cite{Freudenthal}:
+    \begin{align*}
+        k_{d-1}(E) = o_2(E) \in H^{d+1}(X,\pi_{d}(S^{2d-1,d})(\det E)).
+    \end{align*}
+\end{enumerate}
+Recall by \autoref{prop:punctured-affine-space-motivic-sphere} we have that $S^{2d-1,d}\simeq \A^d\minus\{0\}$, and by \autoref{exa:connectivity-punctured-affine-space}, we have that $S^{2d-1,d}$ is $\A^1$-($d-2$)-connected. In particular as we have seen (c.f. \autoref{3.18.2}), we get that
+\begin{align*}
+    \pi_n S^{2d-1,d} = \begin{cases} 0 & n\le d-2 \\ \KMW_d & n=d-1 \\ \text{mostly unknown} & n\ge d-2.\end{cases}
+\end{align*}
+We now see that the primary obstruction is a bit easier to manage.
+
+\begin{proposition} \cite[6.3.1]{AF-splitting}
+For a corank one bundle over an algebraically closed field, its Euler class is zero if and only if its top Chern class is zero.
+\end{proposition}
+\begin{proof} We can leverage the (twisted) short exact sequence
+\begin{align*}
+    0 \to \mathbf{I}^{d+1}(\det E) \to \KMW_d(\det E) \to \KM_d \to 0,
+\end{align*}
+and we get a long exact sequence, sending $e(E)\mapsto c_{d-1}(E)$:
+\begin{align*}
+    \cdots \to H^d(X, \mathbf{I}^{d+1}(\det E)) \to H^d(X, \KMW_d(\det E)) \to H^d(X, \KM_d) \to H^{d+1}(X, \mathbf{I}^{d+1}(\det E)) \to \cdots 
+\end{align*}
+The content of this proposition is then the vanishing of these $\mathbf{I}^j$ cohomology groups in the long exact sequence. This vanishing is proven in \cite[5.2]{AF3}, where the algebraic closure of the field is used. Note that this vanishing only holds for $\dim(X) \ge 2$, but this is the scope of Murthy's conjecture.
+\end{proof}
+
+Hence proving Murthy's conjecture reduces to showing the secondary obstruction vanishes. The hard part about this obstruction is that it is valued in $\pi_{d,0}(S^{2d-1,d})$. We understand a bit about the first stable homotopy groups of motivic spheres by work of R\"ondigs, Spitzweck and {\O}stv{\ae}r \cite{RSO}. Unfortunately, however, our sheaf of study lies outside the stable range.
+
+The issue then comes from understanding the stabilization map, and we note this is a $\P^1$-\textit{stabilization}!
 
 
+\subsection{$\P^1$-Freudenthal suspension}
+
+The Freudenthal suspension theorem we have seen deals with suspending by the simplicial sphere $S^1$. It is really barely motivic in flavor, it's just the classical (sheaf topos) Freudenthal suspension theorem, combined with the unstable connectivity theorem which tells us how connectivity statements behave under motivic localization. As the projective line has motivic weight, people have long been interested in proving a $\P^1$ (or equivalently a $\mathbb{G}_m$) Freudenthal suspension theorem.
+
+The first thing is to come up with a more refined notion of connectivity.
+
+\begin{definition} We say $X$ is $S^{p,q}$-\textit{null} if $\pi_n(X)_{-q} = 0$ for all $n \ge p-q$.
+\end{definition}
+
+Equivalently, there is a notion of unstable localization at spaces, due to Dror, and $X$ is $S^{p,q}$-null if $X \to L_{p,q}X$ is an equivalence.
+
+\begin{definition} We denote by $O(A)$ the collection of \textit{weakly $A$-cellular} spaces, meaning those spaces $X$ for which $L_A X\simeq \ast$.
+\end{definition}
+
+There is a universal process called \textit{cellularization}, denoted $\tau_{\ge(p,q)}(-)$. This has the universal property that $\Map(X,Y) \cong \Map(X,\tau_{\ge(p,q)}Y)$ if $X \in O(S^{p,q})$.
+
+
+\begin{example} If $A = S^{n,0}$, then $X$ is $S^{n,0}$-null if and only if it is $(n-1)$-truncated. $X \in O(S^{n,0})$ if and only if $X$ is $(n-1)$-connected.
+\end{example}
+
+\begin{theorem} (Motivic Freudenthal) If $X \in O(S^{2n,n})$ for $n\ge2$ and $k$ of characteristic zero, then the fiber of
+\begin{align*}
+    X \to \Omega^{2,1}\Sigma^{2,1}X
+\end{align*}
+is in $O(S^{4n-1,2n})$.
+\end{theorem}
+
+As an application, we can consider $X = S^{2d-1,d}$, and apply $\pi_d$ to get
+\begin{align*}
+    \pi_d(S^{2d-1,d}) \to \pi_d(\Omega^{2,1}S^{2d+1,d+1}) = \pi_{d+1}(S^{2d+1,d+1})_{-1},
+\end{align*}
+where the latter sheaf is in the stable range, and hence understandable by \cite{RSO}.
+
+\begin{theorem} \cite[7.2.1]{Freudenthal} For $d\ge4$ there is an exact sequence of sheaves
+\begin{align*}
+    0 \to \KM_{d+2}/24 \to \pi_d(S^{2d-1,d}) \to \pi_d(\tau_{\ge(2d-1,d)}\Omega^{2d,d}O) \to 0.
+\end{align*}
+\end{theorem}
+\begin{proof} Uses the main theorem of \cite{RSO} together with the motivic Freudenthal theorem to say something about stabilization.
+\end{proof}
+
+Hence we get a sequence
+\begin{align*}
+    \cdots \to H^{d+1}(X,\KM_{d+2}/24) \to H^{d+1}(X, \pi_d(S^{2d-1,d})) \to H^{d+1}(X, \pi_d(\tau_{\ge(2d-1,d)}\Omega^{2d,d}O)) \to \cdots 
+\end{align*}
+If $k$ is algebraically closed, and $X$ is a $(d+1)$-fold as assumed, we have that $\KM_{d+2}/24 = 0$. We have that the map
+\begin{align*}
+    \pi_d(\tau_{\ge(2d-1,d)}\Omega^{2d,d}O) \to \pi_d(\Omega^{2d,d}O)
+\end{align*}
+is an isomorphism after $d-3$ contractions, hence their $d+1$st cohomology groups agree. It suffices to argue then that $H^{d+1}(X,\pi_d(\Omega^{2d,d}O)) = 0$. By analysis of the Gersten resolution, we see this group is a quotient of $\CH^{d+1}(X)/2$:
+\begin{align*}
+    \CH^{d+1}(X)/2 \tto H^{d+1}(X, \pi_d(\Omega^{2d,d}O)).
+\end{align*}
+Note that $\CH^{d+1}(X)$ will be divisible coprime to the characteristic, hence $\CH^{d+1}(X)/2$ is zero.
 
 
 \chapter{Appendices}
@@ -5961,4 +6112,4 @@ and $H^r(X,\mathbf{I}^{r+1}) = 0$ over an algebraically closed field.
 
 
 \printbibliography
-\end{document}
+\end{document}exa:connectivity-motivic-spheres
