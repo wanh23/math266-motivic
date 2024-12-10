@@ -59,15 +59,33 @@
 
 \section*{About these notes}
 
-These are notes for a topics class taught at Harvard in Fall 2024. Notes are being updated twice a week with new lectures. Please send any and all changes to
+These are notes for a topics class taught at Harvard in Fall 2024. The most recent version can be found on GitHub, where \textbf{I highly encourage you to submit edits and suggestions}:
 \begin{center}
     \href{https://github.com/tbrazel/math266-motivic}{https://github.com/tbrazel/math266-motivic}
 \end{center}
-Thank you to Merrick Cai, Juan Fernando Valdes, Jake Levinson, Isabel Longbottom, Sof\'ia Marlasca Aparicio, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions.
+
+\textbf{What isn't in these notes?} A ton of core principles in motivic homotopy theory, for instance: purity, six functors formalism, the motivic complexes $\Z(q)$,... Despite the concise title, these notes are not intended to be a sprawling survey of all techniques in motivic homotopy theory, but rather a geodesic towards the motivic obstruction that allows us to talk about classification of torsors over smooth affine varieties. To that end, these notes shouldn't be viewed as a supplement to Morel's book or even a replacement for it. Rather it is a primer for people interested in the Asok--Fasel--et. al. program of research.
+
+To that end, we treat the classification of torsors as \textit{motivation} for constructing motivic spaces. It is important to note that this is very ahistorical, and is done only for pedagogical reasons. Although affine representability was one of the key early results explored by Morel, motivic spaces and spectra were developed in order to house theories such as algebraic $K$-theory, Bloch's higher Chow groups, and to grow new theories such as algebraic cobordism. We chose this route for a few reasons:
+\begin{enumerate}
+    \item The Fall 2024 Thursday seminar is on the Wilson space hypothesis, so we're hoping this class will contrast nicely and provide some foundational background in techniques in motivic obstruction theory.
+    \item In order to tailor the course to a broader audience, we'd like to unify the class around a key question which has general appeal, so we've picked the classification of torsors over affine varieties using motivic methods as such a question. This has certain advantages, for instance we can pause in the sheaf topos and discuss classifying torsors there before building motivic spaces --- this vista is useful to people across many fields.
+\end{enumerate}
+
+\textbf{Why did you spend so long on X if you're trying to get to affine representability?} Perhaps the most mathematical mathematician, guided by pure force of will, can teach towards a singular goal, each word building towards this grand horizon. I haven't had the pleasure of meeting this person. The rest of us are tempted by the many sprawling inviting tangents that open their doors to us along the way, and what you're reading is my ambling path.
+
+\textbf{What background is assumed?} We're assuming a strong handle of algebraic geometry and category theory, and a fair bit of familiarity with commutative algebra and homotopy theory. We'll see very quickly that $\infty$-categories (and/or model categories) are needed in order to develop the setting in which we wish to work. We've elected to take the $\infty$-categorical approach, since it streamlines many of the constructions and key ideas, at the cost of being a high technical investment; for this reason we've done our best to make the $\infty$-categorical machinery easy to black box. The reader should be aware that while the categorical language will be heavy in the first half of these notes, it will quickly fade into the background as we become familiar with the ambient setting we're working in and can set our focus towards computations.
+
+
+
+
+\section*{Acknowledgements}
+
+Thank you to Howard Beck, Merrick Cai, Juan Fernando Valdes, Jake Levinson, Isabel Longbottom, Sof\'ia Marlasca Aparicio, Matthew Niemiro, and Natalie Stewart for valuable changes and suggestions to these notes.
 
 Thank you to Aravind Asok, Tom Bachmann, Elden Elmanto, Niels Feld, Mike Hopkins, and Matthias Wendt for answering random motivic questions.
 
-Thank you to Maxine Calle, Connor Cassady, David Chan, Liam Keenan, and Maxmilien P\'eroux for letting be bother them about technical non-motivic questions.
+Thank you to Maxine Calle, Connor Cassady, David Chan, Liam Keenan, and Maximilien P\'eroux for letting be bother them about technical non-motivic questions.
 
 
 \section{Introduction}
@@ -90,15 +108,24 @@ After taking $\Spec$ everywhere, this becomes
 \begin{align*}
     \Hom_\Sch(\Spec(R),\mathbb{G}_m) \to \Hom_\Sch(\Spec(R[t]),\mathbb{G}_m).
 \end{align*}
-We therefore might rephrase \autoref{eqn:units-rings} as saying that $\Hom_{\Sch}(-,\mathbb{G}_m)$ is \textit{$\A^1$-invariant}, at least when we plug in something reduced.
+We therefore might rephrase \autoref{eqn:units-rings} as saying that the representable functor $\Hom_{\Sch}(-,\mathbb{G}_m)$ is \textit{$\A^1$-invariant}, at least when we plug in something reduced.
 \end{example}
 
 \begin{example} Let $k$ be a field. Then the functor $k \to k[t_1, \ldots, t_n]$ induces an extension of scalars map
-\begin{align*}
+\begin{equation}\label{eqn:extn-scalars}
+\begin{aligned}
     \Mod_k &\to \Mod_{k[t_1, \ldots, t_n]} \\
     M &\mapsto M \otimes_k k[t_1, \ldots, t_n].
-\end{align*}
+\end{aligned}
+\end{equation}
 \textbf{Serre's Problem}: Is every finitely generated $k[t_1, \ldots, t_n]$-module free?
+
+We can rephrase this in a few ways:
+\begin{enumerate}
+    \item Is the functor
+\end{enumerate}
+
+
 
 Recall finitely generated projective $R$-modules are the same as ``algebraic vector bundles'' over $\Spec(R)$, so we're asking whether every algebraic vector bundle on $\A^n_k$ is trivial.
 
@@ -191,43 +218,21 @@ Therefore any homotopy invariant functor out of spaces provides another example 
 \end{align*}
 \end{example}
 
+These observations lead to the following curiosity:
 
-\textbf{Q}: Can we build a homotopy theory of algebraic varieties in which the affine line $\A^1$ plays the role that the interval $[0,1]$ plays in classical topology?
+\textbf{Motivational question}: Can we build a homotopy theory of algebraic varieties in which the affine line $\A^1$ plays the role that the interval $[0,1]$ plays in classical topology?
 
-\textbf{A}: Yes! This is what's known as \textit{$\A^1$-homotopy theory} or \textit{motivic homotopy theory}. This dates back to Morel and Voevodsky's seminal work in 1999, but many ideas date back to work of Karoubi--Villamayor, Jardine, Weibel in the 1980's, work of Brown, Gersten, Illusie and Joyal in the 1970's, and of Quillen and Grothendieck in the 1960's.
+This is what's known as \textit{$\A^1$-homotopy theory} or \textit{motivic homotopy theory}. This dates back to Morel and Voevodsky's seminal work in 1999, but many ideas date back to work of Karoubi--Villamayor, Jardine, Weibel in the 1980's, work of Brown, Gersten, Illusie and Joyal in the 1970's, and of Quillen and Grothendieck in the 1960's.
 
-\textbf{Q}: What can we do with motivic homotopy theory?
+% \textbf{Q}: What can we do with motivic homotopy theory?
 
-\textbf{A}: Motivic homotopy theory blends algebraic geometry and topology in a beautiful way, allowing us to do many things. A short list is:
-\begin{itemize}
-    \item we obtain a natural home for these kinds of $\A^1$-invariant cohomology theories of varieties, and can study them in a method analogous to algebraic topology (e.g. we can classify cohomology operations, use fiber sequences to carry out computations, unify various spectral sequences, etc.)
-    \item we have access to obstruction theory for classifying torsors over affine varieties --- recent success in this direction is Asok--Bachmann--Hopkins' resolution of Murthy's conjecture
-    \item we can eliminate differentials in the Adams spectral sequence via looking at their motivic depth (citation needed)
-\end{itemize}
+% \textbf{A}: Motivic homotopy theory blends algebraic geometry and topology in a beautiful way, allowing us to do many things. A short list is:
+% \begin{itemize}
+%     \item we obtain a natural home for these kinds of $\A^1$-invariant cohomology theories of varieties, and can study them in a method analogous to algebraic topology (e.g. we can classify cohomology operations, use fiber sequences to carry out computations, unify various spectral sequences, etc.)
+%     \item we have access to obstruction theory for classifying torsors over affine varieties --- recent success in this direction is Asok--Bachmann--Hopkins' resolution of Murthy's conjecture \cite{Freudenthal}
+%     \item we can eliminate differentials in the Adams spectral sequence via looking at their motivic depth (citation needed)
+% \end{itemize}
 
-\textbf{Q}: What techniques will we learn in this class?
-
-\textbf{A}: We should be able to do the following things:
-\begin{itemize}
-    \item learn descent and torsors more thoroughly, and unify perspectives on sheaves and stacks using higher categorical language
-    \item work with $\infty$-categories at a very basic level
-    \item learn how to work with motivic spaces and do computations
-    \item learn motivic obstruction theory and its applications
-\end{itemize}
-
-\subsection{A bit more about these notes}
-
-\begin{remark} \textit{(Transparency about pedagogy)} We're going to place affine representability on the horizon and keep our eyes fixed on it in order to motivate the category of motivic spaces. This is of course ahistorical--- although affine representability was one of the key early results explored by Morel, motivic spaces and spectra were developed in order to house theories such as algebraic $K$-theory, Bloch's higher Chow groups, and to grow new theories such as algebraic cobordism. We chose this route for a few reasons:
-\begin{enumerate}
-    \item The Fall 2024 Thursday seminar is on the motivic Steenrod algebra, so we're hoping this class will contrast nicely and provide some foundational background in techniques in motivic obstruction theory.
-    \item In order to tailor the course to a broader audience, we'd like to unify the class around a key question which has general appeal, so we've picked the classification of torsors over affine varieties using motivic methods as such a question. This has certain advantages, for instance we can pause in the sheaf topos and discuss classifying torsors there before building motivic spaces --- this vista is useful to people across many fields.
-
-    \item This forces us to spend a bit longer on descent and torsors, two words which strike fear in the heart of many, and are worth investing some more time in.
-\end{enumerate}
-\end{remark}
-
-\begin{remark} \textit{(On background)} We're assuming a strong handle of algebraic geometry and category theory, and a fair bit of familiarity with commutative algebra and homotopy theory. We'll see very quickly that $\infty$-categories (and/or model categories) are needed in order to develop the setting in which we wish to work. We've elected to take the $\infty$-categorical approach, since it streamlines many of the constructions and key ideas, at the cost of being a high technical investment; for this reason we've done our best to make the $\infty$-categorical machinery easy to black box. The reader should be aware that while the categorical language will be heavy in the first half of these notes, it will quickly fade into the background as we become familiar with the ambient setting we're working in and can set our focus towards computations.
-\end{remark}
 
 \chapter{Torsors}
 \minitoc
