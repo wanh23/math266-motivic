@@ -1,4 +1,6 @@
 \documentclass[11pt,openany]{book}
+\usepackage[utf8]{inputenc} % usually not needed (loaded by default)
+% \usepackage[T1]{fontenc}
 \usepackage[page,toc,titletoc,title]{appendix}
 \usepackage{minitoc}
 % Bibliography stuff
@@ -6050,7 +6052,9 @@ and we get a long exact sequence, sending $e(E)\mapsto c_{d-1}(E)$:
 The content of this proposition is then the vanishing of these $\mathbf{I}^j$ cohomology groups in the long exact sequence. This vanishing is proven in \cite[5.2]{AF3}, where the algebraic closure of the field is used. Note that this vanishing only holds for $\dim(X) \ge 2$, but this is the scope of Murthy's conjecture.
 \end{proof}
 
-Hence proving Murthy's conjecture reduces to showing the secondary obstruction vanishes. The hard part about this obstruction is that it is valued in $\pi_{d,0}(S^{2d-1,d})$. We understand a bit about the first stable homotopy groups of motivic spheres by work of R\"ondigs, Spitzweck and {\O}stv{\ae}r \cite{RSO}. Unfortunately, however, our sheaf of study lies outside the stable range.
+Hence proving Murthy's conjecture reduces to showing the secondary obstruction vanishes. 
+The hard part about this obstruction is that it is valued in $\pi_{d,0}(S^{2d-1,d})$. 
+We understand a bit about the first stable homotopy groups of motivic spheres by \cite{RSO}. Unfortunately, however, our sheaf of study lies outside the stable range.
 
 The issue then comes from understanding the stabilization map, and we note this is a $\P^1$-\textit{stabilization}!
 
