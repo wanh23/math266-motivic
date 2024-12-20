@@ -16,7 +16,7 @@ Note that this problem can be reinterpreted geometrically as asking whether ever
     Every finitely generated projective $k[t_1,\ldots,t_n]$-module is free.
 \end{theorem}
 
-Quillen's proof of this theorem was quite sophisticated, introducing an ingenious technique called Quillen patching. Following Suslin and Quillen's original proofs in 1976, Suslin and Vaserstein independently produced new, elementary proofs of the Quillen--Suslin theorem. Roughly speaking, Suslin (in a letter to Bass dated May 2, 1976, apparently\footnote{at least, this is how the proof was cited in \cite[Chapter III]{Lam_Serre_Problem}}) provided a ``linear-algebraic" proof showing that the ring $k[t_1,\ldots,t_n]$ is a \textit{Hermite ring}, which means that unimodular rows valued in the ring can be completed to invertible matrices; it is known that finitely generated projective modules over a Hermite ring are free. Soon after, Vaserstein\footnote{in unpublished notes cited by \cite[Chapter III]{Lam_Serre_Problem}} provided another elementary proof (colloquially known as ``Vaserstein’s 8-line proof") of the Quillen--Suslin theorem using the theory of unimodular rows. The details of Suslin's and Vaserstein's proofs are beyond the scope of this appendix (in particular, not germane to motivic homotopy theory), and we refer the reader to \cite[Chapter III]{Lam_Serre_Problem} for an excellent exposition of these proofs. However, we use their proofs as motivation for studying unimodular rows. At a very high level, unimodular rows in a $k$-algebra $A$ control the surjective ring homomorphisms $A^{\oplus n} \to A$ and are thus ubiquitous in algebraic K-theory. We will discuss toward the end of this note some applications to the study of stably free modules over a smooth algebra, for instance.
+Quillen's proof of this theorem was quite sophisticated, introducing an ingenious technique called Quillen patching. Following Suslin and Quillen's original proofs in 1976, Suslin and Vaserstein independently produced new, elementary proofs of the Quillen--Suslin theorem. Roughly speaking, Suslin (in a letter to Bass dated May 2, 1976, apparently\footnote{at least, this is how the proof was cited in \cite[Chapter III]{Lam_Serre_Problem}}) provided a ``linear-algebraic" proof showing that the ring $k[t_1,\ldots,t_n]$ is a \textit{Hermite ring}, which means that unimodular rows valued in the ring can be completed to invertible matrices; it is known that finitely generated projective modules over a Hermite ring are free. Soon after, Vaserstein\footnote{in unpublished notes cited by \cite[Chapter III]{Lam_Serre_Problem}} provided another elementary proof (colloquially known as ``Vaserstein’s 8-line proof") of the Quillen--Suslin theorem using the theory of unimodular rows. The details of Suslin's and Vaserstein's proofs are beyond the scope of this appendix (in particular, not germane to motivic homotopy theory), and we refer the reader to \cite[Chapter III]{Lam_Serre_Problem} for an excellent exposition of these proofs. However, we use their proofs as motivation for studying unimodular rows. At a very high level, unimodular rows in a $k$-algebra $A$ control the surjective ring homomorphisms $A^{\oplus n} \to A$ and are thus ubiquitous in algebraic $K$-theory. We will discuss toward the end of this note some applications to the study of stably free modules over a smooth algebra, for instance.
 
 \subsubsection{Background} 
 
@@ -59,7 +59,7 @@ Van der Kallen asked whether his theorem above can be extended to the algebraic 
     where the right-hand side denotes the set of $\A^1$-homotopy classes of maps $\Spec A \to \A^n_k \setminus\{0\}$.
 \end{theorem}
 
-In this sense, we can say that $\A^n_k \setminus\{0\}$ represents the functor $k\mathsf{-Alg} \to \mathsf{Set}$ given by $A \mapsto \mathrm{Um}_n(A)/E_n(A)$ in the category of motivic spaces. Under some dimensionality assumptions on the ring $A$, van der Kallen endows the left-hand side of (\ref{eqn:fasel_bijection}) with the structure of an abelian group. With the same assumptions, the right-hand side can also be equipped with the structure of an abelian group coming from the co-H-space structure on $\A_n^k\setminus\{0\}$. Completing the analogy with van der Kallen's topological result, Lerbet \cite{LERBET2024109415} shows that Fasel's bijection is in fact a group isomorphism whenever these group structures can be defined. That is, our goal is to build up to the following theorem.
+In this sense, we can say that $\A^n_k \setminus\{0\}$ represents the functor $k\mathsf{-Alg} \to \mathsf{Set}$ given by $A \mapsto \mathrm{Um}_n(A)/E_n(A)$ in the category of motivic spaces. Under some dimensionality assumptions on the ring $A$, van der Kallen endows the left-hand side of (\ref{eqn:fasel_bijection}) with the structure of an abelian group. With the same assumptions, the right-hand side can also be equipped with the structure of an abelian group coming from the co-H-space structure on $\A_k^n\setminus\{0\}$. Completing the analogy with van der Kallen's topological result, Lerbet \cite{LERBET2024109415} shows that Fasel's bijection is in fact a group isomorphism whenever these group structures can be defined. That is, our goal is to build up to the following theorem.
 
 \begin{theorem}[Lerbet, 2024]
     Suppose $A$ has Krull dimension at most $2n-4$. Then, the bijection (\ref{eqn:fasel_bijection}) is a group isomorphism.
@@ -72,9 +72,9 @@ A natural question is to ask for an explicit computation of the group $\operator
 \begin{theorem}[Fasel, 2010]\label{thm:fasel_cohomology}
     Let $k$ be a perfect field of characteristic not equal to two, and suppose $A$ is a smooth $k$-algebra of Krull dimension $d = n-1 \geq 2$. There exists a natural isomorphism 
     \[
-    \mathrm{Um}_n(A)/E_n(A) \xto{\sim} H^{n-1}(\Spec A,K_{n}^{MW}),
+    \mathrm{Um}_n(A)/E_n(A) \xto{\sim} H^{n-1}(\Spec A,\KMW_n),
     \]
-    where $K_*^{MW}$ is the Milnor--Witt sheaf.
+    where $\KMW_\ast$ is the Milnor--Witt sheaf.
 \end{theorem}
 
 Using this theorem, Fasel explicitly computes the group $\mathrm{Um}_n(A)/E_n(A)$ in some exceptional cases. Fasel's work in this direction, building on previous work of Morel, also has some applications to the study of stably free modules, which we briefly mention at the end of this note.
@@ -89,7 +89,7 @@ In this relatively brief section, we provide an exposition of Fasel's proof of T
 \]
 Note that Theorem \ref{thm:fasel} holds without any restrictions on the stable dimension of $A$.
 
-Strictly speaking, Fasel establishes a more concrete version of the bijection above, in terms of naive homotopy classes of maps $\Spec A \to \A^n_k\setminus\{0\}$. As we will soon see, his result is readily reframed in terms of honest $\A^1$-homotopy classes, and we choose to reframe his result in these terms since (1) it keeps in line with the content of this course and (2) more importantly, it sets up the framework for Lerbet's group structure theorem. Recall that a naive $\A^1$-homotopy between maps $f,g: X \to Y$ of $k$-schemes is a morphism $H: X \times_k \A^1_k \to Y$ such that the following diagram commutes:
+Strictly speaking, Fasel establishes a more concrete version of the bijection above, in terms of naive homotopy classes of maps $\Spec A \to \A^n_k\setminus\{0\}$. As we will soon see, his result is readily reframed in terms of honest $\A^1$-homotopy classes, and we choose to reframe his result in these terms since (1) it keeps in line with the content of this course and (2) more importantly, it sets up the framework for Lerbet's group structure theorem. Recall that a naive $\A^1$-homotopy between maps $f,g\colon X \to Y$ of $k$-schemes is a morphism $H\colon X \times_k \A^1_k \to Y$ such that the following diagram commutes:
 % https://q.uiver.app/#q=WzAsNCxbMywxLCJZIl0sWzAsMCwiWCBcXHRpbWVzXFx7MFxcfSJdLFswLDIsIlggXFx0aW1lcyBcXHsxXFx9Il0sWzEsMSwiWCBcXHRpbWVzXFxtYXRoYmJ7QX1eMV9rIl0sWzEsMywiIiwwLHsic3R5bGUiOnsidGFpbCI6eyJuYW1lIjoiaG9vayIsInNpZGUiOiJib3R0b20ifX19XSxbMSwwLCJmIFxcdGltZXMgXFxvcGVyYXRvcm5hbWV7aWR9X3tcXHswXFx9fSJdLFsyLDAsImcgXFx0aW1lcyBcXG9wZXJhdG9ybmFtZXtpZH1fe1xcezFcXH19IiwyXSxbMywwLCJIIiwxXSxbMiwzLCIiLDIseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dXQ==
 \[\begin{tikzcd}
 	{X \times\{0\}} \\
@@ -101,14 +101,14 @@ Strictly speaking, Fasel establishes a more concrete version of the bijection ab
 	\arrow[hook, from=3-1, to=2-2]
 	\arrow["{g \times \operatorname{id}_{\{1\}}}"', from=3-1, to=2-4]
 \end{tikzcd}\]
-In ring-theoretic terms, if $Y = \Spec B$ and $X = \Spec A$, a naive $\A^1$-homotopy between the corresponding ring maps $f^\sharp, g^\sharp: B \to A$ amounts to a map $H^\sharp: B \to A[t]$ such that $H^\sharp(0) = f^\sharp$ and $H^\sharp(1) = g^\sharp$. Here (and henceforth), for any $\alpha \in A$, we use the notation $H^\sharp(\alpha): B \to A$ to denote the composition of $H^\sharp$ with the quotient map $A[t] \to A[t]/(t - \alpha) \cong A$.
+In ring-theoretic terms, if $Y = \Spec B$ and $X = \Spec A$, a naive $\A^1$-homotopy between the corresponding ring maps $f^\sharp, g^\sharp\colon B \to A$ amounts to a map $H^\sharp\colon B \to A[t]$ such that $H^\sharp(0) = f^\sharp$ and $H^\sharp(1) = g^\sharp$. Here (and henceforth), for any $\alpha \in A$, we use the notation $H^\sharp(\alpha)\colon B \to A$ to denote the composition of $H^\sharp$ with the quotient map $A[t] \to A[t]/(t - \alpha) \cong A$.
 
 \begin{proposition}\cite[Theorem 2.1]{Fasel_2010}\label{prop:fasel_naive}
     There exists natural bijection
     \[
     \mathrm{Um}_n(A)/E_n(A) \xto{\sim} [\Spec A, \A^n_k\setminus \{0\}]_{N},
     \]
-    where the right-hand side denotes the set of \textit{naive} $\A^1$-homotopy classes of maps $\Spec A \to \A^n_k$. 
+    where the right-hand side denotes the set of \textit{naive} $\A^1$-homotopy classes of maps $\Spec A \to \A^n_k \setminus\{0\}$. 
 \end{proposition}
 
 \begin{remark}
@@ -120,9 +120,9 @@ In ring-theoretic terms, if $Y = \Spec B$ and $X = \Spec A$, a naive $\A^1$-homo
 \end{remark}
 
 \begin{proof}[Proof of Proposition \ref{prop:fasel_naive}]
-    We follow the proof given by Fasel in \cite[Theorem 2.1]{Fasel_2010}, adding more detail where appropriate. Thanks to Proposition \ref{prop:unimodular-basic}, it suffices to prove that (1) unimodular rows belonging to the same orbit define naively homotopic morphisms and (2) if two unimodular rows define naively homotopic morphisms, then they belong to the same orbit. Given a unimodular row $u \in \operatorname{Um}_n(A)$, let $\psi_u: \Spec A \to \A^n\setminus\{0\}$ denote the induced morphism. 
+    We follow the proof given by Fasel in \cite[Theorem 2.1]{Fasel_2010}, adding more detail where appropriate. Thanks to Proposition \ref{prop:unimodular-basic}, it suffices to prove that (1) unimodular rows belonging to the same orbit define naively homotopic morphisms and (2) if two unimodular rows define naively homotopic morphisms, then they belong to the same orbit. Given a unimodular row $u \in \operatorname{Um}_n(A)$, let $\psi_u\colon \Spec A \to \A^n\setminus\{0\}$ denote the induced morphism. 
 
-    Claim (1) is relatively straightforward. Letting $E_n$ denote the group scheme of elementary matrices, we can understand elements of $E_n(A)$ as morphisms $M: \Spec A \to E_n$. Given a unimodular row $u \in \mathrm{Um}_n(A)$, the morphism $\psi_{uM}: \Spec A \to \A^n\setminus\{0\}$ is the composition
+    Claim (1) is relatively straightforward. Letting $E_n$ denote the group scheme of elementary matrices, we can understand elements of $E_n(A)$ as morphisms $M\colon \Spec A \to E_n$. Given a unimodular row $u \in \mathrm{Um}_n(A)$, the morphism $\psi_{uM}\colon \Spec A \to \A^n\setminus\{0\}$ is the composition
     \[
     \Spec A \xto{\Delta} \Spec A \times \Spec A \xto{\psi_u \times M} \A^n\setminus\{0\} \times E_n \to \A^n \setminus \{0\}, 
     \]
@@ -136,10 +136,10 @@ In ring-theoretic terms, if $Y = \Spec B$ and $X = \Spec A$, a naive $\A^1$-homo
     \[
     0 \to B(0) \to A^n \xto{U(0) = u_0} A \to 0.
     \]
-    Tensor this sequence up by $A[t]$. Observe that the \textit{same} copy of $B(0)[t] = B \subset A$ is the kernel of both $U(t): A[t]^n \to A[t]$ and the constant map $u_0: A[t]^n \to A[t]$. Since both maps induce a splitting $A[t]^n \cong A[t] \oplus B$, there must exist an automorphism $\alpha: A[t]^n \to A[t]^n$ fixing $B$ and satisfying $u_0 \circ \alpha = U(t)$. Moreover, note that $\psi_0$ is the identity since $U(0) = u_0$. A result of Vorst \cite{Vorst} shows that $\alpha$ can be identified with an elementary matrix $E(t) \in E_n(A[t])$. It follows that $u_0 \circ E(1) = U(1) = u_1$, as desired.
+    Tensor this sequence up by $A[t]$. Observe that the \textit{same} copy of $B(0)[t] = B \subset A$ is the kernel of both $U(t)\colon A[t]^n \to A[t]$ and the constant map $u_0\colon A[t]^n \to A[t]$. Since both maps induce a splitting $A[t]^n \cong A[t] \oplus B$, there must exist an automorphism $\alpha\colon A[t]^n \to A[t]^n$ fixing $B$ and satisfying $u_0 \circ \alpha = U(t)$. Moreover, note that $\psi_0$ is the identity since $U(0) = u_0$. A result of Vorst \cite{Vorst} shows that $\alpha$ can be identified with an elementary matrix $E(t) \in E_n(A[t])$. It follows that $u_0 \circ E(1) = U(1) = u_1$, as desired.
 \end{proof}
 
-To re-express Fasel's result about naive homotopy classes as a result about $\A^1$-homotopy classes, we will use the fact that $\A^n \setminus \{0\}$ is $\A^1$-naive. Recall that a simplicial presheaf $F \in \PSh(\Sm_k)$ is called \textit{$\A^1$-naive} if for every smooth affine $k$-scheme $U$, we have an equivalence
+To re-express Fasel's result about naive homotopy classes as a result about $\A^1$-homotopy classes, we will use the fact that $\A^n \setminus \{0\}$ is $\A^1$-naive. Recall by \autoref{def:a1-naive} that a simplicial presheaf $F \in \PSh(\Sm_k)$ is called \textit{$\A^1$-naive} if for every smooth affine $k$-scheme $U$, we have an equivalence
 \[
 L_{\A^1}(F)(U) \xto{\sim} L_{\operatorname{mot}}(F)(U).
 \]
@@ -153,7 +153,7 @@ For our purposes, the most important consequence is that naive homotopy classes 
 \end{lemma}
 
 \begin{proof}
-    A direct application of \cite[Corollary 4.2.6]{AHW2}.
+    This is a direct application of \cite[Corollary 4.2.6]{AHW2}.
 \end{proof}
 
 Combining the lemma above with Proposition \ref{prop:fasel_naive}, we have proven
@@ -169,7 +169,7 @@ In this section, we discuss the natural group structure on $\mathrm{Um}_n(A)/E_n
 \subsubsection{Weak Mennicke Symbols}
 
 \begin{definition}\label{def:wms}
-    Let $G$ be a group. A weak Mennicke symbol on $\mathrm{Um}_n(A)$ is a map of sets $\mu: \mathrm{Um}_n(A) \to G$ satisfying the following relations:
+    Let $G$ be a group. A \textit{weak Mennicke symbol} on $\mathrm{Um}_n(A)$ is a map of sets $\mu\colon \mathrm{Um}_n(A) \to G$ satisfying the following relations:
     \begin{itemize}
         \item[(i)] The map $\mu$ is invariant under the right-action of $E_n(A)$. That is, for any elementary matrix $E$ and for any $u \in \mathrm{Um}_n(A)$, we have $\mu(uE) = \mu(u)$. In other words, the map $\mu$ factors through the quotient $\mathrm{Um}_n(A) \to \mathrm{Um}_n(A)/E_n(A)$. 
         \item[(ii)] For any pair of unimodular rows $u,u' \in \mathrm{Um}_n(A)$ of the form $u = (a,u_2,\ldots,u_n)$ and $u' = (1+a,u_2,\ldots,u_n)$ and for any $r \in A$ such that $r(1 + a) = a$ modulo the ideal $\langle u_2,\ldots,u_n\rangle$, we have $\phi(u) = \phi(u'')\phi(u')$, where $u'' = (r,u_2,\ldots,u_n)$ (it can be shown that this sequence is also a unimodular row). 
@@ -177,7 +177,7 @@ In this section, we discuss the natural group structure on $\mathrm{Um}_n(A)/E_n
 \end{definition}
 
 \begin{remark}
-    Van der Kallen uses the terminology ``weak" Mennicke symbol because the axioms above do indeed give a weaker definition of the Mennicke symbols introduced by Suslin \cite{suslin2006mennicke} for the algebraic K-theory of fields.
+    Van der Kallen uses the terminology ``weak" Mennicke symbol because the axioms above do indeed give a weaker definition of the Mennicke symbols introduced by Suslin \cite{suslin2006mennicke} for the algebraic $K$-theory of fields.
 \end{remark}
 
 A basic, yet fundamental, insight is the existence of a universal group $\mathrm{WMS}_n(A)$ of weak Mennicke symbols.
@@ -186,7 +186,7 @@ A basic, yet fundamental, insight is the existence of a universal group $\mathrm
     For any positive integer $n$ and any $k$-algebra $A$, define the group $\mathrm{WMS}_n(A)$ as the quotient of the free group on $\mathrm{Um}_n(A)$ by the relations generated by Conditions (i) and (ii) in Definition \ref{def:wms}. Denote the class of the element corresponding to $u\in \mathrm{Um}_n(A)$ by $[u]$.
 \end{definition}
 
-There exists a universal weak Mennicke symbol $\hat{\mu}: \mathrm{Um}_n(A) \to \mathrm{WMS}_n(A)$ given by $u \mapsto [u]$. This symbol is universal in the sense that for any weak Mennicke symbol $\mu: \mathrm{Um}_n(A) \to G$, there exists a unique group homomorphism $\mu': \mathrm{WMS}_n(A) \to G$ such that $\mu' \circ \hat{\mu} = \mu$. The key insight of van der Kallen is that the group structure on $\mathrm{WMS}_n(A)$ can be transferred to the set $\mathrm{Um}_n(A)/E_n(A)$ under some assumptions on $A$. To properly state these assumptions, we need to define the \textit{stable dimension} of $A$.
+There exists a universal weak Mennicke symbol $\hat{\mu}\colon \mathrm{Um}_n(A) \to \mathrm{WMS}_n(A)$ given by $u \mapsto [u]$. This symbol is universal in the sense that for any weak Mennicke symbol $\mu\colon \mathrm{Um}_n(A) \to G$, there exists a unique group homomorphism $\mu'\colon \mathrm{WMS}_n(A) \to G$ such that $\mu' \circ \hat{\mu} = \mu$. The key insight of van der Kallen is that the group structure on $\mathrm{WMS}_n(A)$ can be transferred to the set $\mathrm{Um}_n(A)/E_n(A)$ under some assumptions on $A$. To properly state these assumptions, we need to define the \textit{stable dimension} of $A$.
 
 \begin{definition}
     Let $A$ be a commutative $k$-algebra. The stable rank of $A$, denoted $\operatorname{srank}(A)$, is defined as the smallest integer $r$ such that for any unimodular row $(a_1,\ldots,a_{r+1})$, there exist $b_1,\ldots,b_r$ such that $(a_1 + b_1a_{r+1}, a_1 + b_2a_{r+1},\ldots, a_{r}+b_{r+1}a_{r+1})$ is also unimodular. If no such integer $r$ exists, then we declare $\operatorname{srank}(A) = \infty$. The stable dimension of $A$, denoted $\operatorname{sdim}(A)$, is defined as $\operatorname{srank}(A) - 1$. 
